@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Crebrid Pricer</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #C8643A;
+    --orange-light: #D97B52;
+    --orange-pale: #FDF0EB;
+    --orange-border: #F0C4B0;
+    --bg: #F7F7F5;
+    --white: #FFFFFF;
+    --text: #1A1A1A;
+    --muted: #6B6B6B;
+    --border: #E5E5E2;
+    --border-dark: #D0CFC9;
+    --surface: #FFFFFF;
+    --green: #2D7A5F;
+    --green-bg: #EBF5F0;
+    --green-border: #A8D5C2;
+    --red: #C0392B;
+    --red-bg: #FDECEA;
+    --red-border: #F0B8B3;
+    --mono: 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 48px;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  .header-text h1 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .header-text p {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  .date-pill {
+    margin-left: auto;
+    background: var(--orange-pale);
+    color: var(--orange);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--orange-border);
+    white-space: nowrap;
+  }
+
+  /* CONTAINER */
+  .container { padding: 14px 14px 0; max-width: 480px; margin: 0 auto; }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .card-header {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-header-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .card-header-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex-shrink: 0;
+  }
+
+  /* FIELDS */
+  .field {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+  }
+
+  .field:last-child { border-bottom: none; }
+
+  .field label {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .field input, .field select {
+    background: var(--bg);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 10px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    -webkit-appearance: none;
+  }
+
+  .field input:focus, .field select:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(200,100,58,0.12);
+    background: var(--white);
+  }
+
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B6B6B' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+  }
+
+  .calc-loan-hint {
+    font-size: 11px;
+    color: var(--orange);
+    font-weight: 600;
+    padding: 4px 16px 8px;
+    cursor: pointer;
+    display: none;
+  }
+
+  .calc-loan-hint:hover { text-decoration: underline; }
+
+  .dscr-note {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 6px 16px 10px;
+    font-weight: 500;
+  }
+
+  /* OUTPUTS */
+  .output-hero {
+    padding: 20px 16px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .output-rate-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .output-rate-value {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--orange);
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+
+  .indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    margin-top: 4px;
+  }
+
+  .indicator.pass {
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid var(--green-border);
+  }
+
+  .indicator.review {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+  }
+
+  .indicator.empty {
+    background: var(--bg);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .indicator.ineligible {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+  }
+
+  .output-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .output-cell {
+    padding: 12px 16px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .output-cell:nth-child(even) { border-right: none; }
+  .output-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+  .output-cell-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+
+  .output-cell-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    font-family: var(--mono);
+  }
+
+  .ineligible-banner {
+    background: var(--red-bg);
+    border-bottom: 1px solid var(--red-border);
+    padding: 10px 16px;
+    color: var(--red);
+    font-size: 12px;
+    font-weight: 700;
+    display: none;
+  }
+
+  /* LLPA */
+  .llpa-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .llpa-row:last-child { border-bottom: none; }
+  .llpa-name { color: var(--text); font-weight: 500; }
+  .llpa-val { font-family: var(--mono); font-size: 13px; font-weight: 600; }
+  .llpa-val.pos { color: var(--green); }
+  .llpa-val.neg { color: var(--red); }
+  .llpa-val.zero { color: var(--muted); }
+  .llpa-total { font-weight: 700; background: var(--bg); }
+  .llpa-total .llpa-name { font-weight: 700; color: var(--text); }
+
+  /* ELIGIBILITY */
+  .elig-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+  }
+
+  .elig-row:last-child { border-bottom: none; }
+
+  .elig-rule {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .elig-detail {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .elig-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .elig-badge.pass {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+
+  .elig-badge.fail {
+    background: var(--red-bg);
+    color: var(--red);
+  }
+
+  /* COPY BUTTON */
+  .btn-copy {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    letter-spacing: -0.2px;
+  }
+
+  .btn-copy:active { transform: scale(0.98); background: #B55A32; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--text);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 999;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 4px 16px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <!-- Crebrid diamond logo SVG -->
+<img src="data:image/webp;base64,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" style="height:28px;width:auto;" alt="Crebrid">
+  <div class="header-text">
+    <h1>Crebrid LO Pricer</h1>
+    <p>Professional Investor · LO Version</p>
+  </div>
+  <div class="date-pill">4/29/26</div>
+</header>
+
+<div class="container">
+
+  <!-- INPUTS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-dot"></div>
+      <span class="card-header-title">Loan Inputs</span>
+    </div>
+
+    <div class="field">
+      <label>Credit Score</label>
+      <input type="number" id="fico" value="720" min="620" max="850" onchange="calculate()">
+    </div>
+    <div class="field">
+      <label>LTV (%)</label>
+      <input type="number" id="ltv" value="70" min="1" max="80" step="1" onchange="calculate(); updateCalcLoan()">
+    </div>
+    <div class="field">
+      <label>Est. Value ($)</label>
+      <input type="number" id="estValue" placeholder="Optional" onchange="updateCalcLoan()">
+    </div>
+    <div class="calc-loan-hint" id="calcLoanHint"></div>
+    <div class="field">
+      <label>Loan Amount ($)</label>
+      <input type="number" id="loanAmt" value="100000" oninput="calculate(); if(document.getElementById('rent').value) calcDSCR();">
+    </div>
+    <div class="field">
+      <label>Payoff Amount ($)</label>
+      <input type="number" id="loanPayoff" placeholder="0 (refi only)" min="0">
+    </div>
+    <div class="field">
+      <label>DSCR</label>
+      <input type="number" id="dscr" value="1.15" step="0.01" onchange="calculate()">
+    </div>
+    <div class="field">
+      <label>Product</label>
+      <select id="product" onchange="calculate(); if(document.getElementById('rent').value) calcDSCR();">
+        <option>30Y Fixed</option>
+        <option>15Y Fixed</option>
+        <option>30Y-IO</option>
+        <option>5/6 Arm</option>
+        <option>5/6 Arm IO</option>
+        <option>7/6 Arm</option>
+        <option>7/6 Arm IO</option>
+        <option>10/6 Arm</option>
+        <option>10/6 Arm IO</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Property Type</label>
+      <select id="propType" onchange="calculate()">
+        <option>SFR</option>
+        <option>2-4 Unit</option>
+        <option>5-10 Unit</option>
+        <option>Condo</option>
+        <option>Non-Warrantable Condo</option>
+        <option>Modular</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Purpose</label>
+      <select id="purpose" onchange="calculate()">
+        <option>Purchase</option>
+        <option selected>Cash-Out Refinance</option>
+        <option>Rate/Term Refinance</option>
+        <option>Delayed Financing</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Investor Type</label>
+      <select id="investorType" onchange="calculate()">
+        <option>Single Property</option>
+        <option>Crossed</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Prepay (months)</label>
+      <select id="prepay" onchange="calculate()">
+        <option value="0">0 months</option>
+        <option value="12">12 months</option>
+        <option value="24">24 months</option>
+        <option value="36" selected>36 months</option>
+        <option value="48">48 months</option>
+        <option value="60">60 months</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Experience</label>
+      <select id="experience" onchange="calculate()">
+        <option value="0">0</option>
+        <option value="2+" selected>2+</option>
+        <option value="5+">5+</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>STR?</label>
+      <select id="str" onchange="calculate()">
+        <option>No</option>
+        <option>Yes</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Foreign National?</label>
+      <select id="fn" onchange="calculate()">
+        <option>No</option>
+        <option>Yes</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Credit Event (3-4yr)?</label>
+      <select id="creditEvent" onchange="calculate()">
+        <option>No</option>
+        <option>Yes</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- DSCR CALCULATOR -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-dot"></div>
+      <span class="card-header-title">DSCR Calculator</span>
+    </div>
+    <div class="field">
+      <label>Monthly Rent ($)</label>
+      <input type="number" id="rent" placeholder="0" oninput="calcDSCR()">
+    </div>
+    <div class="field">
+      <label>Monthly Taxes ($)</label>
+      <input type="number" id="monthlyTaxes" placeholder="0" value="0" oninput="updateTIA()">
+    </div>
+    <div class="field">
+      <label>Monthly Insurance ($)</label>
+      <input type="number" id="monthlyInsurance" placeholder="0" value="0" oninput="updateTIA()">
+    </div>
+    <div class="field">
+      <label>Monthly HOA ($)</label>
+      <input type="number" id="hoa" value="0" oninput="calcDSCR()">
+    </div>
+    <div class="field" style="background:var(--surface2);border-radius:6px;">
+      <label style="color:var(--muted);font-size:11px;">TIA (auto-calc)</label>
+      <input type="number" id="tia" readonly
+        style="background:var(--surface2);color:var(--muted);font-weight:600;cursor:default;border-color:var(--border);">
+    </div>
+    <div class="dscr-note" id="dscrCalcNote">Enter monthly expenses to auto-calculate DSCR</div>
+  </div>
+
+  <!-- OUTPUTS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-dot"></div>
+      <span class="card-header-title">Pricing Output</span>
+    </div>
+
+    <div class="ineligible-banner" id="ineligibleBanner">⛔ INELIGIBLE — Review eligibility checker below</div>
+
+    <div class="output-hero">
+      <div>
+        <div class="output-rate-label">Selected Rate</div>
+        <div style="display:flex;align-items:baseline;gap:4px">
+          <div class="output-rate-value" id="outRate">—</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:600;margin-bottom:2px">auto</div>
+        </div>
+        <div style="margin-top:8px;display:flex;align-items:center;gap:8px">
+          <input type="number" id="rateOverride" placeholder="Override rate"
+            step="0.125" min="6" max="10.25"
+            style="width:130px;background:var(--bg);border:1px solid var(--border-dark);border-radius:8px;
+                   color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;
+                   font-weight:600;padding:6px 10px;outline:none;"
+            oninput="applyRateOverride()"
+            onfocus="this.style.borderColor='var(--orange)';this.style.boxShadow='0 0 0 3px rgba(200,100,58,0.12)'"
+            onblur="this.style.borderColor='var(--border-dark)';this.style.boxShadow='none'">
+          <button onclick="clearRateOverride()"
+            style="font-size:11px;font-weight:700;color:var(--muted);background:none;border:none;
+                   cursor:pointer;padding:0;font-family:'Plus Jakarta Sans',sans-serif;"
+            id="clearOverrideBtn" style="display:none">✕ Clear</button>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:4px;font-weight:500" id="overrideNote"></div>
+        <div style="margin-top:10px">
+          <span id="outIndicator" class="indicator empty">— Enter inputs —</span>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div id="outPrice" style="display:none"></div>
+        <div id="outPremiumLabel" style="display:none"></div>
+        <div id="outPremium" style="display:none"></div>
+      </div>
+    </div>
+
+    <div id="outPoints" style="display:none"></div>
+    <div id="outRevenue" style="display:none"></div>
+    <div class="output-grid">
+      <div class="output-cell">
+        <div class="output-cell-label">Payment Rate</div>
+        <div class="output-cell-value" id="outPayRate">—</div>
+      </div>
+      <div class="output-cell">
+        <div class="output-cell-label">Monthly P&amp;I</div>
+        <div class="output-cell-value" id="outPI_raw">—</div>
+      </div>
+      <div class="output-cell">
+        <div class="output-cell-label">Monthly PITIA</div>
+        <div class="output-cell-value" id="outPI">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LLPA BREAKDOWN -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-dot"></div>
+      <span class="card-header-title">LLPA Breakdown</span>
+    </div>
+    <div id="llpaRows"></div>
+  </div>
+
+  <!-- ELIGIBILITY -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-dot"></div>
+      <span class="card-header-title">Eligibility Checker</span>
+    </div>
+    <div id="eligRows"></div>
+  </div>
+
+  <!-- PRICED BY -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-dot"></div>
+      <span class="card-header-title">Quote Details</span>
+    </div>
+    <div class="field">
+      <label>Borrower Name</label>
+      <input type="text" id="borrowerName" placeholder="Full name">
+    </div>
+    <div class="field">
+      <label>Property Address</label>
+      <input type="text" id="propertyAddress" placeholder="Street address">
+    </div>
+    <div class="field">
+      <label>City, State ZIP</label>
+      <input type="text" id="propertyCity" placeholder="Dallas, TX 75201">
+    </div>
+    <div class="field">
+      <label>Priced By</label>
+      <select id="pricedBy">
+        <option value="Matt Campos, Director">Matt Campos</option>
+        <option value="Toby Newhouse, MD">Toby Newhouse</option>
+        <option value="Morgan Quillen, Crebrid">Morgan Quillen</option>
+        <option value="Andrea Haire, Crebrid">Andrea Haire</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Loan Officer</label>
+      <select id="loSelect" onchange="autoFillLO()">
+        <option value="">-- Select LO --</option>
+        <option value="Andrea Haire|ahaire@crebrid.com">Andrea Haire</option>
+        <option value="Brett Fair|bfair@crebrid.com">Brett Fair</option>
+        <option value="Chad Russell|crussell@crebrid.com">Chad Russell</option>
+        <option value="Chase Howard|choward@crebrid.com">Chase Howard</option>
+        <option value="Chris Jordan|cjordan@crebrid.com">Chris Jordan</option>
+        <option value="Christy Williams|cwilliams@crebrid.com">Christy Williams</option>
+        <option value="Debora Kaufmann|dkaufmann@crebrid.com">Debora Kaufmann</option>
+        <option value="Isaiah Barron|ibarron@crebrid.com">Isaiah Barron</option>
+        <option value="Joel Dyke|jdyke@crebrid.com">Joel Dyke</option>
+        <option value="Juan Paulino|jpaulino@crebrid.com">Juan Paulino</option>
+        <option value="Kamren Allen|kallen@crebrid.com">Kamren Allen</option>
+        <option value="Matt Campos|mcampos@crebrid.com">Matt Campos</option>
+        <option value="Ryan Young|ryoung@crebrid.com">Ryan Young</option>
+        <option value="Steven Kjol|skjol@crebrid.com">Steven Kjol</option>
+        <option value="Toby Newhouse|tnewhouse@crebrid.com">Toby Newhouse</option>
+        <option value="Tony Viola|aviola@crebrid.com">Tony Viola</option>
+        <option value="Whitney Wehring|wwehring@crebrid.com">Whitney Wehring</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>LO Email</label>
+      <input type="text" id="loEmail" placeholder="Auto-populated" readonly
+        style="background:#F7F7F5;color:#6B6B6B;font-weight:600;">
+    </div>
+    <input type="hidden" id="loName">
+    <div class="field">
+      <label>Junior LO</label>
+      <select id="jloSelect" onchange="autoFillJLO()">
+        <option value="">-- Select JLO --</option>
+        <option value="Alvin Gusman|agusman@crebrid.com">Alvin Gusman</option>
+        <option value="Logan Lassiter|llassiter@crebrid.com">Logan Lassiter</option>
+        <option value="Riley McFarland|rmacfarland@crebrid.com">Riley McFarland</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>JLO Email</label>
+      <input type="text" id="jloEmail" placeholder="Auto-populated" readonly
+        style="background:#F7F7F5;color:#6B6B6B;font-weight:600;">
+    </div>
+    <input type="hidden" id="jloName">
+    <div class="field" style="align-items:flex-start;padding:12px 16px;">
+      <label style="padding-top:4px;">Notes</label>
+      <textarea id="quoteNotes" placeholder="Additional information..." 
+        style="background:var(--bg);border:1px solid var(--border-dark);border-radius:8px;
+               color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;
+               font-weight:500;padding:8px 10px;width:100%;outline:none;resize:vertical;
+               min-height:52px;max-height:100px;line-height:1.4;"
+        onfocus="this.style.borderColor='var(--orange)';this.style.boxShadow='0 0 0 3px rgba(200,100,58,0.12)'"
+        onblur="this.style.borderColor='var(--border-dark)';this.style.boxShadow='none'"></textarea>
+    </div>
+    <div class="field">
+      <label>Broker Name</label>
+      <input type="text" id="brokerNameInput" placeholder="Optional — replaces Junior LO if filled">
+    </div>
+    <div class="field">
+      <label>Origination Fee</label>
+      <select id="originationFee">
+        <option value="0.50%">0.50%</option>
+        <option value="1.00%">1.00%</option>
+        <option value="1.50%">1.50%</option>
+        <option value="2.00%" selected>2.00%</option>
+        <option value="2.50%">2.50%</option>
+        <option value="3.00%">3.00%</option>
+        <option value="3.50%">3.50%</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- COPY BUTTON -->
+  <button class="btn-copy" onclick="generateTermSheet()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+    </svg>
+    Generate Term Sheet (PDF)
+  </button>
+
+  <button class="btn-copy" onclick="copyToEmail()" style="background:#F7F7F5;color:#1A1A1A;border:1px solid #E5E5E2;margin-top:-4px;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+    </svg>
+    Copy Quote for Email
+  </button>
+
+</div>
+
+<!-- TERM SHEET MODAL -->
+<div id="termSheetModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;overflow-y:auto;padding:20px;">
+  <div id="termSheetContent" style="background:white;max-width:600px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+
+    <!-- Term Sheet Header — white top with logo, orange accent below -->
+    <div style="background:white;padding:28px 32px 20px;border-bottom:3px solid #C8643A;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <img src="data:image/webp;base64,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" style="height:40px;width:auto;display:block;" alt="Crebrid">
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6B6B6B;">Rate Sheet</div>
+          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">April 29, 2026</div>
+        </div>
+      </div>
+    </div>
+    <!-- Orange title band -->
+    <div style="background:#C8643A;padding:14px 32px;">
+      <div style="color:white;font-size:18px;font-weight:800;letter-spacing:-0.3px;">DSCR Loan Term Sheet</div>
+      <div style="color:rgba(255,255,255,0.85);font-size:11px;font-weight:500;margin-top:2px;" id="ts-date"></div>
+    </div>
+
+    <!-- Borrower Info -->
+    <div style="padding:24px 32px;border-bottom:1px solid #E5E5E2;background:#FDF0EB;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8643A;margin-bottom:8px;">Borrower & Property</div>
+      <div style="font-size:15px;font-weight:800;color:#1A1A1A;" id="ts-borrower">—</div>
+      <div style="font-size:12px;color:#6B6B6B;font-weight:500;margin-top:3px;" id="ts-address">—</div>
+    </div>
+
+    <!-- Loan Terms -->
+    <div style="padding:10px 32px;border-bottom:1px solid #E5E5E2);">
+      <div style="font-size:13px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:#C8643A;margin-bottom:16px;">Loan Terms</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Interest Rate</div>
+          <div style="font-size:24px;font-weight:800;color:#C8643A;letter-spacing:-0.5px;" id="ts-rate">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Product</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-product">—</div>
+          <div style="font-size:10px;color:#9CA3AF;font-weight:600;margin-top:3px;letter-spacing:0.3px;text-transform:uppercase;" id="ts-purpose"></div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Loan Amount</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-loanamt">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">LTV</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-ltv">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">DSCR</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-dscr">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Monthly PITIA</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-pi">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Monthly P&amp;I</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-pi-raw">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Origination Fee</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-orig-lo">—</div>
+        </div>
+<div id="ts-orig-lo-proc" style="display:none"></div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Prepayment</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-prepay">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Credit Score</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-fico">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Property Type</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-proptype">—</div>
+        </div>
+        <div id="ts-estvalue-cell" style="display:none">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Est. Property Value</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-estvalue">—</div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8643A;margin-bottom:3px;" id="ts-lo-label">Loan Officer</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-loname-grid">—</div>
+          <div style="font-size:11px;color:#6B6B6B;" id="ts-loemail-grid"></div>
+          <div id="ts-jlo-grid" style="display:none;margin-top:4px;">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#C8643A;letter-spacing:0.8px;margin-bottom:1px;">Junior LO</div>
+            <div style="font-size:11px;font-weight:600;color:#1A1A1A;" id="ts-jloname-grid"></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8643A;margin-bottom:3px;">Prepared By</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-pricedby">—</div>
+        </div>
+      </div>
+    </div>
+
+                
+    <!-- Disclaimer -->
+    <div style="padding:16px 32px;background:#F7F7F5;">
+      <div style="font-size:10px;color:#6B6B6B;line-height:1.6;font-weight:500;">
+        <strong style="color:#1A1A1A;">DISCLAIMER:</strong> This term sheet is for informational purposes, it does not represent a commitment to lend. Rates and terms may vary upon final review of appraisal and market rent. All loans are subject to credit approval.
+      </div>
+    </div>
+
+
+    <!-- PAGE BREAK for print -->
+    <div style="page-break-before:always;"></div>
+
+    <!-- PAGE 2 — CLOSING COST ESTIMATE -->
+    <div id="ts-page2">
+
+      <!-- Page 2 Header -->
+      <div style="background:white;padding:20px 32px 14px;border-bottom:3px solid #C8643A;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-size:16px;font-weight:800;color:#1A1A1A;letter-spacing:-0.3px;">Closing Cost Estimate</div>
+          <div style="text-align:right;">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;">Prepared</div>
+            <div style="font-size:12px;font-weight:700;color:#1A1A1A;" id="ts-cc-date"></div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:#6B6B6B;margin-top:3px;" id="ts-cc-borrower"></div>
+      </div>
+
+      <!-- Orange subheader -->
+      <div style="background:#C8643A;padding:8px 32px;">
+        <div style="color:white;font-size:12px;font-weight:700;">Estimated Costs &amp; Cash to Close / Cash Back</div>
+      </div>
+
+      <!-- Loan Summary row -->
+      <div style="padding:14px 32px;border-bottom:1px solid #E5E5E2;background:#FDF0EB;">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C8643A;margin-bottom:8px;">Loan Summary</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">Loan Amount</div>
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A;" id="ts-cc-loanamt">—</div>
+          </div>
+          <div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">Interest Rate</div>
+            <div style="font-size:13px;font-weight:700;color:#C8643A;" id="ts-cc-rate">—</div>
+          </div>
+          <div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">Monthly PITIA</div>
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A;" id="ts-cc-pitia">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Closing Costs Breakdown -->
+      <div style="padding:14px 32px;border-bottom:1px solid #E5E5E2;">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C8643A;margin-bottom:10px;">Closing Costs Breakdown</div>
+        <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:12px;">
+          <tr style="background:#F7F7F5;">
+            <td style="padding:7px 10px;font-weight:700;color:#1A1A1A;border:1px solid #E5E5E2;">Cost Item</td>
+            <td style="padding:7px 10px;font-weight:700;color:#1A1A1A;text-align:right;border:1px solid #E5E5E2;">Estimated Amount</td>
+            <td style="padding:7px 10px;font-weight:700;color:#1A1A1A;text-align:right;border:1px solid #E5E5E2;">Basis</td>
+          </tr>
+          <tr id="ts-cc-dp-row" style="display:none;background:#FDF0EB;">
+            <td style="padding:7px 10px;color:#1A1A1A;font-weight:700;border:1px solid #E5E5E2;">Down Payment</td>
+            <td style="padding:7px 10px;text-align:right;font-weight:700;color:#C8643A;border:1px solid #E5E5E2;" id="ts-cc-dp">—</td>
+            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;">Value − Loan Amt</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;color:#1A1A1A;border:1px solid #E5E5E2;">Origination Fee</td>
+            <td style="padding:7px 10px;text-align:right;font-weight:600;color:#1A1A1A;border:1px solid #E5E5E2;" id="ts-cc-orig">—</td>
+            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;" id="ts-cc-orig-pct">—</td>
+          </tr>
+          <tr style="background:#F7F7F5;">
+            <td style="padding:7px 10px;color:#1A1A1A;border:1px solid #E5E5E2;">Processing / Underwriting Fee</td>
+            <td style="padding:7px 10px;text-align:right;font-weight:600;color:#1A1A1A;border:1px solid #E5E5E2;">$1,999</td>
+            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;">Flat Fee</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;color:#1A1A1A;border:1px solid #E5E5E2;">Title / Settlement Fees</td>
+            <td style="padding:7px 10px;text-align:right;font-weight:600;color:#1A1A1A;border:1px solid #E5E5E2;" id="ts-cc-title">—</td>
+            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;">Est. 1%</td>
+          </tr>
+          <tr style="background:#F7F7F5;">
+            <td style="padding:7px 10px;color:#1A1A1A;border:1px solid #E5E5E2;">Insurance Premium (1st year)</td>
+            <td style="padding:7px 10px;text-align:right;font-weight:600;color:#1A1A1A;border:1px solid #E5E5E2;" id="ts-cc-insurance">—</td>
+            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;">Est. Premium</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px;color:#1A1A1A;border:1px solid #E5E5E2;">Annual Property Taxes (prorated)</td>
+            <td style="padding:7px 10px;text-align:right;font-weight:600;color:#1A1A1A;border:1px solid #E5E5E2;" id="ts-cc-taxes">—</td>
+            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;">Monthly × 12</td>
+          </tr>
+          <tr id="ts-cc-payoff-row" style="background:#F7F7F5;display:none;">
+            <td style="padding:7px 10px;color:#1A1A1A;border:1px solid #E5E5E2;">Existing Loan Payoff</td>
+            <td style="padding:7px 10px;text-align:right;font-weight:600;color:#1A1A1A;border:1px solid #E5E5E2;" id="ts-cc-payoff">—</td>
+            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;">From Input</td>
+          </tr>
+          <tr style="background:#1A1A1A;">
+            <td style="padding:9px 10px;color:white;font-weight:700;border:1px solid #333;">Total Estimated Closing Costs</td>
+            <td style="padding:9px 10px;text-align:right;font-weight:700;color:white;border:1px solid #333;" id="ts-cc-total">—</td>
+            <td style="padding:9px 10px;border:1px solid #333;"></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Reserve Requirement -->
+      <div style="padding:14px 32px;border-bottom:1px solid #E5E5E2;background:#FDF0EB;">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C8643A;margin-bottom:8px;">Reserve Requirement</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">Monthly PITIA</div>
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A;" id="ts-cc-pitia2">—</div>
+          </div>
+          <div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">Months Required</div>
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A;">3 Months</div>
+          </div>
+          <div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">3-Month Reserve</div>
+            <div style="font-size:13px;font-weight:700;color:#C8643A;" id="ts-cc-reserves">—</div>
+          </div>
+        </div>
+        <!-- Purchase / Cash-to-Close: total liquid assets needed -->
+        <div id="ts-cc-liquid-section" style="display:none;margin-top:12px;padding-top:10px;border-top:1px solid #F0C4B0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">Est. Total Liquid Assets Needed</div>
+              <div style="font-size:10px;color:#6B6B6B;">3-Month Reserves + Cash From Borrower</div>
+            </div>
+            <div style="font-size:18px;font-weight:800;color:#C8643A;" id="ts-cc-liquid">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cash to Close / Cash Back -->
+      <div style="padding:16px 32px;border-bottom:1px solid #E5E5E2;">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#C8643A;margin-bottom:10px;">Net Position</div>
+        <div id="ts-cc-cashclose-section" style="display:none;">
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#FEF3C7;border:1px solid #FCD34D;border-radius:8px;padding:12px 16px;">
+            <div>
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#92400E;margin-bottom:2px;" id="ts-cc-close-label">Estimated Cash From Borrower</div>
+              <div style="font-size:11px;color:#92400E;" id="ts-cc-close-sub">Down Payment + Closing Costs =</div>
+            </div>
+            <div style="font-size:22px;font-weight:800;color:#92400E;" id="ts-cc-cashclose">—</div>
+          </div>
+        </div>
+        <div id="ts-cc-cashback-section" style="display:none;margin-top:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#ECFDF5;border:1px solid #6EE7B7;border-radius:8px;padding:12px 16px;">
+            <div>
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#065F46;margin-bottom:2px;">Estimated Cash Back to Borrower</div>
+              <div style="font-size:11px;color:#065F46;">Loan Amount − Payoff &amp; Closing Costs =</div>
+            </div>
+            <div style="font-size:22px;font-weight:800;color:#065F46;" id="ts-cc-cashback">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2 disclaimer -->
+      <div style="padding:12px 32px;background:#F7F7F5;">
+        <div style="font-size:9px;color:#6B6B6B;line-height:1.6;font-weight:500;">
+          <strong style="color:#1A1A1A;">DISCLAIMER:</strong> Closing cost estimates are for informational purposes only. Title fees, insurance, and tax figures are estimates based on standard percentages and may vary. Actual costs will be determined by the title company, insurance provider, and local tax authority. Reserves requirement shown is an estimate only. This does not constitute a commitment to lend.
+        </div>
+      </div>
+    </div>
+    <!-- END PAGE 2 -->
+
+    <!-- Action buttons -->
+    <div style="padding:20px 32px;display:flex;gap:10px;background:white;border-top:1px solid #E5E5E2;">
+      <button onclick="printTermSheet()" style="flex:1;background:#C8643A;color:white;border:none;border-radius:10px;padding:13px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">
+        🖨 Print / Save PDF
+      </button>
+      <button onclick="closeTermSheet()" style="flex:1;background:#F7F7F5;color:#1A1A1A;border:1px solid #E5E5E2;border-radius:10px;padding:13px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+@page { margin: 0.4in; }
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    a[href]:after { content: "" !important; display:none !important; }
+    body > *:not(#termSheetModal) { display: none !important; }
+  #termSheetModal {
+    display: block !important;
+    position: static !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+  #termSheetContent {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  #termSheetContent > div:last-child { display: none !important; }
+}
+</style>
+
+<div class="toast" id="toast">✓ Quote copied to clipboard</div>
+
+<script>
+function generateTermSheet() {
+  const g = id => document.getElementById(id);
+
+  // Populate term sheet fields
+  const borrower = g('borrowerName').value || 'Borrower Name Not Provided';
+  const addr = g('propertyAddress').value || '';
+  const city = g('propertyCity').value || '';
+  const fullAddr = [addr, city].filter(Boolean).join(', ') || 'Property Address Not Provided';
+
+  g('ts-date').textContent = 'Prepared: ' + new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'});
+  g('ts-borrower').textContent = borrower;
+  g('ts-address').textContent = fullAddr;
+  g('ts-rate').textContent = g('outRate').textContent;
+  g('ts-product').textContent = g('product').value;
+  g('ts-loanamt').textContent = '$' + parseInt(g('loanAmt').value).toLocaleString();
+  g('ts-ltv').textContent = g('ltv').value + '%';
+  g('ts-dscr').textContent = parseFloat(g('dscr').value).toFixed(2) + 'x';
+  if(g('ts-purpose')) g('ts-purpose').textContent = g('purpose').value;
+  g('ts-pi').textContent = g('outPI').textContent;
+  if(g('ts-pi-raw')) g('ts-pi-raw').textContent = g('outPI_raw') ? g('outPI_raw').textContent : '—';
+  g('ts-prepay').textContent = g('prepay').value + ' Months';
+  g('ts-fico').textContent = g('fico').value;
+  if(g('ts-proptype')) g('ts-proptype').textContent = g('propType') && g('propType').value ? g('propType').value : '—';
+  if(g('ts-orig')) g('ts-orig').textContent = g('originationFee').value;
+  if(g('ts-orig-proc')) g('ts-orig-proc').textContent = '$1,999';
+  if(g('ts-orig-lo-proc')) g('ts-orig-lo-proc').textContent = '$1,999';
+  if(g('ts-orig-lo')) g('ts-orig-lo').textContent = g('originationFee').value;
+
+  // Est Value — only show if filled in
+  const estVal = parseFloat(g('estValue').value);
+  if (estVal > 0) {
+    g('ts-estvalue-cell').style.display = 'block';
+    g('ts-estvalue').textContent = '$' + estVal.toLocaleString();
+  } else {
+    g('ts-estvalue-cell').style.display = 'none';
+  }
+  if(g('ts-pricedby')) g('ts-pricedby').textContent = g('pricedBy').value;
+  if(g('ts-loname')) g('ts-loname').textContent = g('loName') && g('loName').value ? g('loName').value : '—';
+  if(g('ts-lophone')) g('ts-lophone').textContent = (g('loPhone') && g('loPhone').value) ? g('loPhone').value : '';
+  if(g('ts-loemail')) g('ts-loemail').textContent = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
+  const brokerInput = g('brokerNameInput') && g('brokerNameInput').value ? g('brokerNameInput').value : '';
+  const jloLabel = g('ts-jlo-label');
+  const jloN = brokerInput || (g('jloName') && g('jloName').value ? g('jloName').value : '');
+  const jloE = !brokerInput && g('jloEmail') && g('jloEmail').value ? g('jloEmail').value : '';
+  if(g('ts-jlo-section')) g('ts-jlo-section').style.display = jloN ? 'table-row' : 'none';
+  if(g('ts-jlo-grid')) g('ts-jlo-grid').style.display = jloN ? 'block' : 'none';
+  if(g('ts-jloname-grid')) g('ts-jloname-grid').textContent = jloN;
+  if(jloLabel) jloLabel.textContent = brokerInput ? 'Broker' : 'Junior LO';
+  if(g('ts-jloname')) g('ts-jloname').textContent = jloN;
+  if(g('ts-jloemail')) g('ts-jloemail').textContent = jloE;
+
+  // Notes
+  const notesVal = g('quoteNotes') && g('quoteNotes').value ? g('quoteNotes').value : '';
+  if(g('ts-notes-section')) g('ts-notes-section').style.display = notesVal ? 'block' : 'none';
+  if(g('ts-notes')) g('ts-notes').textContent = notesVal;
+
+  // ── PAGE 2 — Closing Cost Estimate ──
+  const g2 = id => document.getElementById(id);
+
+  const loanAmt2   = parseFloat(g('loanAmt').value) || 0;
+  const estValue2  = parseFloat(g('estValue') && g('estValue').value || 0) || 0;
+  const pitia2     = parseFloat((g('outPI').textContent || '').replace(/[^\d.]/g,'')) || 0;
+  const origPct    = parseFloat((g('originationFee').value || '0').replace('%','')) / 100;
+  const payoff     = parseFloat(g('loanPayoff') && g('loanPayoff').value || 0) || 0;
+  const annTaxes   = (parseFloat(g('monthlyTaxes') && g('monthlyTaxes').value || 0) || 0) * 12;
+  const annIns     = (parseFloat(g('monthlyInsurance') && g('monthlyInsurance').value || 0) || 0) * 12;
+  const purpose2   = g('purpose').value;
+  const isPurchase = purpose2 === 'Purchase';
+
+  const origAmt    = loanAmt2 * origPct;
+  const procAmt    = 1999;
+  const titleAmt   = loanAmt2 * 0.01;
+  const insAmt     = annIns > 0 ? annIns : loanAmt2 * 0.01;
+  const downPmt    = isPurchase && estValue2 > loanAmt2 ? estValue2 - loanAmt2 : 0;
+  const reservesAmt = pitia2 * 3;
+
+  const fmt2 = n => '$' + Math.round(n).toLocaleString();
+
+  // Populate summary
+  if(g2('ts-cc-date'))     g2('ts-cc-date').textContent     = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  if(g2('ts-cc-borrower')) g2('ts-cc-borrower').textContent = g('borrowerName') && g('borrowerName').value ? g('borrowerName').value + ' · ' + (g('propertyAddress') && g('propertyAddress').value ? g('propertyAddress').value : '') : '';
+  if(g2('ts-cc-loanamt'))  g2('ts-cc-loanamt').textContent  = fmt2(loanAmt2);
+  if(g2('ts-cc-rate'))     g2('ts-cc-rate').textContent     = g('outRate').textContent;
+  if(g2('ts-cc-pitia'))    g2('ts-cc-pitia').textContent    = g('outPI').textContent;
+  if(g2('ts-cc-pitia2'))   g2('ts-cc-pitia2').textContent   = g('outPI').textContent;
+
+  // Down payment row — purchases only
+  if(g2('ts-cc-dp-row')) g2('ts-cc-dp-row').style.display = isPurchase && downPmt > 0 ? 'table-row' : 'none';
+  if(g2('ts-cc-dp'))     g2('ts-cc-dp').textContent = fmt2(downPmt);
+
+  // Closing costs
+  if(g2('ts-cc-orig'))      g2('ts-cc-orig').textContent      = fmt2(origAmt);
+  if(g2('ts-cc-orig-pct'))  g2('ts-cc-orig-pct').textContent  = (origPct*100).toFixed(2) + '%';
+  if(g2('ts-cc-title'))     g2('ts-cc-title').textContent     = fmt2(titleAmt);
+  if(g2('ts-cc-insurance')) g2('ts-cc-insurance').textContent = fmt2(insAmt);
+  if(g2('ts-cc-taxes'))     g2('ts-cc-taxes').textContent     = annTaxes > 0 ? fmt2(annTaxes) : 'Not provided';
+  if(g2('ts-cc-reserves'))  g2('ts-cc-reserves').textContent  = fmt2(reservesAmt);
+
+  // Payoff row — refi only
+  if(payoff > 0 && !isPurchase) {
+    if(g2('ts-cc-payoff-row')) g2('ts-cc-payoff-row').style.display = 'table-row';
+    if(g2('ts-cc-payoff'))     g2('ts-cc-payoff').textContent = fmt2(payoff);
+  } else {
+    if(g2('ts-cc-payoff-row')) g2('ts-cc-payoff-row').style.display = 'none';
+  }
+
+  // Total closing costs (excl down payment and payoff)
+  const closingCostsOnly = origAmt + procAmt + titleAmt + insAmt + annTaxes;
+
+  // Total row includes payoff for refi, down payment for purchase
+  const totalCC = isPurchase
+    ? downPmt + closingCostsOnly
+    : closingCostsOnly + payoff;
+  if(g2('ts-cc-total')) g2('ts-cc-total').textContent = fmt2(totalCC);
+
+  // Net Position
+  if(isPurchase) {
+    // Purchase: Cash From Borrower = Down Payment + Closing Costs
+    const cashFromBorrower = downPmt + closingCostsOnly;
+    if(g2('ts-cc-cashclose-section')) g2('ts-cc-cashclose-section').style.display = 'block';
+    if(g2('ts-cc-cashback-section'))  g2('ts-cc-cashback-section').style.display  = 'none';
+    if(g2('ts-cc-close-label'))       g2('ts-cc-close-label').textContent = 'Estimated Cash From Borrower';
+    if(g2('ts-cc-close-sub'))         g2('ts-cc-close-sub').textContent   = 'Down Payment + Closing Costs =';
+    if(g2('ts-cc-cashclose'))         g2('ts-cc-cashclose').textContent   = fmt2(cashFromBorrower);
+    // Liquid assets = 3-month reserves + cash from borrower
+    if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display = 'block';
+    if(g2('ts-cc-liquid'))            g2('ts-cc-liquid').textContent = fmt2(reservesAmt + cashFromBorrower);
+  } else {
+    // Refi: net position
+    const netPosition = loanAmt2 - payoff - closingCostsOnly;
+    if(netPosition >= 0) {
+      // Cash back to borrower
+      if(g2('ts-cc-cashback-section'))  g2('ts-cc-cashback-section').style.display  = 'block';
+      if(g2('ts-cc-cashclose-section')) g2('ts-cc-cashclose-section').style.display = 'none';
+      if(g2('ts-cc-cashback'))          g2('ts-cc-cashback').textContent = fmt2(netPosition);
+      // Liquid assets = 3-month reserves only (cash back covers closing)
+      if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display = 'none';
+    } else {
+      // Cash to close
+      if(g2('ts-cc-cashclose-section')) g2('ts-cc-cashclose-section').style.display = 'block';
+      if(g2('ts-cc-cashback-section'))  g2('ts-cc-cashback-section').style.display  = 'none';
+      if(g2('ts-cc-close-label'))       g2('ts-cc-close-label').textContent = 'Estimated Cash to Close';
+      if(g2('ts-cc-close-sub'))         g2('ts-cc-close-sub').textContent   = 'Loan Amount − Payoff &amp; Closing Costs =';
+      if(g2('ts-cc-cashclose'))         g2('ts-cc-cashclose').textContent   = fmt2(Math.abs(netPosition));
+      // Liquid assets = 3-month reserves + cash to close
+      if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display = 'block';
+      if(g2('ts-cc-liquid'))            g2('ts-cc-liquid').textContent = fmt2(reservesAmt + Math.abs(netPosition));
+    }
+  }
+
+  g('termSheetModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTermSheet() {
+  const modal = document.getElementById('termSheetModal');
+  if(modal) { modal.style.display = 'none'; modal.style.position = 'fixed'; }
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+}
+
+function printTermSheet() {
+  const content = document.getElementById('termSheetContent').innerHTML;
+  const printWin = window.open('', '_blank', 'width=750,height=1000');
+  printWin.document.write(`<!DOCTYPE html><html><head>
+    <meta charset="UTF-8"><title>DSCR Loan Term Sheet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      body { font-family: 'Plus Jakarta Sans', sans-serif; background: white; }
+      @page { margin: 0.4in; }
+      @media print { button { display: none !important; } }
+    </style>
+  </head><body>${content}</body></html>`);
+  printWin.document.close();
+  printWin.focus();
+  setTimeout(() => { printWin.print(); }, 600);
+}
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+const RATES_30Y = [[6,97.875],[6.125,98.625],[6.25,99.375],[6.375,100.125],[6.5,100.875],[6.625,101.625],[6.75,102.375],[6.875,103.125],[7,103.78125],[7.125,104.34375],[7.25,104.90625],[7.375,105.375],[7.5,105.75],[7.625,106.125],[7.75,106.4375],[7.875,106.6875],[8,106.9375],[8.125,107.1875],[8.25,107.4375],[8.375,107.6875],[8.5,107.9375],[8.625,108.1875],[8.75,108.4375],[8.875,108.6875],[9,108.9375],[9.125,109.1875],[9.25,109.4375],[9.375,109.6875],[9.5,109.9375],[9.625,110.1875],[9.75,110.4375],[9.875,110.6875],[10,110.9375],[10.125,111.1875],[10.25,111.4375]];
+
+const RATES_ARM = [[6,98.375],[6.125,99.125],[6.25,99.875],[6.375,100.625],[6.5,101.375],[6.625,102.125],[6.75,102.875],[6.875,103.625],[7,104.23125],[7.125,104.74375],[7.25,105.25625],[7.375,105.675],[7.5,106.0],[7.625,106.325],[7.75,106.6375],[7.875,106.8875],[8,107.1375],[8.125,107.3875],[8.25,107.6375],[8.375,107.8875],[8.5,108.1375],[8.625,108.3875],[8.75,108.6375],[8.875,108.8875],[9,109.1375],[9.125,109.3875],[9.25,109.6375],[9.375,109.8875],[9.5,110.1375],[9.625,110.3875],[9.75,110.6375],[9.875,110.8875],[10,111.1375],[10.125,111.3875],[10.25,111.6375]];
+
+const LTV_COLS = [0.50,0.55,0.60,0.65,0.70,0.75,0.80];
+
+const LLPA_SINGLE_FICO = {
+  '760+':    [1,1,1,1,0.75,0.125,-0.625],
+  '740-759': [1,1,0.875,0.875,0.375,-0.125,-1.375],
+  '720-739': [0.75,0.75,0.625,0.5,0,-0.75,-2.625],
+  '700-719': [0.125,0,-0.375,-0.625,-1.125,-1.25,-3.5],
+  '680-699': [-0.25,-0.375,-0.875,-1.375,-2.125,-3.25,-5.5],
+  '660-679': [-0.875,-1.25,-2,-2.625,-3,-4.25,null],
+  '640-659': [-2.25,-2.375,-2.875,-3.875,-4.125,null,null],
+  'FN':      [0.125,0,-0.375,-0.625,null,null,null],
+};
+
+const LLPA_CROSSED_FICO = {
+  '760+':    [0.875,0.875,0.875,0.875,0.625,0,null],
+  '740-759': [0.875,0.875,0.75,0.75,0.25,-0.25,null],
+  '720-739': [0.625,0.625,0.5,0.375,-0.125,-0.875,null],
+  '700-719': [0,-0.125,-0.5,-0.75,-1.25,null,null],
+  '680-699': [-0.375,-0.5,-1,-1.5,-2.25,null,null],
+  'FN':      [0,-0.125,-0.5,null,null,null,null],
+};
+
+const LLPA_DSCR = {
+  '<1.00':    [-1,-1,-1.25,-1.5,-1.75,-2,null],
+  '1.00-1.14':[-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5],
+  '>=1.15':   [0.25,0.25,0.25,0.25,0.25,0.25,0.25],
+};
+
+const LLPA_PRODUCT = {
+  '7/6 ARM':  [-0.25,-0.25,-0.25,-0.25,-0.25,-0.25,-0.25],
+  '15Y Fixed':[0.125,0.125,0.125,0.125,0.125,0.125,0.125],
+  'IO':       [-0.25,-0.25,-0.25,-0.25,-0.25,-0.5,null],
+};
+
+const LLPA_PROPTYPE = {
+  'Condo':               [-0.25,-0.25,-0.25,-0.25,-0.5,-0.5,-0.5],
+  'Non-Warrantable Condo':[-0.5,-0.5,-0.5,-0.75,-1,null,null],
+  '2-4 Unit':            [-0.125,-0.125,-0.125,-0.375,-0.75,-1,-2],
+  '5-10 Unit':           [-3,-3,-4.25,-4.5,-6.25,-6.5,null],
+};
+
+const LLPA_PURPOSE = {
+  'Rate/Term Refinance': [0,0,-0.25,-0.625,-1,-1.625,-2.125],
+  'Cash-Out Refinance':  [0,0,-0.25,-0.625,-1,-1.625,null],
+};
+
+const LLPA_LOAN_AMT = [
+  {label:'< $150K',  min:0,      max:149999,  vals:[-1,-1,-1,-1.5,-1.5,-1.5,-1.75]},
+  {label:'< $250K',  min:150000, max:249999,  vals:[0,0,0,0,-0.125,-0.125,-0.25]},
+  {label:'> $1MM',   min:1000001,max:1499999, vals:[0,0,0,0,0,0,-0.125]},
+  {label:'> $1.5MM', min:1500000,max:1999999, vals:[-0.125,-0.125,-0.25,-0.25,-0.375,-0.5,-1.5]},
+  {label:'> $2MM',   min:2000000,max:2499999, vals:[-0.125,-0.125,-0.25,-0.375,-0.5,-1.5,-2.5]},
+  {label:'> $2.5MM', min:2500000,max:2999999, vals:[-0.375,-0.375,-0.375,-0.5,-0.75,null,null]},
+  {label:'> $3MM',   min:3000000,max:Infinity,vals:[-0.125,-0.125,-0.25,-0.25,-0.375,-0.5,null]},
+];
+
+const LLPA_STR = [-1.25,-1.25,-1.5,-1.75,-2,-2.5,null];
+const LLPA_FN  = [-1.25,-1.25,-1.25,-1.25,null,null,null];
+const LLPA_CE  = [-0.25,-0.375,-0.5,-0.625,-1,null,null];
+
+const PREPAY = {
+  0:  {llpa:-1.5, maxPrice:101.75},
+  12: {llpa:-1,   maxPrice:102.25},
+  24: {llpa:-0.5, maxPrice:102.75},
+  36: {llpa:0,    maxPrice:103.75},
+  48: {llpa:0.25, maxPrice:103.75},
+  60: {llpa:0.5,  maxPrice:104.5},
+};
+
+const TARGET_PREMIUM = 1.0175;
+const MIN_PRICE = 100;
+const PASS_FLOOR = 1.015;
+const PASS_CEIL  = 1.035;
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+
+function getFicoKey(fico, isFN) {
+  if (isFN) return 'FN';
+  if (fico >= 760) return '760+';
+  if (fico >= 740) return '740-759';
+  if (fico >= 720) return '720-739';
+  if (fico >= 700) return '700-719';
+  if (fico >= 680) return '680-699';
+  if (fico >= 660) return '660-679';
+  if (fico >= 640) return '640-659';
+  return null;
+}
+
+function getLlpaVal(arr, idx) {
+  if (!arr || idx < 0 || idx >= arr.length) return null;
+  const v = arr[idx];
+  return (v === null || v === 'N/A') ? null : Number(v);
+}
+
+function getDscrKey(d) {
+  if (d < 1.0)  return '<1.00';
+  if (d < 1.15) return '1.00-1.14';
+  return '>=1.15';
+}
+
+function isArm(p) { return p.toLowerCase().includes('arm'); }
+function isIO(p)  { return p.toLowerCase().includes('io'); }
+
+function fmtCurrency(n) { return '$' + Math.round(n).toLocaleString(); }
+
+function pmt(rate, nper, pv) {
+  const r = rate / 100 / 12;
+  if (r === 0) return pv / nper;
+  return (pv * r * Math.pow(1+r, nper)) / (Math.pow(1+r, nper) - 1);
+}
+
+// ─── DSCR CALC ───────────────────────────────────────────────────────────────
+
+
+function updateTIA() {
+  const taxes = parseFloat(document.getElementById('monthlyTaxes').value) || 0;
+  const ins   = parseFloat(document.getElementById('monthlyInsurance').value) || 0;
+  const hoa   = parseFloat(document.getElementById('hoa').value) || 0;
+  const tiaEl = document.getElementById('tia');
+  if (tiaEl) tiaEl.value = (taxes + ins).toFixed(2);
+  calcDSCR();
+}
+function calcDSCR() {
+  const rent = parseFloat(document.getElementById('rent').value) || 0;
+  const tia  = parseFloat(document.getElementById('tia').value)  || 0;
+  const hoa  = parseFloat(document.getElementById('hoa').value)  || 0;
+  const loan = parseFloat(document.getElementById('loanAmt').value) || 0;
+  const note = document.getElementById('dscrCalcNote');
+
+  if (rent <= 0) {
+    note.textContent = 'Enter monthly rent to auto-calculate DSCR';
+    return;
+  }
+
+  const rateStr = document.getElementById('outRate').textContent.replace('%','');
+  const rate = parseFloat(rateStr) || 7;
+  const product = document.getElementById('product').value;
+  const nper = product.includes('15Y') ? 180 : 360;
+  const pi = isIO(product) ? loan*(rate/100/12) : pmt(rate, nper, loan);
+  const pitia = pi + tia + hoa;
+  if (pitia <= 0) return;
+
+  const dscrVal = rent / pitia;
+  document.getElementById('dscr').value = dscrVal.toFixed(4);
+  note.textContent = `Auto: ${fmtCurrency(rent)} rent ÷ ${fmtCurrency(pitia)} PITIA = ${dscrVal.toFixed(2)}x`;
+  calculate();
+}
+
+// ─── RATE OVERRIDE ───────────────────────────────────────────────────────────
+
+let rateOverrideActive = false;
+
+function applyRateOverride() {
+  const val = parseFloat(document.getElementById('rateOverride').value);
+  if (!isNaN(val) && val >= 6 && val <= 10.25) {
+    rateOverrideActive = true;
+    document.getElementById('clearOverrideBtn').style.display = 'inline';
+    document.getElementById('overrideNote').textContent = '⚠ Manual rate override active';
+    calculateWithOverride(val);
+  }
+}
+
+function clearRateOverride() {
+  rateOverrideActive = false;
+  document.getElementById('rateOverride').value = '';
+  document.getElementById('clearOverrideBtn').style.display = 'none';
+  document.getElementById('overrideNote').textContent = '';
+  calculate();
+}
+
+function calculateWithOverride(overrideRate) {
+  // Run calculate but force the selected rate
+  const loanAmt = parseFloat(document.getElementById('loanAmt').value) || 0;
+  const product = document.getElementById('product').value;
+  const prepayMo = parseInt(document.getElementById('prepay').value);
+  const isIOProd = isIO(product);
+  const prepayData = PREPAY[prepayMo] || PREPAY[36];
+  const maxPriceFromPrepay = prepayData.maxPrice;
+  const maxPriceLoanAmt = loanAmt > 3000000 ? 100.75 : 9999;
+
+  // Re-run full calculate first to get totalLLPA
+  calculate(overrideRate);
+}
+
+// ─── MAIN CALCULATE ──────────────────────────────────────────────────────────
+
+function calculate(forceRate) {
+  const fico     = parseInt(document.getElementById('fico').value) || 0;
+  const ltv      = parseFloat(document.getElementById('ltv').value) || 0;
+  const loanAmt  = parseFloat(document.getElementById('loanAmt').value) || 0;
+  const dscr     = parseFloat(document.getElementById('dscr').value) || 0;
+  const product  = document.getElementById('product').value;
+  const propType = document.getElementById('propType').value;
+  const purpose  = document.getElementById('purpose').value;
+  const investor = document.getElementById('investorType').value;
+  const prepayMo = parseInt(document.getElementById('prepay').value);
+  const strVal   = document.getElementById('str').value;
+  const fnVal    = document.getElementById('fn').value;
+  const ceVal    = document.getElementById('creditEvent').value;
+  const exp      = document.getElementById('experience').value;
+
+  const isCrossed = investor === 'Crossed';
+  const isFN  = fnVal === 'Yes';
+  const isSTR = strVal === 'Yes';
+  const isCE  = ceVal === 'Yes';
+  const isARM = isArm(product);
+  const isIOProd = isIO(product);
+  const exp0 = exp === '0';
+
+  // Eligibility
+  const eligChecks = [];
+  let ineligible = false;
+
+  function chk(rule, pass, detail='') {
+    if (!pass) ineligible = true;
+    eligChecks.push({rule, pass, detail});
+  }
+
+  chk('Loan amount ≥ $75,000', loanAmt >= 75000, fmtCurrency(loanAmt));
+  chk('Loan amount ≤ $3,000,000', loanAmt <= 3000000, fmtCurrency(loanAmt));
+  chk('DSCR minimum 0.75x', dscr >= 0.75, `${dscr.toFixed(2)}x`);
+  chk('5-10 Unit requires DSCR ≥ 1.15x', propType !== '5-10 Unit' || dscr >= 1.15, `${propType} / ${dscr.toFixed(2)}x`);
+  chk('STR Purchase not eligible', !(isSTR && purpose === 'Purchase'), `STR=${strVal}`);
+
+  const ltvAdj = exp0 ? -5 : 0;
+  const effLtv = ltv + ltvAdj;
+  const maxP = {'SFR':80,'2-4 Unit':80,'Condo':80,'Modular':80,'5-10 Unit':75,'Non-Warrantable Condo':70}[propType]||80;
+  const maxC = {'SFR':75,'2-4 Unit':75,'Condo':75,'Modular':70,'5-10 Unit':70,'Non-Warrantable Condo':60}[propType]||75;
+
+  if (purpose === 'Cash-Out Refinance') {
+    chk('Max LTV — Cash-Out', effLtv <= maxC, `Eff. LTV=${effLtv}% / Max=${maxC}%`);
+  } else {
+    chk('Max LTV — Purchase/R&T', effLtv <= maxP, `Eff. LTV=${effLtv}% / Max=${maxP}%`);
+  }
+
+  if (isFN) {
+    chk('FN max LTV 65%', ltv <= 65, `LTV=${ltv}%`);
+    chk('FN Cash-Out not available', purpose !== 'Cash-Out Refinance', purpose);
+  }
+
+  if (exp0) chk('Experience 0: eff. LTV reduced -5%', true, `Eff. LTV=${effLtv}%`);
+
+  // LTV index
+  const ltvDec = ltv / 100;
+  let ltvIdx = LTV_COLS.findIndex(v => Math.abs(v - ltvDec) < 0.001);
+  if (ltvIdx < 0) ltvIdx = LTV_COLS.reduce((b,v,i)=>Math.abs(v-ltvDec)<Math.abs(LTV_COLS[b]-ltvDec)?i:b,0);
+
+  const ficoKey = getFicoKey(fico, isFN);
+  if (!ficoKey) {
+    ineligible = true;
+    eligChecks.push({rule:'Min FICO 640 (or FN)',pass:false,detail:`FICO=${fico}`});
+  }
+
+  // LLPAs
+  const llpaItems = [];
+
+  const ficoGrid = isCrossed ? LLPA_CROSSED_FICO : LLPA_SINGLE_FICO;
+  const ficoAdj = ficoKey ? getLlpaVal(ficoGrid[ficoKey], ltvIdx) : null;
+  if (ficoAdj === null) { ineligible=true; llpaItems.push({name:`FICO (${isFN?'FN':ficoKey||'N/A'})`,val:null,inelig:true}); }
+  else llpaItems.push({name:`FICO (${isFN?'FN':ficoKey})`,val:ficoAdj});
+
+  const dscrKey = getDscrKey(dscr);
+  const dscrAdj = getLlpaVal(LLPA_DSCR[dscrKey], ltvIdx);
+  if (dscrAdj===null){ineligible=true;llpaItems.push({name:`DSCR (${dscrKey})`,val:null,inelig:true});}
+  else llpaItems.push({name:`DSCR (${dscrKey})`,val:dscrAdj});
+
+  if (isSTR) {
+    const v=getLlpaVal(LLPA_STR,ltvIdx);
+    if(v===null){ineligible=true;llpaItems.push({name:'STR',val:null,inelig:true});}
+    else llpaItems.push({name:'Short Term Rental',val:v});
+  }
+
+  if (product.includes('7/6')) {
+    llpaItems.push({name:'Product (7/6 ARM)',val:getLlpaVal(LLPA_PRODUCT['7/6 ARM'],ltvIdx)||0});
+  } else if (product.includes('15Y')) {
+    llpaItems.push({name:'Product (15Y Fixed)',val:getLlpaVal(LLPA_PRODUCT['15Y Fixed'],ltvIdx)||0});
+  }
+  if (isIOProd) {
+    const v=getLlpaVal(LLPA_PRODUCT['IO'],ltvIdx);
+    if(v===null){ineligible=true;llpaItems.push({name:'Interest-Only',val:null,inelig:true});}
+    else llpaItems.push({name:'Interest-Only',val:v});
+  }
+
+  const laBracket = LLPA_LOAN_AMT.find(b=>loanAmt>=b.min&&loanAmt<=b.max);
+  if (laBracket) {
+    const v=getLlpaVal(laBracket.vals,ltvIdx);
+    if(v!==null) llpaItems.push({name:`Loan Amt (${laBracket.label})`,val:v});
+  }
+
+  if (purpose==='Cash-Out Refinance'||purpose==='Rate/Term Refinance') {
+    const v=getLlpaVal(LLPA_PURPOSE[purpose],ltvIdx);
+    if(v===null){ineligible=true;llpaItems.push({name:'Purpose',val:null,inelig:true});}
+    else if(v!==0) llpaItems.push({name:`Purpose (${purpose})`,val:v});
+  }
+
+  if (LLPA_PROPTYPE[propType]) {
+    const v=getLlpaVal(LLPA_PROPTYPE[propType],ltvIdx);
+    if(v===null){ineligible=true;llpaItems.push({name:`Prop Type (${propType})`,val:null,inelig:true});}
+    else if(v!==0) llpaItems.push({name:`Prop Type (${propType})`,val:v});
+  }
+
+  const prepayData = PREPAY[prepayMo]||PREPAY[36];
+  llpaItems.push({name:`Prepay (${prepayMo}mo)`,val:prepayData.llpa});
+
+  if (isFN) {
+    const v=getLlpaVal(LLPA_FN,ltvIdx);
+    if(v===null){ineligible=true;llpaItems.push({name:'Foreign National',val:null,inelig:true});}
+    else llpaItems.push({name:'Foreign National',val:v});
+  }
+
+  if (isCE) {
+    const v=getLlpaVal(LLPA_CE,ltvIdx);
+    if(v===null){ineligible=true;llpaItems.push({name:'Credit Event (3-4yr)',val:null,inelig:true});}
+    else llpaItems.push({name:'Credit Event (3-4yr)',val:v});
+  }
+
+  let totalLLPA=0, anyInelig=false;
+  for(const item of llpaItems){
+    if(item.inelig){anyInelig=true;break;}
+    totalLLPA+=item.val;
+  }
+  if(anyInelig) ineligible=true;
+
+  // Rate selection
+  const rates = isARM ? RATES_ARM : RATES_30Y;
+  const maxPriceFromPrepay = prepayData.maxPrice;
+  const maxPriceLoanAmt = loanAmt>3000000?100.75:9999;
+  let selectedRate=null,selectedPrice=null,bestDiff=Infinity;
+
+  if(!ineligible&&!anyInelig){
+    const targetPrice=TARGET_PREMIUM*100;
+
+    // If a rate override is active, use that rate directly
+    if (forceRate) {
+      const match = rates.find(([r]) => Math.abs(r - forceRate) < 0.001);
+      if (match) {
+        const [rate, basePrice] = match;
+        const cp = Math.min(Math.max(basePrice+totalLLPA,MIN_PRICE),maxPriceFromPrepay,maxPriceLoanAmt);
+        selectedRate = rate;
+        selectedPrice = cp;
+      }
+    } else {
+      for(const [rate,basePrice] of rates){
+        const cp=Math.min(Math.max(basePrice+totalLLPA,MIN_PRICE),maxPriceFromPrepay,maxPriceLoanAmt);
+        const inBand=cp/100>=PASS_FLOOR&&cp/100<=PASS_CEIL;
+        const diff=Math.abs(cp-targetPrice);
+        const score=inBand?diff:1e9+diff;
+        if(score<bestDiff){bestDiff=score;selectedRate=rate;selectedPrice=cp;}
+      }
+    }
+  }
+
+  // Update UI
+  const banner=document.getElementById('ineligibleBanner');
+  banner.style.display=ineligible?'block':'none';
+
+  if(!ineligible&&selectedRate!==null){
+    const premium=selectedPrice/100;
+    const points=selectedPrice-100;
+    const revenue=(points/100)*loanAmt;
+    const nper=product.includes('15Y')?180:360;
+    const isAmort=!isIOProd;
+    const piPayment=isIOProd?loanAmt*(selectedRate/100/12):pmt(selectedRate,nper,loanAmt);
+    const tia = parseFloat(document.getElementById('tia').value) || 0;
+    const hoa = parseFloat(document.getElementById('hoa').value) || 0;
+    const pitiaPayment = piPayment + tia + hoa;
+    const inBand=premium>=PASS_FLOOR&&premium<=PASS_CEIL;
+
+    document.getElementById('outRate').textContent=selectedRate+'%';
+    document.getElementById('outRate').style.color = forceRate ? '#C8643A' : '#C8643A';
+    // Update the auto label
+    const autoLabel = document.getElementById('outRate').nextElementSibling;
+    if (autoLabel) autoLabel.textContent = forceRate ? 'override' : 'auto';
+    document.getElementById('outPrice').textContent=selectedPrice.toFixed(3);
+    document.getElementById('outPremium').textContent=premium.toFixed(4);
+    document.getElementById('outPoints').textContent=points.toFixed(3)+' pts';
+    document.getElementById('outRevenue').textContent=fmtCurrency(revenue);
+    document.getElementById('outPayRate').textContent=selectedRate+'%';
+    document.getElementById('outPI').textContent=fmtCurrency(pitiaPayment)+'/mo';
+    document.getElementById('outPI_raw').textContent=fmtCurrency(piPayment)+'/mo';
+    // Update label to PITIA
+    document.querySelector('[data-label="pi"]') && (document.querySelector('[data-label="pi"]').textContent = 'Monthly PITIA');
+
+    const ind=document.getElementById('outIndicator');
+    ind.className='indicator '+(inBand?'pass':'review');
+    ind.textContent=inBand?'✓ PASS':'✗ REVIEW';
+  } else {
+    ['outRate','outPrice','outPremium','outPoints','outRevenue','outPayRate','outPI','outPI_raw']
+      .forEach(id=>document.getElementById(id).textContent='—');
+    const ind=document.getElementById('outIndicator');
+    ind.className='indicator '+(ineligible?'ineligible':'empty');
+    ind.textContent=ineligible?'⛔ INELIGIBLE':'— Enter inputs —';
+  }
+
+  // LLPA rows
+  const llpaContainer=document.getElementById('llpaRows');
+  llpaContainer.innerHTML='';
+  for(const item of llpaItems){
+    const div=document.createElement('div');
+    div.className='llpa-row';
+    const vc=item.inelig?'neg':item.val>0?'pos':item.val<0?'neg':'zero';
+    const vt=item.inelig?'N/A':(item.val>=0?'+':'')+item.val.toFixed(3);
+    div.innerHTML=`<span class="llpa-name">${item.name}</span><span class="llpa-val ${vc}">${vt}</span>`;
+    llpaContainer.appendChild(div);
+  }
+  if(!anyInelig){
+    const tot=document.createElement('div');
+    tot.className='llpa-row llpa-total';
+    const tc=totalLLPA>=0?'pos':'neg';
+    tot.innerHTML=`<span class="llpa-name">Total Adjustment</span><span class="llpa-val ${tc}">${totalLLPA>=0?'+':''}${totalLLPA.toFixed(3)}</span>`;
+    llpaContainer.appendChild(tot);
+  }
+
+  // Eligibility rows
+  const ec=document.getElementById('eligRows');
+  ec.innerHTML='';
+  for(const c of eligChecks){
+    const div=document.createElement('div');
+    div.className='elig-row';
+    div.innerHTML=`<span class="elig-rule">${c.rule}${c.detail?` <span class="elig-detail">(${c.detail})</span>`:''}</span>
+                   <span class="elig-badge ${c.pass?'pass':'fail'}">${c.pass?'PASS':'FAIL'}</span>`;
+    ec.appendChild(div);
+  }
+}
+
+// ─── EST VALUE ───────────────────────────────────────────────────────────────
+
+function updateCalcLoan(){
+  const val=parseFloat(document.getElementById('estValue').value)||0;
+  const ltv=parseFloat(document.getElementById('ltv').value)||0;
+  const hint=document.getElementById('calcLoanHint');
+  if(val>0&&ltv>0){
+    const calc=Math.round(val*(ltv/100));
+    hint.style.display='block';
+    hint.textContent=`→ Calculated Loan: $${calc.toLocaleString()} — tap to apply`;
+    hint.onclick=()=>{
+      document.getElementById('loanAmt').value=calc;
+      hint.style.display='none';
+      calculate();
+    };
+  } else {
+    hint.style.display='none';
+  }
+}
+
+// ─── COPY TO EMAIL ───────────────────────────────────────────────────────────
+
+function copyToEmail(){
+  const g=id=>document.getElementById(id);
+  const text=`CREBRID — LUXURY DSCR QUOTE SUMMARY
+Date: ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
+Rate Sheet: April 29, 2026
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LOAN INPUTS
+  Credit Score:     ${g('fico').value}
+  LTV:              ${g('ltv').value}%
+  Loan Amount:      $${parseInt(g('loanAmt').value).toLocaleString()}
+  DSCR:             ${parseFloat(g('dscr').value).toFixed(2)}x
+  Product:          ${g('product').value}
+  Property Type:    ${g('propType').value}
+  Purpose:          ${g('purpose').value}
+  Investor Type:    ${g('investorType').value}
+  Prepay Period:    ${g('prepay').value} months
+  Experience:       ${g('experience').value}
+  STR:              ${g('str').value}
+  Foreign National: ${g('fn').value}
+  Credit Event:     ${g('creditEvent').value}
+
+PRICING OUTPUT
+  Selected Rate:    ${g('outRate').textContent}
+  Monthly PITIA:    ${g('outPI').textContent}
+  Origination Fee:  ${g('originationFee').value}
+  Status:           ${g('outIndicator').textContent}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Priced By: ${g('pricedBy').value}
+Crebrid LLC · 8343 Douglas Ave, Suite 750 · Dallas, TX 75225
+(972) 525-4777 · www.crebrid.com
+
+*Pricing indicative only. Subject to change. For internal use.*`;
+
+  navigator.clipboard.writeText(text).then(()=>{
+    const toast=document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),2500);
+  });
+}
+
+
+function autoFillLO() {
+  const sel = document.getElementById('loSelect').value;
+  const emailEl = document.getElementById('loEmail');
+  const nameEl = document.getElementById('loName');
+  if (sel) {
+    const [name, email] = sel.split('|');
+    if (emailEl) emailEl.value = email;
+    if (nameEl) nameEl.value = name;
+  } else {
+    if (emailEl) emailEl.value = '';
+    if (nameEl) nameEl.value = '';
+  }
+}
+
+
+function autoFillJLO() {
+  const sel = document.getElementById('jloSelect').value;
+  const emailEl = document.getElementById('jloEmail');
+  const nameEl = document.getElementById('jloName');
+  if (sel) {
+    const [name, email] = sel.split('|');
+    if (emailEl) emailEl.value = email;
+    if (nameEl) nameEl.value = name;
+  } else {
+    if (emailEl) emailEl.value = '';
+    if (nameEl) nameEl.value = '';
+  }
+}
+
+calculate();
+</script>
+</body>
+</html>
