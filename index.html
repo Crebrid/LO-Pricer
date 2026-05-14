@@ -1505,6 +1505,42 @@ function calculate(forceRate) {
     chk('Max LTV — Purchase/R&T', effLtv <= maxP, `Eff. LTV=${effLtv}% / Max=${maxP}%`);
   }
 
+
+  // ── FICO + LTV matrix — null cells in LLPA = INELIGIBLE ──
+
+  // ── FICO minimum eligibility — LO Pricer floor is 660 ──
+  chk('Min FICO 660', fico >= 660, `FICO=${fico} / Min=660`);
+
+  // ── Cash-Out specific FICO + LTV restrictions ──
+  if(purpose === 'Cash-Out Refinance') {
+    // 660-679 FICO: Cash-Out max 70% LTV (null at 75%+ in LLPA grid)
+    if(fico >= 660 && fico <= 679) {
+      chk('FICO 660-679: Cash-Out Max LTV 70%', ltv <= 70, `FICO=${fico} / LTV=${ltv}% / Max=70% Cash-Out`);
+    }
+    // 680-699 FICO: Cash-Out max 70% LTV
+    if(fico >= 680 && fico <= 699) {
+      chk('FICO 680-699: Cash-Out Max LTV 70%', ltv <= 70, `FICO=${fico} / LTV=${ltv}% / Max=70% Cash-Out`);
+    }
+    // 700-719 FICO: Cash-Out max 75% LTV
+    if(fico >= 700 && fico <= 719) {
+      chk('FICO 700-719: Cash-Out Max LTV 75%', ltv <= 75, `FICO=${fico} / LTV=${ltv}% / Max=75% Cash-Out`);
+    }
+    // 5-10 Unit Cash-Out — already capped at 70% by maxC but make explicit
+    if(propType === '5-10 Unit') {
+      chk('5-10 Unit: Cash-Out Max LTV 70%', ltv <= 70, `5-10 Unit Cash-Out / LTV=${ltv}% / Max=70%`);
+    }
+  }
+
+  // ── Non-Warrantable Condo Cash-Out not available ──
+  if(propType === 'Non-Warrantable Condo' && purpose === 'Cash-Out Refinance') {
+    chk('Non-Warrantable Condo: Cash-Out Not Available', false, 'Non-Warrantable Condo ineligible for Cash-Out');
+  }
+
+  // ── 5-10 Unit: FICO minimum 660 ──
+  if(propType === '5-10 Unit') {
+    chk('5-10 Unit: Min FICO 660', fico >= 660, `FICO=${fico} / 5-10 Unit requires min 660`);
+  }
+
   if (isFN) {
     chk('FN max LTV 65%', ltv <= 65, `LTV=${ltv}%`);
     chk('FN Cash-Out not available', purpose !== 'Cash-Out Refinance', purpose);
@@ -1520,7 +1556,7 @@ function calculate(forceRate) {
   const ficoKey = getFicoKey(fico, isFN);
   if (!ficoKey) {
     ineligible = true;
-    eligChecks.push({rule:'Min FICO 640 (or FN)',pass:false,detail:`FICO=${fico}`});
+    eligChecks.push({rule:'Min FICO 660',pass:false,detail:`FICO=${fico}`});
   }
 
   // LLPAs
