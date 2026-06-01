@@ -409,7 +409,7 @@
     <h1>Crebrid LO Pricer</h1>
     <p>Professional Investor · LO Version</p>
   </div>
-  <div class="date-pill">5/18/26</div>
+  <div class="date-pill">5/27/26</div>
 </header>
 
 <div class="container">
@@ -418,14 +418,16 @@
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B6B6B;">Rate Trend (30Y 6% Base)</div>
       <div style="display:flex;gap:8px;">
-        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#CC333318;padding:2px 7px;border-radius:20px;">▼ 0.875 pts since 4/22</span>
-        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#CC333318;padding:2px 7px;border-radius:20px;">▼ 0.125 pts vs last sheet</span>
+        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#CC333318;padding:2px 7px;border-radius:20px;">▼ 0.375 pts since 4/22</span>
+        <span style="font-size:10px;font-weight:700;color:#2D7A5F;background:#2D7A5F18;padding:2px 7px;border-radius:20px;">▲ 0.500 pts vs last sheet</span>
       </div>
     </div>
-    <div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/22/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.625</span></div><div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/29/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div><div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div><div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/18/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.750</span></div>
-    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F0F0F0;font-size:9px;color:#9CA3AF;">
-      Lower base price = rates trend slightly higher for borrowers at same premium floor
-    </div>
+    <div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/22/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.625</span></div>
+    <div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/29/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
+    <div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
+    <div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/18/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.750</span></div>
+    <div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.250</span></div>
+    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F0F0F0;font-size:9px;color:#9CA3AF;">Lower base price = rates trend slightly higher for borrowers at same premium floor</div>
   </div>
 
 
@@ -741,28 +743,14 @@
     </div>
     <div class="field">
       <label>Origination Fee</label>
-      <select id="originationFee" onchange="calculate()">
-        <option value="0.00%">0.00%</option>
-        <option value="0.25%">0.25%</option>
+      <select id="originationFee">
         <option value="0.50%">0.50%</option>
-        <option value="0.75%">0.75%</option>
         <option value="1.00%">1.00%</option>
-        <option value="1.25%">1.25%</option>
         <option value="1.50%">1.50%</option>
-        <option value="1.75%">1.75%</option>
         <option value="2.00%" selected>2.00%</option>
-        <option value="2.25%">2.25%</option>
         <option value="2.50%">2.50%</option>
-        <option value="2.75%">2.75%</option>
         <option value="3.00%">3.00%</option>
-        <option value="3.25%">3.25%</option>
         <option value="3.50%">3.50%</option>
-        <option value="3.75%">3.75%</option>
-        <option value="4.00%">4.00%</option>
-        <option value="4.25%">4.25%</option>
-        <option value="4.50%">4.50%</option>
-        <option value="4.75%">4.75%</option>
-        <option value="5.00%">5.00%</option>
       </select>
     </div>
   </div>
@@ -796,7 +784,7 @@
         </div>
         <div style="text-align:right;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6B6B6B;">Rate Sheet</div>
-          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">May 18, 2026</div>
+          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">April 29, 2026</div>
         </div>
       </div>
     </div>
@@ -883,6 +871,7 @@
         <div>
           <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8643A;margin-bottom:3px;">Prepared By</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-pricedby">—</div>
+          <div style="font-size:11px;color:#6B6B6B;font-weight:500;margin-top:1px;" id="ts-pricedby-email"></div>
         </div>
       </div>
     </div>
@@ -1044,7 +1033,6 @@
               <div style="font-size:11px;color:#065F46;">Loan Amount − Payoff &amp; Closing Costs =</div>
             </div>
             <div style="font-size:22px;font-weight:800;color:#065F46;" id="ts-cc-cashback">—</div>
-              <div id="ts-cc-cashback-note" style="display:none;font-size:9px;color:#065F46;font-weight:600;margin-top:3px;letter-spacing:0.3px;"></div>
           </div>
         </div>
       </div>
@@ -1096,159 +1084,133 @@
 function generateTermSheet() {
   const g = id => document.getElementById(id);
 
-  // Populate term sheet fields
-  const borrower = g('borrowerName').value || 'Borrower Name Not Provided';
-  const addr = g('propertyAddress').value || '';
-  const city = g('propertyCity').value || '';
+  const borrower = g('borrowerName') && g('borrowerName').value ? g('borrowerName').value : 'Borrower Name Not Provided';
+  const addr     = g('propertyAddress') && g('propertyAddress').value ? g('propertyAddress').value : '';
+  const city     = g('propertyCity') && g('propertyCity').value ? g('propertyCity').value : '';
   const fullAddr = [addr, city].filter(Boolean).join(', ') || 'Property Address Not Provided';
 
-  g('ts-date').textContent = 'Prepared: ' + new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'});
-  g('ts-borrower').textContent = borrower;
-  g('ts-address').textContent = fullAddr;
-  g('ts-rate').textContent = g('outRate').textContent;
-  g('ts-product').textContent = g('product').value;
-  g('ts-loanamt').textContent = '$' + parseInt(g('loanAmt').value).toLocaleString();
-  g('ts-ltv').textContent = g('ltv').value + '%';
-  g('ts-dscr').textContent = parseFloat(g('dscr').value).toFixed(2) + 'x';
-  if(g('ts-purpose')) g('ts-purpose').textContent = g('purpose').value;
-  g('ts-pi').textContent = g('outPI').textContent;
-  if(g('ts-pi-raw')) g('ts-pi-raw').textContent = g('outPI_raw') ? g('outPI_raw').textContent : '—';
-  g('ts-prepay').textContent = g('prepay').value + ' Months';
-  g('ts-fico').textContent = g('fico').value;
+  if(g('ts-date'))     g('ts-date').textContent     = 'Prepared: ' + new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  if(g('ts-borrower')) g('ts-borrower').textContent = borrower;
+  if(g('ts-address'))  g('ts-address').textContent  = fullAddr;
+  if(g('ts-rate'))     g('ts-rate').textContent     = g('outRate') ? g('outRate').textContent : '—';
+  if(g('ts-product'))  g('ts-product').textContent  = g('product') ? g('product').value : '—';
+  if(g('ts-purpose'))  g('ts-purpose').textContent  = g('purpose') ? g('purpose').value : '';
+  if(g('ts-loanamt'))  g('ts-loanamt').textContent  = '$' + parseInt(g('loanAmt') ? g('loanAmt').value : 0).toLocaleString();
+  if(g('ts-ltv'))      g('ts-ltv').textContent      = (g('ltv') ? g('ltv').value : '—') + '%';
+  if(g('ts-dscr'))     g('ts-dscr').textContent     = parseFloat(g('dscr') ? g('dscr').value : 0).toFixed(2) + 'x';
+  if(g('ts-pi'))       g('ts-pi').textContent       = g('outPI') ? g('outPI').textContent : '—';
+  if(g('ts-pi-raw'))   g('ts-pi-raw').textContent   = g('outPI_raw') ? g('outPI_raw').textContent : '—';
+  if(g('ts-prepay'))   g('ts-prepay').textContent   = (g('prepay') ? g('prepay').value : '—') + ' Months';
+  if(g('ts-fico'))     g('ts-fico').textContent     = g('fico') ? g('fico').value : '—';
+  if(g('ts-proptype')) g('ts-proptype').textContent = g('propType') ? g('propType').value : '—';
+  if(g('ts-orig-lo'))  g('ts-orig-lo').textContent  = g('originationFee') ? g('originationFee').value : '—';
+  if(g('ts-orig-lo-proc')) g('ts-orig-lo-proc').textContent = '$1,999';
+
+
   const rentVal = parseFloat(g('rent') && g('rent').value ? g('rent').value : 0) || 0;
   if(g('ts-rent')) g('ts-rent').textContent = rentVal > 0 ? '$' + Math.round(rentVal).toLocaleString() + '/mo' : 'Not provided';
-  if(g('ts-proptype')) g('ts-proptype').textContent = g('propType') && g('propType').value ? g('propType').value : '—';
-  if(g('ts-orig')) g('ts-orig').textContent = g('originationFee').value;
-  if(g('ts-orig-proc')) g('ts-orig-proc').textContent = '$1,999';
-  if(g('ts-orig-lo-proc')) g('ts-orig-lo-proc').textContent = '$1,999';
-  if(g('ts-orig-lo')) g('ts-orig-lo').textContent = g('originationFee').value;
 
-  // Est Value — only show if filled in
-  const estVal = parseFloat(g('estValue').value);
-  if (estVal > 0) {
-    g('ts-estvalue-cell').style.display = 'block';
-    g('ts-estvalue').textContent = '$' + estVal.toLocaleString();
-  } else {
-    g('ts-estvalue-cell').style.display = 'none';
-  }
-  if(g('ts-pricedby')) g('ts-pricedby').textContent = g('pricedBy').value;
-  if(g('ts-loname')) g('ts-loname').textContent = g('loName') && g('loName').value ? g('loName').value : '—';
-  if(g('ts-loname-grid')) g('ts-loname-grid').textContent = g('loName') && g('loName').value ? g('loName').value : '—';
-  if(g('ts-loemail-grid')) g('ts-loemail-grid').textContent = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
-  if(g('ts-lophone')) g('ts-lophone').textContent = (g('loPhone') && g('loPhone').value) ? g('loPhone').value : '';
-  if(g('ts-loemail')) g('ts-loemail').textContent = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
+  const estVal = parseFloat(g('estValue') ? g('estValue').value : 0);
+  if(g('ts-estvalue-cell')) g('ts-estvalue-cell').style.display = estVal > 0 ? 'block' : 'none';
+  if(g('ts-estvalue') && estVal > 0) g('ts-estvalue').textContent = '$' + estVal.toLocaleString();
+
+  if(g('ts-pricedby')) g('ts-pricedby').textContent = g('pricedBy') && g('pricedBy').value ? g('pricedBy').value : '—';
+  if(g('ts-pricedby-email')) g('ts-pricedby-email').textContent = g('pricedByEmail') && g('pricedByEmail').value ? g('pricedByEmail').value : '';
+
+  // LO info
   const brokerInput = g('brokerNameInput') && g('brokerNameInput').value ? g('brokerNameInput').value : '';
-  const jloLabel = g('ts-jlo-label');
-  const jloN = brokerInput || (g('jloName') && g('jloName').value ? g('jloName').value : '');
-  const jloE = !brokerInput && g('jloEmail') && g('jloEmail').value ? g('jloEmail').value : '';
-  if(g('ts-jlo-section')) g('ts-jlo-section').style.display = jloN ? 'table-row' : 'none';
-  if(g('ts-jlo-grid')) g('ts-jlo-grid').style.display = jloN ? 'block' : 'none';
-  if(g('ts-jloname-grid')) g('ts-jloname-grid').textContent = jloN;
-  if(jloLabel) jloLabel.textContent = brokerInput ? 'Broker' : 'Junior LO';
-  if(g('ts-jloname')) g('ts-jloname').textContent = jloN;
-  if(g('ts-jloemail')) g('ts-jloemail').textContent = jloE;
+  const loLabel = g('ts-lo-label');
+  if(brokerInput) {
+    if(loLabel) loLabel.textContent = 'Broker';
+    if(g('ts-loname-grid')) g('ts-loname-grid').textContent = brokerInput;
+    if(g('ts-loemail-grid')) g('ts-loemail-grid').textContent = '';
+    if(g('ts-jlo-grid')) g('ts-jlo-grid').style.display = 'none';
+  } else {
+    if(loLabel) loLabel.textContent = 'Loan Officer';
+    const loN = g('loName') && g('loName').value ? g('loName').value : '—';
+    const loE = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
+    if(g('ts-loname-grid')) g('ts-loname-grid').textContent = loN;
+    if(g('ts-loemail-grid')) g('ts-loemail-grid').textContent = loE;
+    const jloN = g('jloName') && g('jloName').value ? g('jloName').value : '';
+    if(g('ts-jlo-grid')) g('ts-jlo-grid').style.display = jloN ? 'block' : 'none';
+    if(g('ts-jloname-grid')) g('ts-jloname-grid').textContent = jloN;
+  }
 
-  // Notes
   const notesVal = g('quoteNotes') && g('quoteNotes').value ? g('quoteNotes').value : '';
   if(g('ts-notes-section')) g('ts-notes-section').style.display = notesVal ? 'block' : 'none';
   if(g('ts-notes')) g('ts-notes').textContent = notesVal;
 
-  // ── PAGE 2 — Closing Cost Estimate ──
+  // ── PAGE 2 ──
   const g2 = id => document.getElementById(id);
-
-  const loanAmt2   = parseFloat(g('loanAmt').value) || 0;
-  const estValue2  = parseFloat(g('estValue') && g('estValue').value || 0) || 0;
-  const pitia2     = parseFloat((g('outPI').textContent || '').replace(/[^\d.]/g,'')) || 0;
-  const origPct    = parseFloat((g('originationFee').value || '0').replace('%','')) / 100;
-  const payoff     = parseFloat(g('loanPayoff') && g('loanPayoff').value || 0) || 0;
-  const annTaxes   = (parseFloat(g('monthlyTaxes') && g('monthlyTaxes').value || 0) || 0) * 12;
-  const annIns     = (parseFloat(g('monthlyInsurance') && g('monthlyInsurance').value || 0) || 0) * 12;
-  const purpose2   = g('purpose').value;
-  const isPurchase = purpose2 === 'Purchase';
-
-  const origAmt    = loanAmt2 * origPct;
-  const procAmt    = 1999;
-  const titleAmt   = loanAmt2 * 0.01;
-  const insAmt     = annIns > 0 ? annIns : loanAmt2 * 0.01;
-  const downPmt    = isPurchase && estValue2 > loanAmt2 ? estValue2 - loanAmt2 : 0;
+  const loanAmt2    = parseFloat(g('loanAmt') ? g('loanAmt').value : 0) || 0;
+  const estValue2   = parseFloat(g('estValue') && g('estValue').value ? g('estValue').value : 0) || 0;
+  const pitia2      = parseFloat((g('outPI') ? g('outPI').textContent : '0').replace(/[^\d.]/g,'')) || 0;
+  const origPct     = parseFloat((g('originationFee') ? g('originationFee').value : '0').replace('%','')) / 100;
+  const payoff      = parseFloat(g('loanPayoff') && g('loanPayoff').value ? g('loanPayoff').value : 0) || 0;
+  const annTaxes    = (parseFloat(g('monthlyTaxes') && g('monthlyTaxes').value ? g('monthlyTaxes').value : 0) || 0) * 12;
+  const annIns      = (parseFloat(g('monthlyInsurance') && g('monthlyInsurance').value ? g('monthlyInsurance').value : 0) || 0) * 12;
+  const purpose2    = g('purpose') ? g('purpose').value : '';
+  const isPurchase  = purpose2 === 'Purchase';
+  const origAmt     = loanAmt2 * origPct;
+  const procAmt     = 1999;
+  const titleAmt    = loanAmt2 * 0.01;
+  const insAmt      = annIns > 0 ? annIns : loanAmt2 * 0.01;
+  const downPmt     = isPurchase && estValue2 > loanAmt2 ? estValue2 - loanAmt2 : 0;
   const reservesAmt = pitia2 * 3;
+  const fmt2        = n => '$' + Math.round(n).toLocaleString();
 
-  const fmt2 = n => '$' + Math.round(n).toLocaleString();
-
-  // Populate summary
-  if(g2('ts-cc-date'))     g2('ts-cc-date').textContent     = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  if(g2('ts-cc-borrower')) g2('ts-cc-borrower').textContent = g('borrowerName') && g('borrowerName').value ? g('borrowerName').value + ' · ' + (g('propertyAddress') && g('propertyAddress').value ? g('propertyAddress').value : '') : '';
-  if(g2('ts-cc-loanamt'))  g2('ts-cc-loanamt').textContent  = fmt2(loanAmt2);
-  if(g2('ts-cc-rate'))     g2('ts-cc-rate').textContent     = g('outRate').textContent;
-  if(g2('ts-cc-pitia'))    g2('ts-cc-pitia').textContent    = g('outPI').textContent;
-  if(g2('ts-cc-pitia2'))   g2('ts-cc-pitia2').textContent   = g('outPI').textContent;
-
-  // Down payment row — purchases only
-  if(g2('ts-cc-dp-row')) g2('ts-cc-dp-row').style.display = isPurchase && downPmt > 0 ? 'table-row' : 'none';
-  if(g2('ts-cc-dp'))     g2('ts-cc-dp').textContent = fmt2(downPmt);
-
-  // Closing costs
+  if(g2('ts-cc-date'))      g2('ts-cc-date').textContent      = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  if(g2('ts-cc-borrower'))  g2('ts-cc-borrower').textContent  = borrower;
+  if(g2('ts-cc-loanamt'))   g2('ts-cc-loanamt').textContent   = fmt2(loanAmt2);
+  if(g2('ts-cc-rate'))      g2('ts-cc-rate').textContent      = g('outRate') ? g('outRate').textContent : '—';
+  if(g2('ts-cc-pitia'))     g2('ts-cc-pitia').textContent     = g('outPI') ? g('outPI').textContent : '—';
+  if(g2('ts-cc-pitia2'))    g2('ts-cc-pitia2').textContent    = g('outPI') ? g('outPI').textContent : '—';
+  if(g2('ts-cc-dp-row'))    g2('ts-cc-dp-row').style.display  = isPurchase && downPmt > 0 ? 'table-row' : 'none';
+  if(g2('ts-cc-dp'))        g2('ts-cc-dp').textContent        = fmt2(downPmt);
   if(g2('ts-cc-orig'))      g2('ts-cc-orig').textContent      = fmt2(origAmt);
   if(g2('ts-cc-orig-pct'))  g2('ts-cc-orig-pct').textContent  = (origPct*100).toFixed(2) + '%';
   if(g2('ts-cc-title'))     g2('ts-cc-title').textContent     = fmt2(titleAmt);
   if(g2('ts-cc-insurance')) g2('ts-cc-insurance').textContent = fmt2(insAmt);
   if(g2('ts-cc-taxes'))     g2('ts-cc-taxes').textContent     = annTaxes > 0 ? fmt2(annTaxes) : 'Not provided';
   if(g2('ts-cc-reserves'))  g2('ts-cc-reserves').textContent  = fmt2(reservesAmt);
-
-  // Payoff row — refi only
   if(payoff > 0 && !isPurchase) {
     if(g2('ts-cc-payoff-row')) g2('ts-cc-payoff-row').style.display = 'table-row';
-    if(g2('ts-cc-payoff'))     g2('ts-cc-payoff').textContent = fmt2(payoff);
+    if(g2('ts-cc-payoff'))     g2('ts-cc-payoff').textContent        = fmt2(payoff);
   } else {
     if(g2('ts-cc-payoff-row')) g2('ts-cc-payoff-row').style.display = 'none';
   }
-
-  // Total closing costs (excl down payment and payoff)
   const closingCostsOnly = origAmt + procAmt + titleAmt + insAmt + annTaxes;
-
-  // Total row includes payoff for refi, down payment for purchase
-  const totalCC = isPurchase
-    ? downPmt + closingCostsOnly
-    : closingCostsOnly + payoff;
+  const totalCC = isPurchase ? downPmt + closingCostsOnly : closingCostsOnly + payoff;
   if(g2('ts-cc-total')) g2('ts-cc-total').textContent = fmt2(totalCC);
 
-  // Net Position
   if(isPurchase) {
-    // Purchase: Cash From Borrower = Down Payment + Closing Costs
     const cashFromBorrower = downPmt + closingCostsOnly;
     if(g2('ts-cc-cashclose-section')) g2('ts-cc-cashclose-section').style.display = 'block';
     if(g2('ts-cc-cashback-section'))  g2('ts-cc-cashback-section').style.display  = 'none';
-    if(g2('ts-cc-close-label'))       g2('ts-cc-close-label').textContent = 'Estimated Cash From Borrower';
-    if(g2('ts-cc-close-sub'))         g2('ts-cc-close-sub').textContent   = 'Down Payment + Closing Costs =';
-    if(g2('ts-cc-cashclose'))         g2('ts-cc-cashclose').textContent   = fmt2(cashFromBorrower);
-    // Liquid assets = 3-month reserves + cash from borrower
-    if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display = 'block';
-    if(g2('ts-cc-liquid'))            g2('ts-cc-liquid').textContent = fmt2(reservesAmt + cashFromBorrower);
+    if(g2('ts-cc-close-label'))       g2('ts-cc-close-label').textContent          = 'Estimated Cash From Borrower';
+    if(g2('ts-cc-close-sub'))         g2('ts-cc-close-sub').textContent            = 'Down Payment + Closing Costs =';
+    if(g2('ts-cc-cashclose'))         g2('ts-cc-cashclose').textContent            = fmt2(cashFromBorrower);
+    if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display     = 'block';
+    if(g2('ts-cc-liquid'))            g2('ts-cc-liquid').textContent               = fmt2(reservesAmt + cashFromBorrower);
   } else {
-    // Refi: net position
+    const isRateTerm     = purpose2 === 'Rate/Term Refinance';
+    const maxCashBack    = isRateTerm ? loanAmt2 * 0.02 : Infinity;
     const netPositionRaw = loanAmt2 - payoff - closingCostsOnly;
-    // Rate/Term: cap cash back at 2% of loan amount per Luxury guidelines
-    const isRateTerm = purpose2 === 'Rate/Term Refinance';
-    const maxCashBack = isRateTerm ? loanAmt2 * 0.02 : Infinity;
-    const netPosition = netPositionRaw >= 0 ? Math.min(netPositionRaw, maxCashBack) : netPositionRaw;
+    const netPosition    = netPositionRaw >= 0 ? Math.min(netPositionRaw, maxCashBack) : netPositionRaw;
     if(netPositionRaw >= 0) {
-      // Cash back to borrower
       if(g2('ts-cc-cashback-section'))  g2('ts-cc-cashback-section').style.display  = 'block';
       if(g2('ts-cc-cashclose-section')) g2('ts-cc-cashclose-section').style.display = 'none';
-      if(g2('ts-cc-cashback'))          g2('ts-cc-cashback').textContent = fmt2(netPosition);
-      if(g2('ts-cc-cashback-note')) { g2('ts-cc-cashback-note').textContent = isRateTerm ? '2% Cash-Back Limit Per Crebrid Guidelines' : ''; g2('ts-cc-cashback-note').style.display = isRateTerm ? 'block' : 'none'; }
-      // Liquid assets = 3-month reserves only (cash back covers closing)
+      if(g2('ts-cc-cashback'))          g2('ts-cc-cashback').textContent             = fmt2(netPosition);
+      if(g2('ts-cc-cashback-note'))     { g2('ts-cc-cashback-note').textContent = isRateTerm ? '2% Cash-Back Limit Per Crebrid Guidelines' : ''; g2('ts-cc-cashback-note').style.display = isRateTerm ? 'block' : 'none'; }
       if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display = 'none';
     } else {
-      // Cash to close
       if(g2('ts-cc-cashclose-section')) g2('ts-cc-cashclose-section').style.display = 'block';
       if(g2('ts-cc-cashback-section'))  g2('ts-cc-cashback-section').style.display  = 'none';
-      if(g2('ts-cc-close-label'))       g2('ts-cc-close-label').textContent = 'Estimated Cash to Close';
-      if(g2('ts-cc-close-sub'))         g2('ts-cc-close-sub').textContent   = 'Loan Amount − Payoff &amp; Closing Costs =';
-      if(g2('ts-cc-cashclose'))         g2('ts-cc-cashclose').textContent   = fmt2(Math.abs(netPosition));
-      // Liquid assets = 3-month reserves + cash to close
-      if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display = 'block';
-      if(g2('ts-cc-liquid'))            g2('ts-cc-liquid').textContent = fmt2(reservesAmt + Math.abs(netPosition));
+      if(g2('ts-cc-close-label'))       g2('ts-cc-close-label').textContent          = 'Estimated Cash to Close';
+      if(g2('ts-cc-close-sub'))         g2('ts-cc-close-sub').textContent            = 'Loan Amount − Payoff & Closing Costs =';
+      if(g2('ts-cc-cashclose'))         g2('ts-cc-cashclose').textContent            = fmt2(Math.abs(netPosition));
+      if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display     = 'block';
+      if(g2('ts-cc-liquid'))            g2('ts-cc-liquid').textContent               = fmt2(reservesAmt + Math.abs(netPosition));
     }
   }
 
@@ -1283,9 +1245,9 @@ function printTermSheet() {
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
-const RATES_30Y = [[6,97.75],[6.125,98.5],[6.25,99.25],[6.375,100.0],[6.5,100.75],[6.625,101.5],[6.75,102.25],[6.875,103.0],[7,103.65625],[7.125,104.21875],[7.25,104.78125],[7.375,105.25],[7.5,105.625],[7.625,106.0],[7.75,106.3125],[7.875,106.5625],[8,106.8125],[8.125,107.0625],[8.25,107.3125],[8.375,107.5625],[8.5,107.8125],[8.625,108.0625],[8.75,108.3125],[8.875,108.5625],[9,108.8125],[9.125,109.0625],[9.25,109.3125],[9.375,109.5625],[9.5,109.8125],[9.625,110.0625],[9.75,110.3125],[9.875,110.5625],[10,110.8125],[10.125,111.0625],[10.25,111.3125]];
+const RATES_30Y = [[6,98.25],[6.125,99.0],[6.25,99.75],[6.375,100.5],[6.5,101.25],[6.625,102.0],[6.75,102.75],[6.875,103.5],[7,104.0625],[7.125,104.625],[7.25,105.1875],[7.375,105.5625],[7.5,105.9375],[7.625,106.3125],[7.75,106.5625],[7.875,106.8125],[8,107.0625],[8.125,107.3125],[8.25,107.5625],[8.375,107.8125],[8.5,108.0625],[8.625,108.3125],[8.75,108.5625],[8.875,108.8125],[9,109.0625],[9.125,109.3125],[9.25,109.5625],[9.375,109.8125],[9.5,110.0625],[9.625,110.3125],[9.75,110.5625],[9.875,110.8125],[10,111.0625],[10.125,111.3125],[10.25,111.5625]];
 
-const RATES_ARM = [[6,98.25],[6.125,99.0],[6.25,99.75],[6.375,100.5],[6.5,101.25],[6.625,102.0],[6.75,102.75],[6.875,103.5],[7,104.10625],[7.125,104.61875],[7.25,105.13125],[7.375,105.55],[7.5,105.875],[7.625,106.2],[7.75,106.5125],[7.875,106.7625],[8,107.0125],[8.125,107.2625],[8.25,107.5125],[8.375,107.7625],[8.5,108.0125],[8.625,108.2625],[8.75,108.5125],[8.875,108.7625],[9,109.0125],[9.125,109.2625],[9.25,109.5125],[9.375,109.7625],[9.5,110.0125],[9.625,110.2625],[9.75,110.5125],[9.875,110.7625],[10,111.0125],[10.125,111.2625],[10.25,111.5125]];
+const RATES_ARM = [[6,98.75],[6.125,99.5],[6.25,100.25],[6.375,101.0],[6.5,101.75],[6.625,102.5],[6.75,103.25],[6.875,104.0],[7,104.5125],[7.125,105.025],[7.25,105.5375],[7.375,105.8625],[7.5,106.1875],[7.625,106.5125],[7.75,106.7625],[7.875,107.0125],[8,107.2625],[8.125,107.5125],[8.25,107.7625],[8.375,108.0125],[8.5,108.2625],[8.625,108.5125],[8.75,108.7625],[8.875,109.0125],[9,109.2625],[9.125,109.5125],[9.25,109.7625],[9.375,110.0125],[9.5,110.2625],[9.625,110.5125],[9.75,110.7625],[9.875,111.0125],[10,111.2625],[10.125,111.5125],[10.25,111.7625]];
 
 const LTV_COLS = [0.50,0.55,0.60,0.65,0.70,0.75,0.80];
 
@@ -1421,8 +1383,13 @@ function calcDSCR() {
     return;
   }
 
-  const rateStr = document.getElementById('outRate').textContent.replace('%','');
-  const rate = parseFloat(rateStr) || 7;
+  let rate;
+  if (rateOverrideActive) {
+    rate = parseFloat(document.getElementById('rateOverride').value) || 7;
+  } else {
+    const rateStr = document.getElementById('outRate').textContent.replace('%','');
+    rate = parseFloat(rateStr) || 7;
+  }
   const product = document.getElementById('product').value;
   const nper = product.includes('15Y') ? 180 : 360;
   const pi = isIO(product) ? loan*(rate/100/12) : pmt(rate, nper, loan);
@@ -1444,7 +1411,29 @@ function applyRateOverride() {
   if (!isNaN(val) && val >= 6 && val <= 10.25) {
     rateOverrideActive = true;
     document.getElementById('clearOverrideBtn').style.display = 'inline';
-    document.getElementById('overrideNote').textContent = '⚠ Manual rate override active';
+
+    // Recalculate DSCR using override rate
+    const rent    = parseFloat(document.getElementById('rent').value) || 0;
+    const tia     = parseFloat(document.getElementById('tia').value)  || 0;
+    const hoa     = parseFloat(document.getElementById('hoa').value)  || 0;
+    const loan    = parseFloat(document.getElementById('loanAmt').value) || 0;
+    const product = document.getElementById('product').value;
+    const nper    = product.includes('15Y') ? 180 : 360;
+    const pi      = (typeof isIO === 'function' && isIO(product))
+                    ? loan * (val / 100 / 12)
+                    : (typeof pmt === 'function' ? pmt(val, nper, loan) : loan * (val / 100 / 12));
+    const pitia   = pi + tia + hoa;
+
+    const noteEl  = document.getElementById('overrideNote');
+    if (rent > 0 && pitia > 0) {
+      const dscrVal   = rent / pitia;
+      document.getElementById('dscr').value = dscrVal.toFixed(4);
+      const dscrColor = dscrVal >= 1.15 ? '#2D7A5F' : dscrVal >= 1.0 ? '#B8860B' : '#C0392B';
+      if(noteEl) noteEl.innerHTML = '⚠ Override @ ' + val + '% → DSCR: <span style="font-weight:700;color:' + dscrColor + '">' + dscrVal.toFixed(2) + 'x</span>';
+    } else {
+      if(noteEl) noteEl.textContent = '⚠ Override @ ' + val + '% active — enter rent to see DSCR';
+    }
+
     calculateWithOverride(val);
   }
 }
@@ -1522,45 +1511,28 @@ function calculate(forceRate) {
     chk('Max LTV — Purchase/R&T', effLtv <= maxP, `Eff. LTV=${effLtv}% / Max=${maxP}%`);
   }
 
-
-  // ── FICO + LTV matrix — null cells in LLPA = INELIGIBLE ──
-
-  // ── FICO minimum eligibility — LO Pricer floor is 660 ──
+  // ── FICO minimum (LO pricer floor 660) ──
   chk('Min FICO 660', fico >= 660, `FICO=${fico} / Min=660`);
 
-  // ── Cash-Out specific FICO + LTV restrictions ──
+  // ── FICO + LTV matrix ──
+  if(fico >= 660 && fico <= 679) chk('FICO 660-679: Max LTV 75%', ltv <= 75, `FICO=${fico} / LTV=${ltv}% / Max=75%`);
+
+  // ── Cash-Out FICO restrictions ──
   if(purpose === 'Cash-Out Refinance') {
-    // 660-679 FICO: Cash-Out max 70% LTV (null at 75%+ in LLPA grid)
-    if(fico >= 660 && fico <= 679) {
-      chk('FICO 660-679: Cash-Out Max LTV 70%', ltv <= 70, `FICO=${fico} / LTV=${ltv}% / Max=70% Cash-Out`);
-    }
-    // 680-699 FICO: Cash-Out max 70% LTV
-    if(fico >= 680 && fico <= 699) {
-      chk('FICO 680-699: Cash-Out Max LTV 70%', ltv <= 70, `FICO=${fico} / LTV=${ltv}% / Max=70% Cash-Out`);
-    }
-    // 700-719 FICO: Cash-Out max 75% LTV
-    if(fico >= 700 && fico <= 719) {
-      chk('FICO 700-719: Cash-Out Max LTV 75%', ltv <= 75, `FICO=${fico} / LTV=${ltv}% / Max=75% Cash-Out`);
-    }
-    // 5-10 Unit Cash-Out — already capped at 70% by maxC but make explicit
-    if(propType === '5-10 Unit') {
-      chk('5-10 Unit: Cash-Out Max LTV 70%', ltv <= 70, `5-10 Unit Cash-Out / LTV=${ltv}% / Max=70%`);
-    }
+    if(fico >= 660 && fico <= 679) chk('FICO 660-679: Cash-Out Max LTV 70%', ltv <= 70, `FICO=${fico} / LTV=${ltv}% / Max=70% Cash-Out`);
+    if(fico >= 680 && fico <= 699) chk('FICO 680-699: Cash-Out Max LTV 70%', ltv <= 70, `FICO=${fico} / LTV=${ltv}% / Max=70% Cash-Out`);
+    if(fico >= 700 && fico <= 719) chk('FICO 700-719: Cash-Out Max LTV 75%', ltv <= 75, `FICO=${fico} / LTV=${ltv}% / Max=75% Cash-Out`);
+    if(propType === '5-10 Unit')   chk('5-10 Unit: Cash-Out Max LTV 70%', ltv <= 70, `5-10 Unit / LTV=${ltv}% / Max=70%`);
   }
-
-  // ── Non-Warrantable Condo Cash-Out not available ──
-  if(propType === 'Non-Warrantable Condo' && purpose === 'Cash-Out Refinance') {
-    chk('Non-Warrantable Condo: Cash-Out Not Available', false, 'Non-Warrantable Condo ineligible for Cash-Out');
-  }
-
-  // ── 5-10 Unit: FICO minimum 660 ──
-  if(propType === '5-10 Unit') {
-    chk('5-10 Unit: Min FICO 660', fico >= 660, `FICO=${fico} / 5-10 Unit requires min 660`);
-  }
+  if(propType === 'Non-Warrantable Condo' && purpose === 'Cash-Out Refinance') chk('Non-Warrantable Condo: Cash-Out Not Available', false, 'Ineligible for Cash-Out');
+  if(propType === '5-10 Unit') chk('5-10 Unit: Min FICO 660', fico >= 660, `FICO=${fico} / 5-10 Unit requires min 660`);
 
   if (isFN) {
-    chk('FN max LTV 65%', ltv <= 65, `LTV=${ltv}%`);
-    chk('FN Cash-Out not available', purpose !== 'Cash-Out Refinance', purpose);
+    if (purpose === 'Cash-Out Refinance') {
+      chk('FN Cash-Out: Max LTV 50%', ltv <= 50, `LTV=${ltv}% / FN Cash-Out max=50%`);
+    } else {
+      chk('FN Purchase/R&T: Max LTV 65%', ltv <= 65, `LTV=${ltv}% / FN max=65%`);
+    }
   }
 
   if (exp0) chk('Experience 0: eff. LTV reduced -5%', true, `Eff. LTV=${effLtv}%`);
@@ -1573,7 +1545,7 @@ function calculate(forceRate) {
   const ficoKey = getFicoKey(fico, isFN);
   if (!ficoKey) {
     ineligible = true;
-    eligChecks.push({rule:'Min FICO 660',pass:false,detail:`FICO=${fico}`});
+    eligChecks.push({rule:'Min FICO 640 (or FN)',pass:false,detail:`FICO=${fico}`});
   }
 
   // LLPAs
@@ -1772,35 +1744,36 @@ function updateCalcLoan(){
 
 function copyToEmail() {
   const g = id => document.getElementById(id);
-  const fmt = n => isNaN(n) ? '—' : '$' + Math.round(parseFloat(n)).toLocaleString();
+  const fmt = n => isNaN(parseFloat(n)) ? '—' : '$' + Math.round(parseFloat(n)).toLocaleString();
 
-  // Page 1 — Loan Terms
+  // ── Page 1 — Loan & Borrower Details ──
   const borrower  = g('borrowerName') && g('borrowerName').value ? g('borrowerName').value : 'Not provided';
-  const address   = [g('propertyAddress') && g('propertyAddress').value, g('propertyCity') && g('propertyCity').value].filter(Boolean).join(', ') || 'Not provided';
-  const rate      = g('outRate') ? g('outRate').textContent : '—';
-  const product   = g('product') ? g('product').value : '—';
-  const loanAmt   = g('loanAmt') ? '$' + parseInt(g('loanAmt').value || 0).toLocaleString() : '—';
-  const ltv       = g('ltv') ? g('ltv').value + '%' : '—';
-  const dscr      = g('dscr') ? parseFloat(g('dscr').value || 0).toFixed(2) + 'x' : '—';
-  const pitia     = g('outPI') ? g('outPI').textContent : '—';
-  const pi        = g('outPI') ? g('outPI').textContent : '—';
-  const prepay    = g('prepay') ? g('prepay').value + ' Months' : '—';
-  const fico      = g('fico') ? g('fico').value : '—';
-  const orig      = g('originationFee') ? g('originationFee').value : '—';
-  const rent      = g('rent') && g('rent').value && parseFloat(g('rent').value) > 0 ? '$' + parseFloat(g('rent').value).toLocaleString() + '/mo' : 'Not provided';
-  const purpose   = g('purpose') ? g('purpose').value : '—';
-  const propType  = g('propType') ? g('propType').value : '—';
+  const addr      = [g('propertyAddress') && g('propertyAddress').value, g('propertyCity') && g('propertyCity').value].filter(Boolean).join(', ') || 'Not provided';
+  const loN       = g('loName') && g('loName').value ? g('loName').value : '—';
+  const loE       = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
+  const jloN      = g('jloName') && g('jloName').value ? g('jloName').value : '';
+  const jloE      = g('jloEmail') && g('jloEmail').value ? g('jloEmail').value : '';
+  const broker    = g('brokerNameInput') && g('brokerNameInput').value ? g('brokerNameInput').value : '';
+  const pricedBy  = g('pricedBy') && g('pricedBy').value ? g('pricedBy').value : '—';
+  const pricedByE = g('pricedByEmail') && g('pricedByEmail').value ? g('pricedByEmail').value : '';
   const notes     = g('quoteNotes') && g('quoteNotes').value ? g('quoteNotes').value : '';
+  const estVal    = parseFloat(g('estValue') && g('estValue').value ? g('estValue').value : 0) || 0;
+  const rentVal   = parseFloat(g('rent') && g('rent').value ? g('rent').value : 0) || 0;
+  const taxesVal  = parseFloat(g('monthlyTaxes') && g('monthlyTaxes').value ? g('monthlyTaxes').value : 0) || 0;
+  const insVal    = parseFloat(g('monthlyInsurance') && g('monthlyInsurance').value ? g('monthlyInsurance').value : 0) || 0;
+  const hoaVal    = parseFloat(g('hoa') && g('hoa').value ? g('hoa').value : 0) || 0;
+  const purpose   = g('purpose') ? g('purpose').value : '—';
 
-  // Page 2 — Closing Costs
+  // ── Page 2 — Closing Costs ──
   const loanAmt2    = parseFloat(g('loanAmt') ? g('loanAmt').value : 0) || 0;
   const estValue2   = parseFloat(g('estValue') && g('estValue').value ? g('estValue').value : 0) || 0;
   const pitia2      = parseFloat((g('outPI') ? g('outPI').textContent : '0').replace(/[^\d.]/g,'')) || 0;
   const origPct     = parseFloat((g('originationFee') ? g('originationFee').value : '0').replace('%','')) / 100;
   const payoff      = parseFloat(g('loanPayoff') && g('loanPayoff').value ? g('loanPayoff').value : 0) || 0;
-  const annTaxes    = (parseFloat(g('monthlyTaxes') && g('monthlyTaxes').value ? g('monthlyTaxes').value : 0) || 0) * 12;
-  const annIns      = (parseFloat(g('monthlyInsurance') && g('monthlyInsurance').value ? g('monthlyInsurance').value : 0) || 0) * 12;
+  const annTaxes    = taxesVal * 12;
+  const annIns      = insVal * 12;
   const isPurchase  = purpose === 'Purchase';
+  const isRateTerm  = purpose === 'Rate/Term Refinance';
   const origAmt     = loanAmt2 * origPct;
   const titleAmt    = loanAmt2 * 0.01;
   const insAmt      = annIns > 0 ? annIns : loanAmt2 * 0.01;
@@ -1809,87 +1782,130 @@ function copyToEmail() {
   const closingOnly = origAmt + 1999 + titleAmt + insAmt + annTaxes;
   const totalCC     = isPurchase ? downPmt + closingOnly : closingOnly + payoff;
   const netPos      = loanAmt2 - payoff - closingOnly;
+  const maxCB       = isRateTerm ? loanAmt2 * 0.02 : Infinity;
+  const cashBack    = netPos >= 0 ? Math.min(netPos, maxCB) : 0;
+  const cashToClose = netPos < 0 ? Math.abs(netPos) : 0;
   const cashFromBorrower = isPurchase ? downPmt + closingOnly : 0;
-  const liquidNeeded = isPurchase ? reservesAmt + cashFromBorrower : (netPos < 0 ? reservesAmt + Math.abs(netPos) : reservesAmt);
+  const liquidNeeded = isPurchase
+    ? reservesAmt + cashFromBorrower
+    : (netPos < 0 ? reservesAmt + cashToClose : reservesAmt);
 
-  const fmt2 = n => '$' + Math.round(n).toLocaleString();
+  const f2 = n => '$' + Math.round(n).toLocaleString();
 
-  let text = `DSCR LOAN QUOTE — ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
-Rate Sheet: 5/18/26
-${'='.repeat(45)}
+  let text = `CREBRID — DSCR LOAN QUOTE
+Date: ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}  |  Rate Sheet: 5/27/26
+${'═'.repeat(48)}
 
 BORROWER & PROPERTY
-Borrower:       ${borrower}
-Address:        ${address}
-Loan Type:      ${purpose} · ${propType}
+  Borrower:         ${borrower}
+  Property:         ${addr}${estVal > 0 ? '
+  Est. Value:       $' + estVal.toLocaleString() : ''}
+  Loan Type:        ${purpose}
 
 LOAN TERMS
-Rate:           ${rate}
-Product:        ${product}
-Loan Amount:    ${loanAmt}
-LTV:            ${ltv}
-DSCR:           ${dscr}
-Est. Rent:      ${rent}
-Monthly PITIA:  ${pitia}
-Prepayment:     ${prepay}
-Credit Score:   ${fico}
-Origination:    ${orig}
+  Rate:             ${g('outRate') ? g('outRate').textContent : '—'}
+  Product:          ${g('product') ? g('product').value : '—'}
+  Loan Amount:      $${parseInt(loanAmt2).toLocaleString()}
+  LTV:              ${g('ltv') ? g('ltv').value : '—'}%
+  DSCR:             ${parseFloat(g('dscr') && g('dscr').value ? g('dscr').value : 0).toFixed(2)}x
+  Monthly PITIA:    ${g('outPI') ? g('outPI').textContent : '—'}
+  Prepayment:       ${g('prepay') ? g('prepay').value : '—'} Months
+  Credit Score:     ${g('fico') ? g('fico').value : '—'}
+  Property Type:    ${g('propType') ? g('propType').value : '—'}
+  Investor Type:    ${g('investorType') ? g('investorType').value : '—'}
+  Origination:      ${g('originationFee') ? g('originationFee').value : '—'}
+  STR:              ${g('str') ? g('str').value : '—'}
+  Foreign National: ${g('fn') ? g('fn').value : '—'}
+  Credit Event:     ${g('creditEvent') ? g('creditEvent').value : '—'}
+  Experience:       ${g('experience') ? g('experience').value : '—'}
+  Status:           ${g('outIndicator') ? g('outIndicator').textContent : '—'}
 
-${'='.repeat(45)}
+MONTHLY EXPENSES
+  Est. Rent:        ${rentVal > 0 ? '$' + Math.round(rentVal).toLocaleString() + '/mo' : 'Not provided'}
+  Monthly Taxes:    ${taxesVal > 0 ? '$' + Math.round(taxesVal).toLocaleString() + '/mo' : 'Not provided'}
+  Monthly Insurance:${insVal > 0 ? '$' + Math.round(insVal).toLocaleString() + '/mo' : 'Not provided'}
+  Monthly HOA:      ${hoaVal > 0 ? '$' + Math.round(hoaVal).toLocaleString() + '/mo' : '$0'}
+
+${'═'.repeat(48)}
 CLOSING COST ESTIMATE
-${'='.repeat(45)}`;
+${'═'.repeat(48)}`;
 
-  if(isPurchase && downPmt > 0) {
-    text += `
-Down Payment:   ${fmt2(downPmt)}`;
-  }
+  if(isPurchase && downPmt > 0) text += `
+  Down Payment:     ${f2(downPmt)}`;
   text += `
-Origination:    ${fmt2(origAmt)} (${(origPct*100).toFixed(2)}%)
-Processing/UW:  $1,999
-Title Est.:     ${fmt2(titleAmt)} (1%)
-Insurance Est.: ${fmt2(insAmt)}
-Annual Taxes:   ${annTaxes > 0 ? fmt2(annTaxes) : 'Not provided'}`;
+  Origination Fee:  ${f2(origAmt)} (${(origPct*100).toFixed(2)}%)
+  Processing/UW:    $1,999 (Flat Fee)
+  Title Est.:       ${f2(titleAmt)} (1%)
+  Insurance Est.:   ${f2(insAmt)} (Est. Premium)
+  Annual Taxes:     ${annTaxes > 0 ? f2(annTaxes) + ' (Monthly ×12)' : 'Not provided'}`;
 
-  if(payoff > 0 && !isPurchase) {
-    text += `
-Loan Payoff:    ${fmt2(payoff)}`;
-  }
+  if(payoff > 0 && !isPurchase) text += `
+  Loan Payoff:      ${f2(payoff)} (From Input)`;
 
   text += `
-${'─'.repeat(45)}
-Total Costs:    ${fmt2(totalCC)}
+  ${'─'.repeat(40)}
+  Total Est. Costs: ${f2(totalCC)}
 
 RESERVE REQUIREMENT
-3-Month PITIA:  ${fmt2(reservesAmt)}
-
-NET POSITION`;
-
-  if(isPurchase) {
-    text += `
-Cash From Borrower: ${fmt2(cashFromBorrower)}
-Est. Liquid Assets Needed: ${fmt2(liquidNeeded)}`;
-  } else if(netPos >= 0) {
-    text += `
-Est. Cash Back to Borrower: ${fmt2(netPos)}`;
-  } else {
-    text += `
-Est. Cash to Close: ${fmt2(Math.abs(netPos))}
-Est. Liquid Assets Needed: ${fmt2(liquidNeeded)}`;
-  }
-
-  if(notes) {
-    text += `
-
-NOTES
-${notes}`;
-  }
+  Monthly PITIA:    ${f2(pitia2)}
+  Months Required:  3 Months
+  3-Month Reserve:  ${f2(reservesAmt)}`;
 
   text += `
 
-${'='.repeat(45)}
-This quote is for informational purposes only and does not constitute a commitment to lend.`;
+NET POSITION`;
+  if(isPurchase) {
+    text += `
+  Cash From Borrower: ${f2(cashFromBorrower)} (Down Payment + Closing Costs)`;
+    text += `
+  Est. Liquid Assets Needed: ${f2(liquidNeeded)} (Reserves + Cash From Borrower)`;
+  } else if(netPos >= 0) {
+    text += `
+  Est. Cash Back: ${f2(cashBack)}${isRateTerm ? ' (2% Cash-Back Limit Per Crebrid Guidelines)' : ''}`;
+  } else {
+    text += `
+  Est. Cash to Close: ${f2(cashToClose)}`;
+    text += `
+  Est. Liquid Assets Needed: ${f2(liquidNeeded)} (Reserves + Cash to Close)`;
+  }
+
+  // LO / Broker
+  text += `
+
+${'═'.repeat(48)}
+PREPARED BY`;
+  if(broker) {
+    text += `
+  Broker:           ${broker}`;
+  } else {
+    text += `
+  Loan Officer:     ${loN}${loE ? ' — ' + loE : ''}`;
+    if(jloN) text += `
+  Junior LO:        ${jloN}${jloE ? ' — ' + jloE : ''}`;
+  }
+  text += `
+  Priced By:        ${pricedBy}${pricedByE ? ' — ' + pricedByE : ''}`;
+
+  if(notes) text += `
+
+NOTES
+  ${notes}`;
+
+  text += `
+
+${'═'.repeat(48)}
+This quote is for informational purposes only and does not
+constitute a commitment to lend. Rates subject to change.
+Crebrid LLC · 8343 Douglas Ave, Suite 750 · Dallas, TX 75225
+Powered by Crebrid Pricing Platform`;
 
   navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById('toast');
+    if(toast) { toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2500); }
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
     const toast = document.getElementById('toast');
     if(toast) { toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2500); }
   });
