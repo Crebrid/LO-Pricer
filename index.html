@@ -409,7 +409,7 @@
     <h1>Crebrid LO Pricer</h1>
     <p>Professional Investor · LO Version</p>
   </div>
-  <div class="date-pill">5/27/26</div>
+  <div class="date-pill">6/1/26</div>
 </header>
 
 <div class="container">
@@ -418,8 +418,8 @@
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B6B6B;">Rate Trend (30Y 6% Base)</div>
       <div style="display:flex;gap:8px;">
-        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 0.375 pts since 4/22</span>
-        <span style="font-size:10px;font-weight:700;color:#2D7A5F;background:#EEFAF5;padding:2px 7px;border-radius:20px;">^ 0.500 pts vs last sheet</span>
+        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 0.875 pts since 4/22</span>
+        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 0.750 pts vs last sheet</span>
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/22/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.625</span></div>
@@ -427,8 +427,10 @@
     <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
     <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/18/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.750</span></div>
     <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.250</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/1/26</span><span style="font-size:10px;font-weight:700;color:#CC3333;">97.500</span></div>
     <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F0F0F0;font-size:9px;color:#9CA3AF;">Higher base price = better rates for borrowers at same premium floor</div>
   </div>
+
 
 
   <!-- LOAN INPUTS -->
@@ -797,7 +799,7 @@
         </div>
         <div style="text-align:right;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6B6B6B;">Rate Sheet</div>
-          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">May 27, 2026</div>
+          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">June 1, 2026</div>
         </div>
       </div>
     </div>
@@ -1007,7 +1009,7 @@
           </div>
           <div>
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">Months Required</div>
-            <div style="font-size:13px;font-weight:700;color:#1A1A1A;">3 Months</div>
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A;">June 1, 2026</div>
           </div>
           <div>
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">3-Month Reserve</div>
@@ -1288,9 +1290,9 @@ function printTermSheet() {
 
 // --- DATA --------------------------------------------------------------------
 
-const RATES_30Y = [[6,98.25],[6.125,99.0],[6.25,99.75],[6.375,100.5],[6.5,101.25],[6.625,102.0],[6.75,102.75],[6.875,103.5],[7,104.0625],[7.125,104.625],[7.25,105.1875],[7.375,105.5625],[7.5,105.9375],[7.625,106.3125],[7.75,106.5625],[7.875,106.8125],[8,107.0625],[8.125,107.3125],[8.25,107.5625],[8.375,107.8125],[8.5,108.0625],[8.625,108.3125],[8.75,108.5625],[8.875,108.8125],[9,109.0625],[9.125,109.3125],[9.25,109.5625],[9.375,109.8125],[9.5,110.0625],[9.625,110.3125],[9.75,110.5625],[9.875,110.8125],[10,111.0625],[10.125,111.3125],[10.25,111.5625]];
+const RATES_30Y = [[6,97.5],[6.125,98.25],[6.25,99.0],[6.375,99.75],[6.5,100.5],[6.625,101.25],[6.75,102.0],[6.875,102.75],[7,103.5],[7.125,104.0625],[7.25,104.625],[7.375,105.1875],[7.5,105.5625],[7.625,105.9375],[7.75,106.3125],[7.875,106.5625],[8,106.8125],[8.125,107.0625],[8.25,107.3125],[8.375,107.5625],[8.5,107.8125],[8.625,108.0625],[8.75,108.3125],[8.875,108.5625],[9,108.8125],[9.125,109.0625],[9.25,109.3125],[9.375,109.5625],[9.5,109.8125],[9.625,110.0625],[9.75,110.3125],[9.875,110.5625],[10,110.8125],[10.125,111.0625],[10.25,111.3125]];
 
-const RATES_ARM = [[6,98.75],[6.125,99.5],[6.25,100.25],[6.375,101.0],[6.5,101.75],[6.625,102.5],[6.75,103.25],[6.875,104.0],[7,104.5125],[7.125,105.025],[7.25,105.5375],[7.375,105.8625],[7.5,106.1875],[7.625,106.5125],[7.75,106.7625],[7.875,107.0125],[8,107.2625],[8.125,107.5125],[8.25,107.7625],[8.375,108.0125],[8.5,108.2625],[8.625,108.5125],[8.75,108.7625],[8.875,109.0125],[9,109.2625],[9.125,109.5125],[9.25,109.7625],[9.375,110.0125],[9.5,110.2625],[9.625,110.5125],[9.75,110.7625],[9.875,111.0125],[10,111.2625],[10.125,111.5125],[10.25,111.7625]];
+const RATES_ARM = [[6,98.0],[6.125,98.75],[6.25,99.5],[6.375,100.25],[6.5,101.0],[6.625,101.75],[6.75,102.5],[6.875,103.25],[7,103.95],[7.125,104.4625],[7.25,104.975],[7.375,105.4875],[7.5,105.8125],[7.625,106.1375],[7.75,106.5125],[7.875,106.7625],[8,107.0125],[8.125,107.2625],[8.25,107.5125],[8.375,107.7625],[8.5,108.0125],[8.625,108.2625],[8.75,108.5125],[8.875,108.7625],[9,109.0125],[9.125,109.2625],[9.25,109.5125],[9.375,109.7625],[9.5,110.0125],[9.625,110.2625],[9.75,110.5125],[9.875,110.7625],[10,111.0125],[10.125,111.2625],[10.25,111.5125]];
 
 const LTV_COLS = [0.50,0.55,0.60,0.65,0.70,0.75,0.80];
 
@@ -1449,7 +1451,29 @@ function applyRateOverride() {
   if (!isNaN(val) && val >= 6 && val <= 10.25) {
     rateOverrideActive = true;
     document.getElementById('clearOverrideBtn').style.display = 'inline';
-    document.getElementById('overrideNote').textContent = '(!) Manual rate override active';
+
+    // Recalculate DSCR using override rate
+    const rent    = parseFloat(document.getElementById('rent').value) || 0;
+    const tia     = parseFloat(document.getElementById('tia').value)  || 0;
+    const hoa     = parseFloat(document.getElementById('hoa').value)  || 0;
+    const loan    = parseFloat(document.getElementById('loanAmt').value) || 0;
+    const product = document.getElementById('product').value;
+    const nper    = product.includes('15Y') ? 180 : 360;
+    const pi      = isIO(product)
+                    ? loan * (val / 100 / 12)
+                    : pmt(val, nper, loan);
+    const pitia   = pi + tia + hoa;
+    const noteEl  = document.getElementById('overrideNote');
+
+    if (rent > 0 && pitia > 0) {
+      const dscrVal   = rent / pitia;
+      document.getElementById('dscr').value = dscrVal.toFixed(4);
+      const dscrColor = dscrVal >= 1.15 ? '#2D7A5F' : dscrVal >= 1.0 ? '#B8860B' : '#C0392B';
+      if(noteEl) noteEl.innerHTML = '(!) Override @ ' + val + '% -> DSCR: <span style="font-weight:700;color:' + dscrColor + '">' + dscrVal.toFixed(2) + 'x</span>';
+    } else {
+      if(noteEl) noteEl.textContent = '(!) Override @ ' + val + '% active -- enter rent to see DSCR';
+    }
+
     calculateWithOverride(val);
   }
 }
@@ -1798,14 +1822,14 @@ function copyToEmail() {
   var t = '';
   t += 'CREBRID -- DSCR LOAN QUOTE\n';
   t += 'Date: ' + new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) + '\n';
-  t += 'Rate Sheet: 5/27/26\n';
+  t += 'Rate Sheet: 6/1/26\n';
   t += '\n';
   t += 'RATE TREND (30Y Fixed - 6% Base Price)\n';
-  t += '  4/22/26:  98.625\n';
-  t += '  5/27/26:  97.875\n';
-  t += '  5/15/26:  97.875\n';
-  t += '  5/18/26:  97.750\n';
-  t += '  5/27/26:  98.250  (current)\n';
+  t += '  6/1/26:  98.625\n';
+  t += '  6/1/26:  97.875\n';
+  t += '  6/1/26:  97.875\n';
+  t += '  6/1/26:  97.750\n';
+  t += '  6/1/26:  98.250  (current)\n';
   t += '  Note: Higher base price = better rates for borrowers\n';
   t += SEP + '\n\n';
 
