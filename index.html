@@ -700,6 +700,7 @@
         <option value="Juan Paulino|jpaulino@crebrid.com">Juan Paulino</option>
         <option value="Kamren Allen|kallen@crebrid.com">Kamren Allen</option>
         <option value="Matt Campos|mcampos@crebrid.com">Matt Campos</option>
+        <option value="Morgan Quillen|mquillen@crebrid.com">Morgan Quillen</option>
         <option value="Ryan Young|ryoung@crebrid.com">Ryan Young</option>
         <option value="Steven Kjol|skjol@crebrid.com">Steven Kjol</option>
         <option value="Toby Newhouse|tnewhouse@crebrid.com">Toby Newhouse</option>
@@ -719,6 +720,7 @@
         <option value="">-- Select JLO --</option>
         <option value="Alvin Gusman|agusman@crebrid.com">Alvin Gusman</option>
         <option value="Logan Lassiter|llassiter@crebrid.com">Logan Lassiter</option>
+        <option value="Morgan Quillen|mquillen@crebrid.com">Morgan Quillen</option>
         <option value="Riley McFarland|rmacfarland@crebrid.com">Riley McFarland</option>
       </select>
     </div>
@@ -878,6 +880,10 @@
           <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8643A;margin-bottom:3px;" id="ts-lo-label">Loan Officer</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-loname-grid">—</div>
           <div style="font-size:11px;color:#6B6B6B;" id="ts-loemail-grid"></div>
+          <div id="ts-broker-grid" style="display:none;margin-top:4px;">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6B6B6B;margin-bottom:1px;">Broker</div>
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A;" id="ts-brokername-grid">—</div>
+          </div>
           <div id="ts-jlo-grid" style="display:none;margin-top:4px;">
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#C8643A;letter-spacing:0.8px;margin-bottom:1px;">Junior LO</div>
             <div style="font-size:11px;font-weight:600;color:#1A1A1A;" id="ts-jloname-grid"></div>
@@ -1140,14 +1146,19 @@ function generateTermSheet() {
   if(g('ts-loname')) g('ts-loname').textContent = g('loName') && g('loName').value ? g('loName').value : '--';
   if(g('ts-lophone')) g('ts-lophone').textContent = (g('loPhone') && g('loPhone').value) ? g('loPhone').value : '';
   if(g('ts-loemail')) g('ts-loemail').textContent = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
+  // Broker Name -- shows in its own row, separate from JLO
   const brokerInput = g('brokerNameInput') && g('brokerNameInput').value ? g('brokerNameInput').value : '';
-  const jloLabel = g('ts-jlo-label');
-  const jloN = brokerInput || (g('jloName') && g('jloName').value ? g('jloName').value : '');
-  const jloE = !brokerInput && g('jloEmail') && g('jloEmail').value ? g('jloEmail').value : '';
+  if(g('ts-broker-section')) g('ts-broker-section').style.display = brokerInput ? 'table-row' : 'none';
+  if(g('ts-broker-grid')) g('ts-broker-grid').style.display = brokerInput ? 'block' : 'none';
+  if(g('ts-brokername-grid')) g('ts-brokername-grid').textContent = brokerInput;
+
+  // JLO -- only shows actual JLO, never broker name
+  const jloN = g('jloName') && g('jloName').value ? g('jloName').value : '';
+  const jloE = g('jloEmail') && g('jloEmail').value ? g('jloEmail').value : '';
   if(g('ts-jlo-section')) g('ts-jlo-section').style.display = jloN ? 'table-row' : 'none';
   if(g('ts-jlo-grid')) g('ts-jlo-grid').style.display = jloN ? 'block' : 'none';
   if(g('ts-jloname-grid')) g('ts-jloname-grid').textContent = jloN;
-  if(jloLabel) jloLabel.textContent = brokerInput ? 'Broker' : 'Junior LO';
+  if(g('ts-jlo-label')) g('ts-jlo-label').textContent = 'Junior LO';
   if(g('ts-jloname')) g('ts-jloname').textContent = jloN;
   if(g('ts-jloemail')) g('ts-jloemail').textContent = jloE;
 
