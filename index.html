@@ -1566,7 +1566,7 @@ function calculate(forceRate) {
   if(fico < 660) chk('Min FICO 660', false, 'FICO=' + fico + ' / Min=660 for LO Pricer');
   if(fico >= 660 && fico < 680 && ltv > 75) chk('FICO 660-679: Max LTV 75%', false, 'FICO=' + fico + ' / LTV=' + ltv + '% / Max=75%');
   if(fico >= 660 && fico < 680 && purpose === 'Cash-Out Refinance' && ltv > 70) chk('FICO 660-679: Cash-Out Max 70%', false, 'FICO=' + fico + ' / LTV=' + ltv + '%');
-  if(fico >= 680 && fico < 700 && purpose === 'Cash-Out Refinance' && ltv > 70) chk('FICO 680-699: Cash-Out Max 70%', false, 'FICO=' + fico + ' / LTV=' + ltv + '%');
+  if(fico >= 680 && fico < 700 && purpose === 'Cash-Out Refinance' && ltv > 75) chk('FICO 680-699: Cash-Out Max 75%', false, 'FICO=' + fico + ' / LTV=' + ltv + '% / Max=75%');
   if(fico >= 700 && fico < 720 && purpose === 'Cash-Out Refinance' && ltv > 75) chk('FICO 700-719: Cash-Out Max 75%', false, 'FICO=' + fico + ' / LTV=' + ltv + '%');
 
   if (isFN) {
