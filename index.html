@@ -1561,7 +1561,7 @@ function calculate(forceRate) {
   chk('5-10 Unit requires DSCR >= 1.15x', propType !== '5-10 Unit' || dscr >= 1.15, `${propType} / ${dscr.toFixed(2)}x`);
   chk('STR Purchase not eligible', !(isSTR && purpose === 'Purchase'), `STR=${strVal}`);
 
-  const ltvAdj = exp0 ? -5 : 0;
+  const ltvAdj = exp0 ? 5 : 0;
   const effLtv = ltv + ltvAdj;
   const maxP = {'SFR':80,'2-4 Unit':80,'Condo':80,'Modular':80,'5-10 Unit':75,'Non-Warrantable Condo':70}[propType]||80;
   const maxC = {'SFR':75,'2-4 Unit':75,'Condo':75,'Modular':70,'5-10 Unit':70,'Non-Warrantable Condo':60}[propType]||75;
