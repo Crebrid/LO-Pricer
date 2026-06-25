@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+  showRefiFields();<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -439,10 +440,7 @@
   </div>
 
 
-
-
-
-  <!-- LOAN INPUTS -->
+  <!-- INPUTS -->
   <div class="card">
     <div class="card-header">
       <div class="card-header-dot"></div>
@@ -501,7 +499,7 @@
     </div>
     <div class="field">
       <label>Purpose</label>
-      <select id="purpose" onchange="calculate()">
+      <select id="purpose" onchange="calculate(); showRefiFields();">
         <option>Purchase</option>
         <option selected>Cash-Out Refinance</option>
         <option>Rate/Term Refinance</option>
@@ -532,6 +530,40 @@
         <option value="0">0</option>
         <option value="2+" selected>2+</option>
         <option value="5+">5+</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Seasoning <span style="color:#CC3333;font-size:10px;">(required)</span></label>
+      <select id="seasoning" onchange="calculate()">
+        <option value="">-- Select --</option>
+        <option value="0-3M">0-3 Months</option>
+        <option value="3-6M">3-6 Months</option>
+        <option value="6M+">6M+</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Occupancy</label>
+      <select id="occupancy">
+        <option value="Tenant Occupied">Tenant Occupied</option>
+        <option value="Vacant">Vacant</option>
+      </select>
+    </div>
+    <div class="field" id="field-acqdate" style="display:none;">
+      <label>Acquisition Date</label>
+      <input type="date" id="acquisitionDate" onchange="calcSeasoningFromDate()">
+    </div>
+    <div class="field" id="field-ownership" style="display:none;">
+      <label>Ownership</label>
+      <select id="ownership">
+        <option value="LLC">LLC</option>
+        <option value="Personal">Personal</option>
+      </select>
+    </div>
+    <div class="field" id="field-fullowner" style="display:none;">
+      <label>100% Owner?</label>
+      <select id="fullOwner">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
       </select>
     </div>
     <div class="field">
@@ -629,9 +661,9 @@
       </div>
     </div>
 
+    <div id="outPoints" style="display:none"></div>
+    <div id="outRevenue" style="display:none"></div>
     <div class="output-grid">
-      <div id="outPoints" style="display:none"></div>
-      <div id="outRevenue" style="display:none"></div>
       <div class="output-cell">
         <div class="output-cell-label">Payment Rate</div>
         <div class="output-cell-value" id="outPayRate">—</div>
@@ -709,7 +741,6 @@
         <option value="Juan Paulino|jpaulino@crebrid.com">Juan Paulino</option>
         <option value="Kamren Allen|kallen@crebrid.com">Kamren Allen</option>
         <option value="Matt Campos|mcampos@crebrid.com">Matt Campos</option>
-        <option value="Morgan Quillen|mquillen@crebrid.com">Morgan Quillen</option>
         <option value="Ryan Young|ryoung@crebrid.com">Ryan Young</option>
         <option value="Steven Kjol|skjol@crebrid.com">Steven Kjol</option>
         <option value="Toby Newhouse|tnewhouse@crebrid.com">Toby Newhouse</option>
@@ -875,12 +906,28 @@
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-fico">—</div>
         </div>
         <div>
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Est. Monthly Rent</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-rent">—</div>
-        </div>
-        <div>
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Property Type</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-proptype">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Seasoning</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-seasoning">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Occupancy</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-occupancy">—</div>
+        </div>
+        <div id="ts-acqdate-cell" style="display:none;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Acquisition Date</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-acqdate">—</div>
+        </div>
+        <div id="ts-ownership-cell" style="display:none;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Ownership</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-ownership">—</div>
+        </div>
+        <div id="ts-fullowner-cell" style="display:none;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">100% Owner?</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-fullowner">—</div>
         </div>
         <div id="ts-estvalue-cell" style="display:none">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Est. Property Value</div>
@@ -890,10 +937,6 @@
           <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8643A;margin-bottom:3px;" id="ts-lo-label">Loan Officer</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-loname-grid">—</div>
           <div style="font-size:11px;color:#6B6B6B;" id="ts-loemail-grid"></div>
-          <div id="ts-broker-grid" style="display:none;margin-top:4px;">
-            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6B6B6B;margin-bottom:1px;">Broker</div>
-            <div style="font-size:13px;font-weight:700;color:#1A1A1A;" id="ts-brokername-grid">—</div>
-          </div>
           <div id="ts-jlo-grid" style="display:none;margin-top:4px;">
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#C8643A;letter-spacing:0.8px;margin-bottom:1px;">Junior LO</div>
             <div style="font-size:11px;font-weight:600;color:#1A1A1A;" id="ts-jloname-grid"></div>
@@ -907,13 +950,7 @@
     </div>
 
                 
-    <!-- Notes -->
-    <div id="ts-notes-section" style="display:none;padding:10px 32px;border-bottom:1px solid #E5E5E2;background:#FAFAFA;">
-      <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6B6B6B;margin-bottom:4px;">Notes</div>
-      <div style="font-size:11px;color:#4B5563;font-weight:500;line-height:1.5;" id="ts-notes"></div>
-    </div>
-
-        <!-- Disclaimer -->
+    <!-- Disclaimer -->
     <div style="padding:16px 32px;background:#F7F7F5;">
       <div style="font-size:10px;color:#6B6B6B;line-height:1.6;font-weight:500;">
         <strong style="color:#1A1A1A;">DISCLAIMER:</strong> This term sheet is for informational purposes, it does not represent a commitment to lend. Rates and terms may vary upon final review of appraisal and market rent. All loans are subject to credit approval.
@@ -1025,7 +1062,7 @@
           </div>
           <div>
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">Months Required</div>
-            <div style="font-size:13px;font-weight:700;color:#1A1A1A;">June 17, 2026</div>
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A;">3 Months</div>
           </div>
           <div>
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">3-Month Reserve</div>
@@ -1063,7 +1100,6 @@
               <div style="font-size:11px;color:#065F46;">Loan Amount − Payoff &amp; Closing Costs =</div>
             </div>
             <div style="font-size:22px;font-weight:800;color:#065F46;" id="ts-cc-cashback">—</div>
-              <div id="ts-cc-cashback-note" style="display:none;font-size:9px;color:#065F46;font-weight:600;margin-top:3px;"></div>
           </div>
         </div>
       </div>
@@ -1134,8 +1170,6 @@ function generateTermSheet() {
   if(g('ts-pi-raw')) g('ts-pi-raw').textContent = g('outPI_raw') ? g('outPI_raw').textContent : '--';
   g('ts-prepay').textContent = g('prepay').value + ' Months';
   g('ts-fico').textContent = g('fico').value;
-  const rentVal = parseFloat(g('rent') && g('rent').value ? g('rent').value : 0) || 0;
-  if(g('ts-rent')) g('ts-rent').textContent = rentVal > 0 ? '$' + Math.round(rentVal).toLocaleString() + '/mo' : 'Not provided';
   if(g('ts-proptype')) g('ts-proptype').textContent = g('propType') && g('propType').value ? g('propType').value : '--';
   if(g('ts-orig')) g('ts-orig').textContent = g('originationFee').value;
   if(g('ts-orig-proc')) g('ts-orig-proc').textContent = '$1,999';
@@ -1151,24 +1185,17 @@ function generateTermSheet() {
     g('ts-estvalue-cell').style.display = 'none';
   }
   if(g('ts-pricedby')) g('ts-pricedby').textContent = g('pricedBy').value;
-  if(g('ts-loname-grid')) g('ts-loname-grid').textContent = g('loName') && g('loName').value ? g('loName').value : '--';
-  if(g('ts-loemail-grid')) g('ts-loemail-grid').textContent = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
   if(g('ts-loname')) g('ts-loname').textContent = g('loName') && g('loName').value ? g('loName').value : '--';
   if(g('ts-lophone')) g('ts-lophone').textContent = (g('loPhone') && g('loPhone').value) ? g('loPhone').value : '';
   if(g('ts-loemail')) g('ts-loemail').textContent = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
-  // Broker Name -- shows in its own row, separate from JLO
   const brokerInput = g('brokerNameInput') && g('brokerNameInput').value ? g('brokerNameInput').value : '';
-  if(g('ts-broker-section')) g('ts-broker-section').style.display = brokerInput ? 'table-row' : 'none';
-  if(g('ts-broker-grid')) g('ts-broker-grid').style.display = brokerInput ? 'block' : 'none';
-  if(g('ts-brokername-grid')) g('ts-brokername-grid').textContent = brokerInput;
-
-  // JLO -- only shows actual JLO, never broker name
-  const jloN = g('jloName') && g('jloName').value ? g('jloName').value : '';
-  const jloE = g('jloEmail') && g('jloEmail').value ? g('jloEmail').value : '';
+  const jloLabel = g('ts-jlo-label');
+  const jloN = brokerInput || (g('jloName') && g('jloName').value ? g('jloName').value : '');
+  const jloE = !brokerInput && g('jloEmail') && g('jloEmail').value ? g('jloEmail').value : '';
   if(g('ts-jlo-section')) g('ts-jlo-section').style.display = jloN ? 'table-row' : 'none';
   if(g('ts-jlo-grid')) g('ts-jlo-grid').style.display = jloN ? 'block' : 'none';
   if(g('ts-jloname-grid')) g('ts-jloname-grid').textContent = jloN;
-  if(g('ts-jlo-label')) g('ts-jlo-label').textContent = 'Junior LO';
+  if(jloLabel) jloLabel.textContent = brokerInput ? 'Broker' : 'Junior LO';
   if(g('ts-jloname')) g('ts-jloname').textContent = jloN;
   if(g('ts-jloemail')) g('ts-jloemail').textContent = jloE;
 
@@ -1255,16 +1282,7 @@ function generateTermSheet() {
       // Cash back to borrower
       if(g2('ts-cc-cashback-section'))  g2('ts-cc-cashback-section').style.display  = 'block';
       if(g2('ts-cc-cashclose-section')) g2('ts-cc-cashclose-section').style.display = 'none';
-      if(g2('ts-cc-cashback')) {
-        const isRT2 = purpose2 === 'Rate/Term Refinance';
-        const maxCB2 = isRT2 ? loanAmt2 * 0.02 : netPosition;
-        const cappedCB = Math.min(netPosition, maxCB2);
-        g2('ts-cc-cashback').textContent = fmt2(cappedCB);
-        if(g2('ts-cc-cashback-note')) {
-          g2('ts-cc-cashback-note').textContent = isRT2 ? '2% Cash-Back Limit Per Crebrid Guidelines' : '';
-          g2('ts-cc-cashback-note').style.display = isRT2 ? 'block' : 'none';
-        }
-      }
+      if(g2('ts-cc-cashback'))          g2('ts-cc-cashback').textContent = fmt2(netPosition);
       // Liquid assets = 3-month reserves only (cash back covers closing)
       if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display = 'none';
     } else {
@@ -1472,29 +1490,7 @@ function applyRateOverride() {
   if (!isNaN(val) && val >= 6 && val <= 10.25) {
     rateOverrideActive = true;
     document.getElementById('clearOverrideBtn').style.display = 'inline';
-
-    // Recalculate DSCR using override rate
-    const rent    = parseFloat(document.getElementById('rent').value) || 0;
-    const tia     = parseFloat(document.getElementById('tia').value)  || 0;
-    const hoa     = parseFloat(document.getElementById('hoa').value)  || 0;
-    const loan    = parseFloat(document.getElementById('loanAmt').value) || 0;
-    const product = document.getElementById('product').value;
-    const nper    = product.includes('15Y') ? 180 : 360;
-    const pi      = isIO(product)
-                    ? loan * (val / 100 / 12)
-                    : pmt(val, nper, loan);
-    const pitia   = pi + tia + hoa;
-    const noteEl  = document.getElementById('overrideNote');
-
-    if (rent > 0 && pitia > 0) {
-      const dscrVal   = rent / pitia;
-      document.getElementById('dscr').value = dscrVal.toFixed(4);
-      const dscrColor = dscrVal >= 1.15 ? '#2D7A5F' : dscrVal >= 1.0 ? '#B8860B' : '#C0392B';
-      if(noteEl) noteEl.innerHTML = '(!) Override @ ' + val + '% -> DSCR: <span style="font-weight:700;color:' + dscrColor + '">' + dscrVal.toFixed(2) + 'x</span>';
-    } else {
-      if(noteEl) noteEl.textContent = '(!) Override @ ' + val + '% active -- enter rent to see DSCR';
-    }
-
+    document.getElementById('overrideNote').textContent = '(!) Manual rate override active';
     calculateWithOverride(val);
   }
 }
@@ -1572,22 +1568,32 @@ function calculate(forceRate) {
     chk('Max LTV -- Purchase/R&T', effLtv <= maxP, `Eff. LTV=${effLtv}% / Max=${maxP}%`);
   }
 
-    // FICO + LTV eligibility
-  if(fico < 660) chk('Min FICO 660', false, 'FICO=' + fico + ' / Min=660 for LO Pricer');
-  if(fico >= 660 && fico < 680 && ltv > 75) chk('FICO 660-679: Max LTV 75%', false, 'FICO=' + fico + ' / LTV=' + ltv + '% / Max=75%');
-  if(fico >= 660 && fico < 680 && purpose === 'Cash-Out Refinance' && ltv > 70) chk('FICO 660-679: Cash-Out Max 70%', false, 'FICO=' + fico + ' / LTV=' + ltv + '%');
-  if(fico >= 680 && fico < 700 && purpose === 'Cash-Out Refinance' && ltv > 75) chk('FICO 680-699: Cash-Out Max 75%', false, 'FICO=' + fico + ' / LTV=' + ltv + '% / Max=75%');
-  if(fico >= 700 && fico < 720 && purpose === 'Cash-Out Refinance' && ltv > 75) chk('FICO 700-719: Cash-Out Max 75%', false, 'FICO=' + fico + ' / LTV=' + ltv + '%');
-
   if (isFN) {
+    
     if (purpose === 'Cash-Out Refinance') {
-      chk('FN Cash-Out: Max LTV 50%', ltv <= 50, `LTV=${ltv}% / FN Cash-Out max=50%`);
+      chk('FN Cash-Out: Max LTV 50%', ltv <= 50, 'LTV='+ltv+'% / FN Cash-Out max=50%');
     } else {
-      chk('FN Purchase/R&T: Max LTV 65%', ltv <= 65, `LTV=${ltv}% / FN max=65%`);
+      chk('FN Purchase/R&T: Max LTV 65%', ltv <= 65, 'LTV='+ltv+'% / FN max=65%');
     }
   }
 
   if (exp0) chk('Experience 0: eff. LTV reduced -5%', true, `Eff. LTV=${effLtv}%`);
+
+  // Seasoning checks
+  var seasoning = document.getElementById('seasoning') ? document.getElementById('seasoning').value : '';
+  var isPurchaseOrDF = purpose === 'Purchase' || purpose === 'Delayed Financing';
+  if (!seasoning && !isPurchaseOrDF) {
+    chk('Seasoning required', false, 'Please select a seasoning period');
+  }
+  if (seasoning === '0-3M' && !isPurchaseOrDF) {
+    chk('Seasoning 0-3M: Ineligible', false, 'Cash-Out/Rate-Term require 3M+ seasoning');
+  }
+  if (seasoning === '3-6M' && purpose === 'Cash-Out Refinance' && ltv > 70) {
+    chk('Seasoning 3-6M: Cash-Out Max 70%', false, 'LTV='+ltv+'% / Max=70% with 3-6M seasoning');
+  }
+  if (seasoning === '3-6M' && purpose === 'Rate/Term Refinance' && ltv > 75) {
+    chk('Seasoning 3-6M: Rate/Term Max 75%', false, 'LTV='+ltv+'% / Max=75% with 3-6M seasoning');
+  }
 
   // LTV index
   const ltvDec = ltv / 100;
@@ -1794,153 +1800,53 @@ function updateCalcLoan(){
 
 // --- COPY TO EMAIL -----------------------------------------------------------
 
-function copyToEmail() {
-  var g = function(id) { return document.getElementById(id); };
-  var f2 = function(n) { return '$' + Math.round(n).toLocaleString(); };
+function copyToEmail(){
+  const g=id=>document.getElementById(id);
+  const text=`CREBRID -- LUXURY DSCR QUOTE SUMMARY
+Date: ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
+Rate Sheet: June 17, 2026
+??????????????????????????????????
 
-  var borrower  = g('borrowerName') && g('borrowerName').value ? g('borrowerName').value : 'Not provided';
-  var addr      = '';
-  if(g('propertyAddress') && g('propertyAddress').value) addr += g('propertyAddress').value;
-  if(g('propertyCity') && g('propertyCity').value) addr += (addr ? ', ' : '') + g('propertyCity').value;
-  if(!addr) addr = 'Not provided';
+LOAN INPUTS
+  Credit Score:     ${g('fico').value}
+  LTV:              ${g('ltv').value}%
+  Loan Amount:      $${parseInt(g('loanAmt').value).toLocaleString()}
+  DSCR:             ${parseFloat(g('dscr').value).toFixed(2)}x
+  Product:          ${g('product').value}
+  Property Type:    ${g('propType').value}
+  Purpose:          ${g('purpose').value}
+  Investor Type:    ${g('investorType').value}
+  Prepay Period:    ${g('prepay').value} months
+  Experience:       ${g('experience').value}
+  Seasoning:        ${g('seasoning')&&g('seasoning').value?g('seasoning').value:'Not provided'}
+  Occupancy:        ${g('occupancy')?g('occupancy').value:'--'}
+${g('purpose')&&g('purpose').value!=='Purchase'?`  Acquisition Date: ${(function(){var a=g('acquisitionDate')&&g('acquisitionDate').value?g('acquisitionDate').value:'';if(a){var p=a.split('-');return p[1]+'/'+p[2]+'/'+p[0];}return 'Not provided';})()}
+  Ownership:        ${g('ownership')?g('ownership').value:'--'}
+  100% Owner:       ${g('fullOwner')?g('fullOwner').value:'--'}`:''}
+  STR:              ${g('str').value}
+  Foreign National: ${g('fn').value}
+  Credit Event:     ${g('creditEvent').value}
 
-  var loN      = g('loName') && g('loName').value ? g('loName').value : '--';
-  var loE      = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
-  var jloN     = g('jloName') && g('jloName').value ? g('jloName').value : '';
-  var pb       = g('pricedBy') && g('pricedBy').value ? g('pricedBy').value : '--';
-  var notes    = g('quoteNotes') && g('quoteNotes').value ? g('quoteNotes').value : '';
-  var purpose  = g('purpose') ? g('purpose').value : '--';
-  var estVal   = parseFloat(g('estValue') && g('estValue').value ? g('estValue').value : 0) || 0;
-  var rentVal  = parseFloat(g('rent') && g('rent').value ? g('rent').value : 0) || 0;
-  var taxesVal = parseFloat(g('monthlyTaxes') && g('monthlyTaxes').value ? g('monthlyTaxes').value : 0) || 0;
-  var insVal   = parseFloat(g('monthlyInsurance') && g('monthlyInsurance').value ? g('monthlyInsurance').value : 0) || 0;
-  var hoaVal   = parseFloat(g('hoa') && g('hoa').value ? g('hoa').value : 0) || 0;
-  var loanAmt2 = parseFloat(g('loanAmt') ? g('loanAmt').value : 0) || 0;
-  var estVal2  = estVal;
-  var pitia2   = parseFloat((g('outPI') ? g('outPI').textContent : '0').replace(/[^0-9.]/g,'')) || 0;
-  var origPct  = parseFloat((g('originationFee') ? g('originationFee').value : '0').replace('%','')) / 100;
-  var payoff   = parseFloat(g('loanPayoff') && g('loanPayoff').value ? g('loanPayoff').value : 0) || 0;
-  var annTax   = taxesVal * 12;
-  var annIns   = insVal * 12;
-  var isPurch  = purpose === 'Purchase';
-  var isRT     = purpose === 'Rate/Term Refinance';
-  var origAmt  = loanAmt2 * origPct;
-  var titleAmt = loanAmt2 * 0.01;
-  var insAmt   = annIns > 0 ? annIns : loanAmt2 * 0.01;
-  var downPmt  = isPurch && estVal2 > loanAmt2 ? estVal2 - loanAmt2 : 0;
-  var reserves = pitia2 * 3;
-  var closing  = origAmt + 1999 + titleAmt + insAmt + annTax;
-  var totalCC  = isPurch ? downPmt + closing : closing + payoff;
-  var netPos   = loanAmt2 - payoff - closing;
-  var maxCB    = isRT ? loanAmt2 * 0.02 : Infinity;
-  var cashBack = netPos >= 0 ? Math.min(netPos, maxCB) : 0;
-  var cashCls  = netPos < 0 ? Math.abs(netPos) : 0;
-  var cashFB   = isPurch ? downPmt + closing : 0;
-  var liquid   = isPurch ? reserves + cashFB : (netPos < 0 ? reserves + cashCls : reserves);
+PRICING OUTPUT
+  ** RATE IS FLOATING UNTIL LOCKED **
+  Selected Rate:    ${g('outRate').textContent}
+  Monthly PITIA:    ${g('outPI').textContent}
+  Origination Fee:  ${g('originationFee').value}
+  Status:           ${g('outIndicator').textContent}
 
-  var SEP  = '================================================';
-  var SEP2 = '------------------------------------------------';
-  var t = '';
-  t += 'CREBRID -- DSCR LOAN QUOTE\n';
-  t += 'Date: ' + new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) + '\n';
-  t += 'Rate Sheet: 6/17/26\n';
-  t += '\n';
-  t += 'RATE TREND (30Y Fixed - 6% Base Price)\n';
-  t += '  6/1/26:  98.625\n';
-  t += '  6/1/26:  97.875\n';
-  t += '  6/1/26:  97.875\n';
-  t += '  6/1/26:  97.750\n';
-  t += '  6/1/26:  98.250  (current)\n';
-  t += '  Note: Higher base price = better rates for borrowers\n';
-  t += SEP + '\n\n';
+??????????????????????????????????
+Priced By: ${g('pricedBy').value}
+Crebrid LLC - 8343 Douglas Ave, Suite 750 - Dallas, TX 75225
+(972) 525-4777 - www.crebrid.com
 
-  t += 'BORROWER & PROPERTY\n';
-  t += '  Borrower:           ' + borrower + '\n';
-  t += '  Property:           ' + addr + '\n';
-  if(estVal > 0) t += '  Est. Value:         $' + estVal.toLocaleString() + '\n';
-  t += '  Loan Type:          ' + purpose + '\n\n';
+*Pricing indicative only. Subject to change. For internal use.*`;
 
-  t += 'LOAN TERMS\n';
-  t += '  ** RATE IS FLOATING UNTIL LOCKED **\n';
-  t += '  Rate:               ' + (g('outRate') ? g('outRate').textContent : '--') + '\n';
-  t += '  Product:            ' + (g('product') ? g('product').value : '--') + '\n';
-  t += '  Loan Amount:        $' + parseInt(loanAmt2).toLocaleString() + '\n';
-  t += '  LTV:                ' + (g('ltv') ? g('ltv').value : '--') + '%\n';
-  t += '  DSCR:               ' + parseFloat(g('dscr') && g('dscr').value ? g('dscr').value : 0).toFixed(2) + 'x\n';
-  t += '  Monthly PITIA:      ' + (g('outPI') ? g('outPI').textContent : '--') + '\n';
-  t += '  Monthly P&I:        ' + (g('outPI_raw') ? g('outPI_raw').textContent : '--') + '\n';
-  t += '  Prepayment:         ' + (g('prepay') ? g('prepay').value : '--') + ' Months\n';
-  t += '  Credit Score:       ' + (g('fico') ? g('fico').value : '--') + '\n';
-  t += '  Property Type:      ' + (g('propType') ? g('propType').value : '--') + '\n';
-  t += '  Investor Type:      ' + (g('investorType') ? g('investorType').value : '--') + '\n';
-  t += '  Origination:        ' + (g('originationFee') ? g('originationFee').value : '--') + '\n';
-  t += '  STR:                ' + (g('str') ? g('str').value : '--') + '\n';
-  t += '  Foreign National:   ' + (g('fn') ? g('fn').value : '--') + '\n';
-  t += '  Credit Event:       ' + (g('creditEvent') ? g('creditEvent').value : '--') + '\n';
-  t += '  Experience:         ' + (g('experience') ? g('experience').value : '--') + '\n';
-  t += '  Status:             ' + (g('outIndicator') ? g('outIndicator').textContent : '--') + '\n\n';
-
-  t += 'MONTHLY EXPENSES\n';
-  t += '  Est. Rent:          ' + (rentVal > 0 ? '$' + Math.round(rentVal).toLocaleString() + '/mo' : 'Not provided') + '\n';
-  t += '  Monthly Taxes:      ' + (taxesVal > 0 ? '$' + Math.round(taxesVal).toLocaleString() + '/mo' : 'Not provided') + '\n';
-  t += '  Monthly Insurance:  ' + (insVal > 0 ? '$' + Math.round(insVal).toLocaleString() + '/mo' : 'Not provided') + '\n';
-  t += '  Monthly HOA:        $' + Math.round(hoaVal).toLocaleString() + '/mo\n\n';
-
-  t += SEP + '\n';
-  t += 'CLOSING COST ESTIMATE\n';
-  t += SEP + '\n';
-  if(isPurch && downPmt > 0) t += '  Down Payment:       ' + f2(downPmt) + '\n';
-  t += '  Origination:        ' + f2(origAmt) + ' (' + (origPct*100).toFixed(2) + '%)\n';
-  t += '  Processing/UW:      $1,999 (Flat Fee)\n';
-  t += '  Title Est.:         ' + f2(titleAmt) + ' (1%)\n';
-  t += '  Insurance Est.:     ' + f2(insAmt) + '\n';
-  t += '  Annual Taxes:       ' + (annTax > 0 ? f2(annTax) : 'Not provided') + '\n';
-  if(payoff > 0 && !isPurch) t += '  Loan Payoff:        ' + f2(payoff) + '\n';
-  t += '  ' + SEP2 + '\n';
-  t += '  Total Est. Costs:   ' + f2(totalCC) + '\n\n';
-
-  t += 'RESERVE REQUIREMENT\n';
-  t += '  Monthly PITIA:      ' + f2(pitia2) + '\n';
-  t += '  3-Month Reserve:    ' + f2(reserves) + '\n\n';
-
-  t += 'NET POSITION\n';
-  if(isPurch) {
-    t += '  Cash From Borrower: ' + f2(cashFB) + '\n';
-    t += '  Liquid Assets Needed: ' + f2(liquid) + '\n';
-  } else if(netPos >= 0) {
-    t += '  Est. Cash Back:     ' + f2(cashBack);
-    if(isRT) t += ' (2% Cash-Back Limit Per Crebrid Guidelines)';
-    t += '\n';
-  } else {
-    t += '  Est. Cash to Close: ' + f2(cashCls) + '\n';
-    t += '  Liquid Assets Needed: ' + f2(liquid) + '\n';
-  }
-  t += '\n';
-
-  t += SEP + '\n';
-  t += 'PREPARED BY\n';
-  t += '  Loan Officer:       ' + loN + (loE ? ' -- ' + loE : '') + '\n';
-  if(jloN) t += '  Junior LO:          ' + jloN + '\n';
-  t += '  Priced By:          ' + pb + '\n';
-  if(notes) t += '\nNOTES\n  ' + notes + '\n';
-  t += '\n' + SEP + '\n';
-  t += 'Crebrid LLC -- 8343 Douglas Ave Suite 750 -- Dallas TX 75225\n';
-  t += 'This quote is for informational purposes only and does not\n';
-  t += 'constitute a commitment to lend. Rates subject to change.\n';
-
-  navigator.clipboard.writeText(t).then(function() {
-    var toast = document.getElementById('toast');
-    if(toast) { toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); }, 2500); }
-  }).catch(function() {
-    var ta = document.createElement('textarea');
-    ta.value = t; document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); document.body.removeChild(ta);
-    var toast = document.getElementById('toast');
-    if(toast) { toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); }, 2500); }
+  navigator.clipboard.writeText(text).then(()=>{
+    const toast=document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),2500);
   });
 }
-
-
 
 
 function autoFillLO() {
@@ -1972,7 +1878,32 @@ function autoFillJLO() {
   }
 }
 
+function calcSeasoningFromDate() {
+  var acqDate = document.getElementById('acquisitionDate');
+  var seasoningSel = document.getElementById('seasoning');
+  if (!acqDate || !acqDate.value || !seasoningSel) return;
+  var acq = new Date(acqDate.value);
+  var now = new Date();
+  var months = (now.getFullYear() - acq.getFullYear()) * 12 + (now.getMonth() - acq.getMonth());
+  if (months < 0) months = 0;
+  if (months < 3) { seasoningSel.value = '0-3M'; }
+  else if (months < 6) { seasoningSel.value = '3-6M'; }
+  else { seasoningSel.value = '6M+'; }
+  calculate();
+}
+
+function showRefiFields() {
+  var purpose = document.getElementById('purpose') ? document.getElementById('purpose').value : '';
+  var isRefi = purpose !== 'Purchase';
+  var ids = ['field-acqdate', 'field-ownership', 'field-fullowner'];
+  for (var k = 0; k < ids.length; k++) {
+    var el = document.getElementById(ids[k]);
+    if (el) el.style.display = isRefi ? 'flex' : 'none';
+  }
+}
+
 calculate();
+showRefiFields();
 </script>
 </body>
 </html>
