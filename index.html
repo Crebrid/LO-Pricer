@@ -83,7 +83,7 @@
   }
 
   /* CONTAINER */
-  .container { padding: 14px 14px 0; max-width: 480px; margin: 0 auto; }
+  .container { padding: 0 20px; max-width: 1080px; margin: 0 auto; }
 
   /* CARDS */
   .card {
@@ -398,6 +398,7 @@
     background: var(--border);
     margin: 4px 16px;
   }
+  @media (max-width: 740px) { .container > div[style] { grid-template-columns: 1fr !important; } }
 </style>
 </head>
 <body>
@@ -409,37 +410,16 @@
     <h1>Crebrid LO Pricer</h1>
     <p>Professional Investor · LO Version</p>
   </div>
-  <div class="date-pill">6/17/26</div>
+  <div class="date-pill">6/26/26</div>
 </header>
 
 <div class="container">
-  <!-- Rate Trend Indicator -->
-  <div style="background:white;border:1px solid #E5E5E2;border-radius:12px;padding:14px 16px;margin-bottom:12px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B6B6B;">Rate Trend (30Y 6% Base)</div>
-      <div style="display:flex;gap:8px;">
-        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 1.625 pts from best</span>
-        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 0.750 pts vs last sheet</span>
-      </div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/12/26</span><span style="font-size:10px;font-weight:700;color:#2D7A5F;">98.750</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.188</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/31/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.563</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/6/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.938</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/22/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.625</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/29/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/18/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.750</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.250</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/1/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.500</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/8/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">96.750</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/17/26</span><span style="font-size:10px;font-weight:700;color:#CC3333;">97.125</span></div>
-    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F0F0F0;font-size:9px;color:#9CA3AF;">Higher base price = better rates for borrowers at same premium floor</div>
-  </div>
 
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
 
-  <!-- INPUTS -->
+    <!-- ── LEFT COLUMN ── -->
+    <div>
+<!-- INPUTS -->
   <div class="card">
     <div class="card-header">
       <div class="card-header-dot"></div>
@@ -532,6 +512,14 @@
       </select>
     </div>
     <div class="field">
+      <label>1st Rental Property? <span style="color:#CC3333;font-size:10px;">(required)</span></label>
+      <select id="firstRental">
+        <option value="">-- Select --</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+    <div class="field">
       <label>Seasoning <span style="color:#CC3333;font-size:10px;">(required)</span></label>
       <select id="seasoning" onchange="calculate()">
         <option value="">-- Select --</option>
@@ -548,16 +536,8 @@
       </select>
     </div>
     <div class="field" id="field-acqdate" style="display:none;">
-      <label>Acquisition Date</label>
-      <input type="date" id="acquisitionDate" onchange="calcSeasoningFromDate()">
-    </div>
-    <div class="field" id="field-ownership" style="display:none;">
-      <label>Ownership</label>
-      <select id="ownership"><option value="LLC">LLC</option><option value="Personal">Personal</option></select>
-    </div>
-    <div class="field" id="field-fullowner" style="display:none;">
-      <label>100% Owner?</label>
-      <select id="fullOwner"><option value="Yes">Yes</option><option value="No">No</option></select>
+      <label>Acquisition Date <span style="color:#CC3333;font-size:10px;">(required)</span></label>
+      <input type="date" id="acquisitionDate" required onchange="calcSeasoningFromDate()">
     </div>
     <div class="field">
       <label>STR?</label>
@@ -611,8 +591,36 @@
     </div>
     <div class="dscr-note" id="dscrCalcNote">Enter monthly expenses to auto-calculate DSCR</div>
   </div>
+    </div>
 
-  <!-- OUTPUTS -->
+    <!-- ── RIGHT COLUMN ── -->
+    <div>
+  <!-- Rate Trend Indicator -->
+  <div style="background:white;border:1px solid #E5E5E2;border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B6B6B;">Rate Trend (30Y 6% Base)</div>
+      <div style="display:flex;gap:8px;">
+        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 1.625 pts from best</span>
+        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 0.750 pts vs last sheet</span>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/12/26</span><span style="font-size:10px;font-weight:700;color:#2D7A5F;">98.750</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.188</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/31/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.563</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/6/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.938</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/22/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.625</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/29/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/18/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.750</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.250</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/1/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.500</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/8/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">96.750</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/17/26</span><span style="font-size:10px;font-weight:700;color:#CC3333;">97.125</span></div>
+    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F0F0F0;font-size:9px;color:#9CA3AF;">Higher base price = better rates for borrowers at same premium floor</div>
+  </div>
+
+<!-- OUTPUTS -->
   <div class="card">
     <div class="card-header">
       <div class="card-header-dot"></div>
@@ -819,6 +827,9 @@
     </svg>
     Copy Quote for Email
   </button>
+    </div>
+
+  </div>
 
 </div>
 
@@ -834,7 +845,7 @@
         </div>
         <div style="text-align:right;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6B6B6B;">Rate Sheet</div>
-          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">June 17, 2026</div>
+          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">June 26, 2026</div>
         </div>
       </div>
     </div>
@@ -852,7 +863,7 @@
     </div>
 
     <!-- Loan Terms -->
-    <div style="padding:10px 32px;border-bottom:1px solid #E5E5E2);">
+    <div style="padding:10px 32px;border-bottom:1px solid #E5E5E2;">
       <div style="font-size:13px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:#C8643A;margin-bottom:16px;">Loan Terms</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div>
@@ -896,36 +907,45 @@
         </div>
         <div>
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Credit Score</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-fico">—</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-fico">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Est. Monthly Rent</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-rent">&#8212;</div>
         </div>
         <div>
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Property Type</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-proptype">—</div>
         </div>
-        <div>
-          <div style="font-size:10px;color:#6B6B6B;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:3px;">Seasoning</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-seasoning">—</div>
-        </div>
-        <div>
-          <div style="font-size:10px;color:#6B6B6B;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:3px;">Occupancy</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-occupancy">—</div>
-        </div>
-        <div id="ts-acqdate-cell" style="display:none;">
-          <div style="font-size:10px;color:#6B6B6B;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:3px;">Acquisition Date</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-acqdate">—</div>
-        </div>
-        <div id="ts-ownership-cell" style="display:none;">
-          <div style="font-size:10px;color:#6B6B6B;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:3px;">Ownership</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-ownership">—</div>
-        </div>
-        <div id="ts-fullowner-cell" style="display:none;">
-          <div style="font-size:10px;color:#6B6B6B;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:3px;">100% Owner?</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-fullowner">—</div>
-        </div>
         <div id="ts-estvalue-cell" style="display:none">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Est. Property Value</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-estvalue">—</div>
         </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Seasoning</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-seasoning">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Occupancy</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-occupancy">&#8212;</div>
+        </div>
+        <div id="ts-acqdate-cell" style="display:none;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Acquisition Date</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-acqdate">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Investor Type</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-investortype">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Experience</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-experience">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">1st Rental Property?</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-firstRental">&#8212;</div>
+        </div>
+
         <div>
           <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8643A;margin-bottom:3px;" id="ts-lo-label">Loan Officer</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-loname-grid">—</div>
@@ -960,7 +980,10 @@
       <!-- Page 2 Header -->
       <div style="background:white;padding:20px 32px 14px;border-bottom:3px solid #C8643A;">
         <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div style="font-size:16px;font-weight:800;color:#1A1A1A;letter-spacing:-0.3px;">Closing Cost Estimate</div>
+                
+      
+
+<div style="font-size:16px;font-weight:800;color:#1A1A1A;letter-spacing:-0.3px;">Closing Cost Estimate</div>
           <div style="text-align:right;">
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;">Prepared</div>
             <div style="font-size:12px;font-weight:700;color:#1A1A1A;" id="ts-cc-date"></div>
@@ -1179,8 +1202,6 @@ function generateTermSheet() {
   }
   if(g('ts-pricedby')) g('ts-pricedby').textContent = g('pricedBy').value;
   if(g('ts-loname')) g('ts-loname').textContent = g('loName') && g('loName').value ? g('loName').value : '--';
-  if(g('ts-loname-grid')) g('ts-loname-grid').textContent = g('loName') && g('loName').value ? g('loName').value : '--';
-  if(g('ts-lophone')) g('ts-lophone').textContent = (g('loPhone') && g('loPhone').value) ? g('loPhone').value : '';
   if(g('ts-loemail')) g('ts-loemail').textContent = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
   const brokerInput = g('brokerNameInput') && g('brokerNameInput').value ? g('brokerNameInput').value : '';
   const jloLabel = g('ts-jlo-label');
@@ -1292,19 +1313,27 @@ function generateTermSheet() {
     }
   }
 
+  if(g('ts-rent')) {
+    var rentVal2 = parseFloat(g('rent')&&g('rent').value?g('rent').value:0)||0;
+    g('ts-rent').textContent = rentVal2>0 ? '$'+Math.round(rentVal2).toLocaleString()+'/mo' : 'Not provided';
+  }
   if(g('ts-seasoning')) g('ts-seasoning').textContent = g('seasoning')&&g('seasoning').value ? g('seasoning').value : 'Not provided';
   if(g('ts-occupancy')) g('ts-occupancy').textContent = g('occupancy') ? g('occupancy').value : '--';
   var isRefiTS = g('purpose') && g('purpose').value !== 'Purchase';
   if(g('ts-acqdate-cell')) g('ts-acqdate-cell').style.display = isRefiTS ? 'block' : 'none';
-  if(g('ts-ownership-cell')) g('ts-ownership-cell').style.display = isRefiTS ? 'block' : 'none';
-  if(g('ts-fullowner-cell')) g('ts-fullowner-cell').style.display = isRefiTS ? 'block' : 'none';
   if(g('ts-acqdate')) {
     var acqRaw = g('acquisitionDate')&&g('acquisitionDate').value ? g('acquisitionDate').value : '';
     if(acqRaw){var ap=acqRaw.split('-');g('ts-acqdate').textContent=ap[1]+'/'+ap[2]+'/'+ap[0];}
     else g('ts-acqdate').textContent='Not provided';
   }
-  if(g('ts-ownership')) g('ts-ownership').textContent = isRefiTS&&g('ownership') ? g('ownership').value : '--';
-  if(g('ts-fullowner')) g('ts-fullowner').textContent = isRefiTS&&g('fullOwner') ? g('fullOwner').value : '--';
+
+  // -- New fields --
+  if(g('ts-investortype')) g('ts-investortype').textContent = g('investorType') ? g('investorType').value : '--';
+  if(g('ts-experience')) g('ts-experience').textContent = g('experience') ? g('experience').value : '--';
+  if(g('ts-firstRental')) g('ts-firstRental').textContent = g('firstRental')&&g('firstRental').value ? g('firstRental').value : 'Not provided';
+
+  // -- LO name --
+  if(g('ts-loname-grid')) g('ts-loname-grid').textContent = g('loName')&&g('loName').value ? g('loName').value : '--';
 
   g('termSheetModal').style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -1337,9 +1366,9 @@ function printTermSheet() {
 
 // --- DATA --------------------------------------------------------------------
 
-const RATES_30Y = [[6.0,97.125],[6.125,97.875],[6.25,98.625],[6.375,99.375],[6.5,100.125],[6.625,100.875],[6.75,101.625],[6.875,102.375],[7.0,103.125],[7.125,103.78125],[7.25,104.34375],[7.375,104.90625],[7.5,105.375],[7.625,105.75],[7.75,106.125],[7.875,106.4375],[8.0,106.6875],[8.125,106.9375],[8.25,107.1875],[8.375,107.4375],[8.5,107.6875],[8.625,107.9375],[8.75,108.1875],[8.875,108.4375],[9.0,108.6875],[9.125,108.9375],[9.25,109.1875],[9.375,109.4375],[9.5,109.6875],[9.625,109.9375],[9.75,110.1875],[9.875,110.4375],[10.0,110.6875],[10.125,110.9375],[10.25,111.1875]];
+const RATES_30Y = [[6.0,97.875],[6.125,98.625],[6.25,99.375],[6.375,100.125],[6.5,100.875],[6.625,101.625],[6.75,102.375],[6.875,103.125],[7.0,103.78125],[7.125,104.34375],[7.25,104.90625],[7.375,105.375],[7.5,105.75],[7.625,106.125],[7.75,106.4375],[7.875,106.6875],[8.0,106.9375],[8.125,107.1875],[8.25,107.4375],[8.375,107.6875],[8.5,107.9375],[8.625,108.1875],[8.75,108.4375],[8.875,108.6875],[9.0,108.9375],[9.125,109.1875],[9.25,109.4375],[9.375,109.6875],[9.5,109.9375],[9.625,110.1875],[9.75,110.4375],[9.875,110.6875],[10.0,110.9375],[10.125,111.1875],[10.25,111.4375]];
 
-const RATES_ARM = [[6.0,97.625],[6.125,98.375],[6.25,99.125],[6.375,99.875],[6.5,100.625],[6.625,101.375],[6.75,102.125],[6.875,102.875],[7.0,103.575],[7.125,104.18125],[7.25,104.69375],[7.375,105.20625],[7.5,105.625],[7.625,105.95],[7.75,106.325],[7.875,106.6375],[8.0,106.8875],[8.125,107.1375],[8.25,107.3875],[8.375,107.6375],[8.5,107.8875],[8.625,108.1375],[8.75,108.3875],[8.875,108.6375],[9.0,108.8875],[9.125,109.1375],[9.25,109.3875],[9.375,109.6375],[9.5,109.8875],[9.625,110.1375],[9.75,110.3875],[9.875,110.6375],[10.0,110.8875],[10.125,111.1375],[10.25,111.3875]];
+const RATES_ARM = [[6.0,98.375],[6.125,99.125],[6.25,99.875],[6.375,100.625],[6.5,101.375],[6.625,102.125],[6.75,102.875],[6.875,103.625],[7.0,104.23125],[7.125,104.74375],[7.25,105.25625],[7.375,105.675],[7.5,106],[7.625,106.325],[7.75,106.6375],[7.875,106.8875],[8.0,107.1375],[8.125,107.3875],[8.25,107.6375],[8.375,107.8875],[8.5,108.1375],[8.625,108.3875],[8.75,108.6375],[8.875,108.8875],[9.0,109.1375],[9.125,109.3875],[9.25,109.6375],[9.375,109.8875],[9.5,110.1375],[9.625,110.3875],[9.75,110.6375],[9.875,110.8875],[10.0,111.1375],[10.125,111.3875],[10.25,111.6375]];
 
 const LTV_COLS = [0.50,0.55,0.60,0.65,0.70,0.75,0.80];
 
@@ -1833,13 +1862,13 @@ function copyToEmail(){
   var liquid=isPurch?reserves+(downPmt+closing):(netPos<0?reserves+cashCls:reserves);
   var SEP='================================================';
   var t='CREBRID -- DSCR LOAN QUOTE\n';
-  t+='Date: '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'  |  Rate Sheet: 6/17/26\n';
+  t+='Date: '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'  |  Rate Sheet: 6/26/26\n';
   t+=SEP+'\n\n';
   t+='RATE TREND (30Y 6% Base)\n';
   t+='  3/12/26: 98.750  3/27/26: 97.188  3/31/26: 97.563  4/6/26:  97.938\n';
   t+='  4/22/26: 98.625  4/29/26: 97.875  5/15/26: 97.875  5/18/26: 97.750\n';
   t+='  5/27/26: 98.250  6/1/26:  97.500  6/8/26:  96.750  6/15/26: 97.875\n';
-  t+='  6/17/26: 97.125 (current)\n\n';
+  t+='  6/17/26: 97.125  6/26/26: 97.875 (current)\n\n';
   t+='BORROWER & PROPERTY\n';
   t+='  Borrower:          '+borrower+'\n';
   t+='  Property:          '+addr+'\n';
@@ -1869,8 +1898,6 @@ function copyToEmail(){
     var acqC=g('acquisitionDate')&&g('acquisitionDate').value?g('acquisitionDate').value:'';
     var acqD=''; if(acqC){var ap=acqC.split('-');acqD=ap[1]+'/'+ap[2]+'/'+ap[0];}
     t+='  Acquisition Date:  '+(acqD||'Not provided')+'\n';
-    t+='  Ownership:         '+(g('ownership')?g('ownership').value:'--')+'\n';
-    t+='  100% Owner:        '+(g('fullOwner')?g('fullOwner').value:'--')+'\n';
   }
   t+='  Status:            '+(g('outIndicator')?g('outIndicator').textContent:'--')+'\n';
   t+='\nMONTHLY EXPENSES\n';
@@ -1894,6 +1921,10 @@ function copyToEmail(){
   else t+='  Est. Cash to Close: '+f2(cashCls)+'\n  Liquid Needed: '+f2(liquid)+'\n';
   t+='\n'+SEP+'\nPREPARED BY\n';
   t+='  Loan Officer:      '+loN+'\n';
+  var jloVal=(g('jloName')&&g('jloName').value)?g('jloName').value:'';
+  if(jloVal) t+='  Junior LO:         '+jloVal+'\n';
+  var bkrVal=(g('brokerNameInput')&&g('brokerNameInput').value)?g('brokerNameInput').value:'';
+  if(bkrVal) t+='  Broker:            '+bkrVal+'\n';
   t+='  Priced By:         '+pb+'\n';
   if(notes) t+='\nNOTES\n  '+notes+'\n';
   t+='\n'+SEP+'\nCrebrid LLC -- 8343 Douglas Ave Suite 750 -- Dallas TX 75225\nFor informational purposes only.\n';
