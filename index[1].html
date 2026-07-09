@@ -1,5 +1,4 @@
-
-  showRefiFields();<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -84,7 +83,7 @@
   }
 
   /* CONTAINER */
-  .container { padding: 14px 14px 0; max-width: 480px; margin: 0 auto; }
+  .container { padding: 0 20px; max-width: 1080px; margin: 0 auto; }
 
   /* CARDS */
   .card {
@@ -399,6 +398,7 @@
     background: var(--border);
     margin: 4px 16px;
   }
+  @media (max-width: 740px) { .container > div[style] { grid-template-columns: 1fr !important; } }
 </style>
 </head>
 <body>
@@ -410,37 +410,16 @@
     <h1>Crebrid LO Pricer</h1>
     <p>Professional Investor · LO Version</p>
   </div>
-  <div class="date-pill">6/17/26</div>
+  <div class="date-pill">6/26/26</div>
 </header>
 
 <div class="container">
-  <!-- Rate Trend Indicator -->
-  <div style="background:white;border:1px solid #E5E5E2;border-radius:12px;padding:14px 16px;margin-bottom:12px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B6B6B;">Rate Trend (30Y 6% Base)</div>
-      <div style="display:flex;gap:8px;">
-        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 1.625 pts from best</span>
-        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 0.750 pts vs last sheet</span>
-      </div>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/12/26</span><span style="font-size:10px;font-weight:700;color:#2D7A5F;">98.750</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.188</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/31/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.563</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/6/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.938</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/22/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.625</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/29/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/18/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.750</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.250</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/1/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.500</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/8/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">96.750</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/17/26</span><span style="font-size:10px;font-weight:700;color:#CC3333;">97.125</span></div>
-    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F0F0F0;font-size:9px;color:#9CA3AF;">Higher base price = better rates for borrowers at same premium floor</div>
-  </div>
 
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
 
-  <!-- INPUTS -->
+    <!-- ── LEFT COLUMN ── -->
+    <div>
+<!-- INPUTS -->
   <div class="card">
     <div class="card-header">
       <div class="card-header-dot"></div>
@@ -533,6 +512,14 @@
       </select>
     </div>
     <div class="field">
+      <label>1st Rental Property? <span style="color:#CC3333;font-size:10px;">(required)</span></label>
+      <select id="firstRental">
+        <option value="">-- Select --</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+    <div class="field">
       <label>Seasoning <span style="color:#CC3333;font-size:10px;">(required)</span></label>
       <select id="seasoning" onchange="calculate()">
         <option value="">-- Select --</option>
@@ -549,22 +536,8 @@
       </select>
     </div>
     <div class="field" id="field-acqdate" style="display:none;">
-      <label>Acquisition Date</label>
-      <input type="date" id="acquisitionDate" onchange="calcSeasoningFromDate()">
-    </div>
-    <div class="field" id="field-ownership" style="display:none;">
-      <label>Ownership</label>
-      <select id="ownership">
-        <option value="LLC">LLC</option>
-        <option value="Personal">Personal</option>
-      </select>
-    </div>
-    <div class="field" id="field-fullowner" style="display:none;">
-      <label>100% Owner?</label>
-      <select id="fullOwner">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-      </select>
+      <label>Acquisition Date <span style="color:#CC3333;font-size:10px;">(required)</span></label>
+      <input type="date" id="acquisitionDate" required onchange="calcSeasoningFromDate()">
     </div>
     <div class="field">
       <label>STR?</label>
@@ -618,8 +591,37 @@
     </div>
     <div class="dscr-note" id="dscrCalcNote">Enter monthly expenses to auto-calculate DSCR</div>
   </div>
+    </div>
 
-  <!-- OUTPUTS -->
+    <!-- ── RIGHT COLUMN ── -->
+    <div>
+  <!-- Rate Trend Indicator -->
+  <div style="background:white;border:1px solid #E5E5E2;border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B6B6B;">Rate Trend (30Y 6% Base)</div>
+      <div style="display:flex;gap:8px;">
+        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 0.875 pts from best</span>
+        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">^ 0.750 pts vs last sheet</span>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/12/26</span><span style="font-size:10px;font-weight:700;color:#2D7A5F;">98.750</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.188</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/31/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.563</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/6/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.938</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/22/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.625</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">4/29/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/18/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.750</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">5/27/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">98.250</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/1/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.500</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/8/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">96.750</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/15/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.875</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/17/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.125</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">6/26/26</span><span style="font-size:10px;font-weight:700;color:#CC3333;">97.875</span></div>
+    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F0F0F0;font-size:9px;color:#9CA3AF;">Higher base price = better rates for borrowers at same premium floor</div>
+  </div>
+
+<!-- OUTPUTS -->
   <div class="card">
     <div class="card-header">
       <div class="card-header-dot"></div>
@@ -826,6 +828,9 @@
     </svg>
     Copy Quote for Email
   </button>
+    </div>
+
+  </div>
 
 </div>
 
@@ -841,7 +846,7 @@
         </div>
         <div style="text-align:right;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6B6B6B;">Rate Sheet</div>
-          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">June 17, 2026</div>
+          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">June 26, 2026</div>
         </div>
       </div>
     </div>
@@ -859,7 +864,7 @@
     </div>
 
     <!-- Loan Terms -->
-    <div style="padding:10px 32px;border-bottom:1px solid #E5E5E2);">
+    <div style="padding:10px 32px;border-bottom:1px solid #E5E5E2;">
       <div style="font-size:13px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:#C8643A;margin-bottom:16px;">Loan Terms</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div>
@@ -903,36 +908,45 @@
         </div>
         <div>
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Credit Score</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-fico">—</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-fico">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Est. Monthly Rent</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-rent">&#8212;</div>
         </div>
         <div>
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Property Type</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-proptype">—</div>
         </div>
-        <div>
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Seasoning</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-seasoning">—</div>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Occupancy</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-occupancy">—</div>
-        </div>
-        <div id="ts-acqdate-cell" style="display:none;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Acquisition Date</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-acqdate">—</div>
-        </div>
-        <div id="ts-ownership-cell" style="display:none;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Ownership</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-ownership">—</div>
-        </div>
-        <div id="ts-fullowner-cell" style="display:none;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">100% Owner?</div>
-          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-fullowner">—</div>
-        </div>
         <div id="ts-estvalue-cell" style="display:none">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Est. Property Value</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-estvalue">—</div>
         </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Seasoning</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-seasoning">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Occupancy</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-occupancy">&#8212;</div>
+        </div>
+        <div id="ts-acqdate-cell" style="display:none;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Acquisition Date</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-acqdate">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Investor Type</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-investortype">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">Experience</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-experience">&#8212;</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#6B6B6B;margin-bottom:3px;">1st Rental Property?</div>
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-firstRental">&#8212;</div>
+        </div>
+
         <div>
           <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8643A;margin-bottom:3px;" id="ts-lo-label">Loan Officer</div>
           <div style="font-size:14px;font-weight:700;color:#1A1A1A;" id="ts-loname-grid">—</div>
@@ -967,7 +981,10 @@
       <!-- Page 2 Header -->
       <div style="background:white;padding:20px 32px 14px;border-bottom:3px solid #C8643A;">
         <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div style="font-size:16px;font-weight:800;color:#1A1A1A;letter-spacing:-0.3px;">Closing Cost Estimate</div>
+                
+      
+
+<div style="font-size:16px;font-weight:800;color:#1A1A1A;letter-spacing:-0.3px;">Closing Cost Estimate</div>
           <div style="text-align:right;">
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;">Prepared</div>
             <div style="font-size:12px;font-weight:700;color:#1A1A1A;" id="ts-cc-date"></div>
@@ -1100,6 +1117,7 @@
               <div style="font-size:11px;color:#065F46;">Loan Amount − Payoff &amp; Closing Costs =</div>
             </div>
             <div style="font-size:22px;font-weight:800;color:#065F46;" id="ts-cc-cashback">—</div>
+              <div id="ts-cc-cashback-note" style="display:none;font-size:9px;color:#065F46;font-weight:600;margin-top:3px;"></div>
           </div>
         </div>
       </div>
@@ -1186,7 +1204,6 @@ function generateTermSheet() {
   }
   if(g('ts-pricedby')) g('ts-pricedby').textContent = g('pricedBy').value;
   if(g('ts-loname')) g('ts-loname').textContent = g('loName') && g('loName').value ? g('loName').value : '--';
-  if(g('ts-lophone')) g('ts-lophone').textContent = (g('loPhone') && g('loPhone').value) ? g('loPhone').value : '';
   if(g('ts-loemail')) g('ts-loemail').textContent = g('loEmail') && g('loEmail').value ? g('loEmail').value : '';
   const brokerInput = g('brokerNameInput') && g('brokerNameInput').value ? g('brokerNameInput').value : '';
   const jloLabel = g('ts-jlo-label');
@@ -1277,12 +1294,21 @@ function generateTermSheet() {
     if(g2('ts-cc-liquid'))            g2('ts-cc-liquid').textContent = fmt2(reservesAmt + cashFromBorrower);
   } else {
     // Refi: net position
+    const isRT = purposeVal === 'Rate/Term Refinance';
     const netPosition = loanAmt2 - payoff - closingCostsOnly;
     if(netPosition >= 0) {
       // Cash back to borrower
       if(g2('ts-cc-cashback-section'))  g2('ts-cc-cashback-section').style.display  = 'block';
       if(g2('ts-cc-cashclose-section')) g2('ts-cc-cashclose-section').style.display = 'none';
-      if(g2('ts-cc-cashback'))          g2('ts-cc-cashback').textContent = fmt2(netPosition);
+      if(g2('ts-cc-cashback')) {
+        const maxCashBack = isRT ? loanAmt2 * 0.02 : Infinity;
+        const cappedCashBack = Math.min(netPosition, maxCashBack);
+        g2('ts-cc-cashback').textContent = fmt2(cappedCashBack);
+        if(g2('ts-cc-cashback-note')) {
+          g2('ts-cc-cashback-note').style.display = (isRT && netPosition > maxCashBack) ? 'block' : 'none';
+          g2('ts-cc-cashback-note').textContent = '2% Cash-Back Limit Per Crebrid Guidelines';
+        }
+      }
       // Liquid assets = 3-month reserves only (cash back covers closing)
       if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display = 'none';
     } else {
@@ -1297,6 +1323,28 @@ function generateTermSheet() {
       if(g2('ts-cc-liquid'))            g2('ts-cc-liquid').textContent = fmt2(reservesAmt + Math.abs(netPosition));
     }
   }
+
+  if(g('ts-rent')) {
+    var rentVal2 = parseFloat(g('rent')&&g('rent').value?g('rent').value:0)||0;
+    g('ts-rent').textContent = rentVal2>0 ? '$'+Math.round(rentVal2).toLocaleString()+'/mo' : 'Not provided';
+  }
+  if(g('ts-seasoning')) g('ts-seasoning').textContent = g('seasoning')&&g('seasoning').value ? g('seasoning').value : 'Not provided';
+  if(g('ts-occupancy')) g('ts-occupancy').textContent = g('occupancy') ? g('occupancy').value : '--';
+  var isRefiTS = g('purpose') && g('purpose').value !== 'Purchase';
+  if(g('ts-acqdate-cell')) g('ts-acqdate-cell').style.display = isRefiTS ? 'block' : 'none';
+  if(g('ts-acqdate')) {
+    var acqRaw = g('acquisitionDate')&&g('acquisitionDate').value ? g('acquisitionDate').value : '';
+    if(acqRaw){var ap=acqRaw.split('-');g('ts-acqdate').textContent=ap[1]+'/'+ap[2]+'/'+ap[0];}
+    else g('ts-acqdate').textContent='Not provided';
+  }
+
+  // -- New fields --
+  if(g('ts-investortype')) g('ts-investortype').textContent = g('investorType') ? g('investorType').value : '--';
+  if(g('ts-experience')) g('ts-experience').textContent = g('experience') ? g('experience').value : '--';
+  if(g('ts-firstRental')) g('ts-firstRental').textContent = g('firstRental')&&g('firstRental').value ? g('firstRental').value : 'Not provided';
+
+  // -- LO name --
+  if(g('ts-loname-grid')) g('ts-loname-grid').textContent = g('loName')&&g('loName').value ? g('loName').value : '--';
 
   g('termSheetModal').style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -1329,9 +1377,9 @@ function printTermSheet() {
 
 // --- DATA --------------------------------------------------------------------
 
-const RATES_30Y = [[6.0,97.125],[6.125,97.875],[6.25,98.625],[6.375,99.375],[6.5,100.125],[6.625,100.875],[6.75,101.625],[6.875,102.375],[7.0,103.125],[7.125,103.78125],[7.25,104.34375],[7.375,104.90625],[7.5,105.375],[7.625,105.75],[7.75,106.125],[7.875,106.4375],[8.0,106.6875],[8.125,106.9375],[8.25,107.1875],[8.375,107.4375],[8.5,107.6875],[8.625,107.9375],[8.75,108.1875],[8.875,108.4375],[9.0,108.6875],[9.125,108.9375],[9.25,109.1875],[9.375,109.4375],[9.5,109.6875],[9.625,109.9375],[9.75,110.1875],[9.875,110.4375],[10.0,110.6875],[10.125,110.9375],[10.25,111.1875]];
+const RATES_30Y = [[6.0,97.875],[6.125,98.625],[6.25,99.375],[6.375,100.125],[6.5,100.875],[6.625,101.625],[6.75,102.375],[6.875,103.125],[7.0,103.78125],[7.125,104.34375],[7.25,104.90625],[7.375,105.375],[7.5,105.75],[7.625,106.125],[7.75,106.4375],[7.875,106.6875],[8.0,106.9375],[8.125,107.1875],[8.25,107.4375],[8.375,107.6875],[8.5,107.9375],[8.625,108.1875],[8.75,108.4375],[8.875,108.6875],[9.0,108.9375],[9.125,109.1875],[9.25,109.4375],[9.375,109.6875],[9.5,109.9375],[9.625,110.1875],[9.75,110.4375],[9.875,110.6875],[10.0,110.9375],[10.125,111.1875],[10.25,111.4375]];
 
-const RATES_ARM = [[6.0,97.625],[6.125,98.375],[6.25,99.125],[6.375,99.875],[6.5,100.625],[6.625,101.375],[6.75,102.125],[6.875,102.875],[7.0,103.575],[7.125,104.18125],[7.25,104.69375],[7.375,105.20625],[7.5,105.625],[7.625,105.95],[7.75,106.325],[7.875,106.6375],[8.0,106.8875],[8.125,107.1375],[8.25,107.3875],[8.375,107.6375],[8.5,107.8875],[8.625,108.1375],[8.75,108.3875],[8.875,108.6375],[9.0,108.8875],[9.125,109.1375],[9.25,109.3875],[9.375,109.6375],[9.5,109.8875],[9.625,110.1375],[9.75,110.3875],[9.875,110.6375],[10.0,110.8875],[10.125,111.1375],[10.25,111.3875]];
+const RATES_ARM = [[6.0,98.375],[6.125,99.125],[6.25,99.875],[6.375,100.625],[6.5,101.375],[6.625,102.125],[6.75,102.875],[6.875,103.625],[7.0,104.23125],[7.125,104.74375],[7.25,105.25625],[7.375,105.675],[7.5,106],[7.625,106.325],[7.75,106.6375],[7.875,106.8875],[8.0,107.1375],[8.125,107.3875],[8.25,107.6375],[8.375,107.8875],[8.5,108.1375],[8.625,108.3875],[8.75,108.6375],[8.875,108.8875],[9.0,109.1375],[9.125,109.3875],[9.25,109.6375],[9.375,109.8875],[9.5,110.1375],[9.625,110.3875],[9.75,110.6375],[9.875,110.8875],[10.0,111.1375],[10.125,111.3875],[10.25,111.6375]];
 
 const LTV_COLS = [0.50,0.55,0.60,0.65,0.70,0.75,0.80];
 
@@ -1568,7 +1616,11 @@ function calculate(forceRate) {
     chk('Max LTV -- Purchase/R&T', effLtv <= maxP, `Eff. LTV=${effLtv}% / Max=${maxP}%`);
   }
 
-  if (isFN) {
+  if(fico >= 660 && fico < 680 && ltv > 75) chk('FICO 660-679: Max LTV 75%', false, 'FICO='+fico+' / LTV='+ltv+'%');
+  if(fico >= 660 && fico < 680 && purpose === 'Cash-Out Refinance' && ltv > 70) chk('FICO 660-679: Cash-Out Max 70%', false, 'FICO='+fico+' / LTV='+ltv+'%');
+  if(fico >= 680 && fico < 700 && purpose === 'Cash-Out Refinance' && ltv > 75) chk('FICO 680-699: Cash-Out Max 75%', false, 'FICO='+fico+' / LTV='+ltv+'%');
+
+    if (isFN) {
     
     if (purpose === 'Cash-Out Refinance') {
       chk('FN Cash-Out: Max LTV 50%', ltv <= 50, 'LTV='+ltv+'% / FN Cash-Out max=50%');
@@ -1578,22 +1630,12 @@ function calculate(forceRate) {
   }
 
   if (exp0) chk('Experience 0: eff. LTV reduced -5%', true, `Eff. LTV=${effLtv}%`);
-
-  // Seasoning checks
   var seasoning = document.getElementById('seasoning') ? document.getElementById('seasoning').value : '';
   var isPurchaseOrDF = purpose === 'Purchase' || purpose === 'Delayed Financing';
-  if (!seasoning && !isPurchaseOrDF) {
-    chk('Seasoning required', false, 'Please select a seasoning period');
-  }
-  if (seasoning === '0-3M' && !isPurchaseOrDF) {
-    chk('Seasoning 0-3M: Ineligible', false, 'Cash-Out/Rate-Term require 3M+ seasoning');
-  }
-  if (seasoning === '3-6M' && purpose === 'Cash-Out Refinance' && ltv > 70) {
-    chk('Seasoning 3-6M: Cash-Out Max 70%', false, 'LTV='+ltv+'% / Max=70% with 3-6M seasoning');
-  }
-  if (seasoning === '3-6M' && purpose === 'Rate/Term Refinance' && ltv > 75) {
-    chk('Seasoning 3-6M: Rate/Term Max 75%', false, 'LTV='+ltv+'% / Max=75% with 3-6M seasoning');
-  }
+  if (!seasoning && !isPurchaseOrDF) chk('Seasoning required', false, 'Please select a seasoning period');
+  if (seasoning === '0-3M' && !isPurchaseOrDF) chk('Seasoning 0-3M: Ineligible', false, 'Requires 3M+ seasoning');
+  if (seasoning === '3-6M' && purpose === 'Cash-Out Refinance' && ltv > 70) chk('Seasoning 3-6M: Cash-Out Max 70%', false, 'LTV='+ltv+'%');
+  if (seasoning === '3-6M' && purpose === 'Rate/Term Refinance' && ltv > 75) chk('Seasoning 3-6M: Rate/Term Max 75%', false, 'LTV='+ltv+'%');
 
   // LTV index
   const ltvDec = ltv / 100;
@@ -1801,50 +1843,110 @@ function updateCalcLoan(){
 // --- COPY TO EMAIL -----------------------------------------------------------
 
 function copyToEmail(){
-  const g=id=>document.getElementById(id);
-  const text=`CREBRID -- LUXURY DSCR QUOTE SUMMARY
-Date: ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
-Rate Sheet: June 17, 2026
-??????????????????????????????????
-
-LOAN INPUTS
-  Credit Score:     ${g('fico').value}
-  LTV:              ${g('ltv').value}%
-  Loan Amount:      $${parseInt(g('loanAmt').value).toLocaleString()}
-  DSCR:             ${parseFloat(g('dscr').value).toFixed(2)}x
-  Product:          ${g('product').value}
-  Property Type:    ${g('propType').value}
-  Purpose:          ${g('purpose').value}
-  Investor Type:    ${g('investorType').value}
-  Prepay Period:    ${g('prepay').value} months
-  Experience:       ${g('experience').value}
-  Seasoning:        ${g('seasoning')&&g('seasoning').value?g('seasoning').value:'Not provided'}
-  Occupancy:        ${g('occupancy')?g('occupancy').value:'--'}
-${g('purpose')&&g('purpose').value!=='Purchase'?`  Acquisition Date: ${(function(){var a=g('acquisitionDate')&&g('acquisitionDate').value?g('acquisitionDate').value:'';if(a){var p=a.split('-');return p[1]+'/'+p[2]+'/'+p[0];}return 'Not provided';})()}
-  Ownership:        ${g('ownership')?g('ownership').value:'--'}
-  100% Owner:       ${g('fullOwner')?g('fullOwner').value:'--'}`:''}
-  STR:              ${g('str').value}
-  Foreign National: ${g('fn').value}
-  Credit Event:     ${g('creditEvent').value}
-
-PRICING OUTPUT
-  ** RATE IS FLOATING UNTIL LOCKED **
-  Selected Rate:    ${g('outRate').textContent}
-  Monthly PITIA:    ${g('outPI').textContent}
-  Origination Fee:  ${g('originationFee').value}
-  Status:           ${g('outIndicator').textContent}
-
-??????????????????????????????????
-Priced By: ${g('pricedBy').value}
-Crebrid LLC - 8343 Douglas Ave, Suite 750 - Dallas, TX 75225
-(972) 525-4777 - www.crebrid.com
-
-*Pricing indicative only. Subject to change. For internal use.*`;
-
-  navigator.clipboard.writeText(text).then(()=>{
-    const toast=document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(()=>toast.classList.remove('show'),2500);
+  var g=function(id){return document.getElementById(id);};
+  var f2=function(n){return '$'+Math.round(n).toLocaleString();};
+  var borrower=(g('borrowerName')&&g('borrowerName').value)||'Not provided';
+  var addr=[g('propertyAddress')&&g('propertyAddress').value,g('propertyCity')&&g('propertyCity').value].filter(Boolean).join(', ')||'Not provided';
+  var loN=(g('loName')&&g('loName').value)||'--';
+  var pb=(g('pricedBy')&&g('pricedBy').value)||'--';
+  var notes=(g('quoteNotes')&&g('quoteNotes').value)||'';
+  var purpose=g('purpose')?g('purpose').value:'--';
+  var loanAmt2=parseFloat(g('loanAmt')?g('loanAmt').value:0)||0;
+  var estVal2=parseFloat(g('estValue')&&g('estValue').value?g('estValue').value:0)||0;
+  var pitia2=parseFloat((g('outPI')?g('outPI').textContent:'0').replace(/[^0-9.]/g,''))||0;
+  var origPct=parseFloat((g('originationFee')?g('originationFee').value:'0').replace('%',''))/100;
+  var payoff=parseFloat(g('loanPayoff')&&g('loanPayoff').value?g('loanPayoff').value:0)||0;
+  var taxesVal=parseFloat(g('monthlyTaxes')&&g('monthlyTaxes').value?g('monthlyTaxes').value:0)||0;
+  var insVal=parseFloat(g('monthlyInsurance')&&g('monthlyInsurance').value?g('monthlyInsurance').value:0)||0;
+  var hoaVal=parseFloat(g('hoa')&&g('hoa').value?g('hoa').value:0)||0;
+  var rentVal=parseFloat(g('rent')&&g('rent').value?g('rent').value:0)||0;
+  var isPurch=purpose==='Purchase'; var isRT=purpose==='Rate/Term Refinance'; var isRefi=purpose!=='Purchase';
+  var origAmt=loanAmt2*origPct; var titleAmt=loanAmt2*0.01;
+  var annIns=insVal*12; var annTax=taxesVal*12;
+  var insAmt=annIns>0?annIns:loanAmt2*0.01;
+  var downPmt=isPurch&&estVal2>loanAmt2?estVal2-loanAmt2:0;
+  var reserves=pitia2*3; var closing=origAmt+1999+titleAmt+insAmt+annTax;
+  var totalCC=isPurch?downPmt+closing:closing+payoff;
+  var netPos=loanAmt2-payoff-closing;
+  var cashBack=netPos>=0?Math.min(netPos,isRT?loanAmt2*0.02:Infinity):0;
+  var cashCls=netPos<0?Math.abs(netPos):0;
+  var liquid=isPurch?reserves+(downPmt+closing):(netPos<0?reserves+cashCls:reserves);
+  var SEP='================================================';
+  var t='CREBRID -- DSCR LOAN QUOTE\n';
+  t+='Date: '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'  |  Rate Sheet: 6/26/26\n';
+  t+=SEP+'\n\n';
+  t+='RATE TREND (30Y 6% Base)\n';
+  t+='  3/12/26: 98.750  3/27/26: 97.188  3/31/26: 97.563  4/6/26:  97.938\n';
+  t+='  4/22/26: 98.625  4/29/26: 97.875  5/15/26: 97.875  5/18/26: 97.750\n';
+  t+='  5/27/26: 98.250  6/1/26:  97.500  6/8/26:  96.750  6/15/26: 97.875\n';
+  t+='  6/17/26: 97.125  6/26/26: 97.875 (current)\n\n';
+  t+='BORROWER & PROPERTY\n';
+  t+='  Borrower:          '+borrower+'\n';
+  t+='  Property:          '+addr+'\n';
+  if(estVal2>0) t+='  Est. Value:        $'+estVal2.toLocaleString()+'\n';
+  t+='  Loan Type:         '+purpose+'\n\n';
+  t+='LOAN TERMS\n';
+  t+='  ** RATE IS FLOATING UNTIL LOCKED **\n';
+  t+='  Rate:              '+(g('outRate')?g('outRate').textContent:'--')+'\n';
+  t+='  Product:           '+(g('product')?g('product').value:'--')+'\n';
+  t+='  Loan Amount:       $'+parseInt(loanAmt2).toLocaleString()+'\n';
+  t+='  LTV:               '+(g('ltv')?g('ltv').value:'--')+'%\n';
+  t+='  DSCR:              '+parseFloat(g('dscr')&&g('dscr').value?g('dscr').value:0).toFixed(2)+'x\n';
+  t+='  Monthly PITIA:     '+(g('outPI')?g('outPI').textContent:'--')+'\n';
+  t+='  Monthly P&I:       '+(g('outPI_raw')?g('outPI_raw').textContent:'--')+'\n';
+  t+='  Prepayment:        '+(g('prepay')?g('prepay').value:'--')+' Months\n';
+  t+='  Credit Score:      '+(g('fico')?g('fico').value:'--')+'\n';
+  t+='  Property Type:     '+(g('propType')?g('propType').value:'--')+'\n';
+  t+='  Investor Type:     '+(g('investorType')?g('investorType').value:'--')+'\n';
+  t+='  Origination:       '+(g('originationFee')?g('originationFee').value:'--')+'\n';
+  t+='  STR:               '+(g('str')?g('str').value:'--')+'\n';
+  t+='  Foreign National:  '+(g('fn')?g('fn').value:'--')+'\n';
+  t+='  Credit Event:      '+(g('creditEvent')?g('creditEvent').value:'--')+'\n';
+  t+='  Experience:        '+(g('experience')?g('experience').value:'--')+'\n';
+  t+='  Seasoning:         '+(g('seasoning')&&g('seasoning').value?g('seasoning').value:'Not provided')+'\n';
+  t+='  Occupancy:         '+(g('occupancy')?g('occupancy').value:'--')+'\n';
+  if(isRefi){
+    var acqC=g('acquisitionDate')&&g('acquisitionDate').value?g('acquisitionDate').value:'';
+    var acqD=''; if(acqC){var ap=acqC.split('-');acqD=ap[1]+'/'+ap[2]+'/'+ap[0];}
+    t+='  Acquisition Date:  '+(acqD||'Not provided')+'\n';
+  }
+  t+='  Status:            '+(g('outIndicator')?g('outIndicator').textContent:'--')+'\n';
+  t+='\nMONTHLY EXPENSES\n';
+  t+='  Est. Rent:         '+(rentVal>0?'$'+Math.round(rentVal).toLocaleString()+'/mo':'Not provided')+'\n';
+  t+='  Monthly Taxes:     '+(taxesVal>0?'$'+Math.round(taxesVal).toLocaleString()+'/mo':'Not provided')+'\n';
+  t+='  Monthly Insurance: '+(insVal>0?'$'+Math.round(insVal).toLocaleString()+'/mo':'Not provided')+'\n';
+  t+='  Monthly HOA:       $'+Math.round(hoaVal).toLocaleString()+'/mo\n';
+  t+='\n'+SEP+'\nCLOSING COST ESTIMATE\n'+SEP+'\n';
+  if(isPurch&&downPmt>0) t+='  Down Payment:      '+f2(downPmt)+'\n';
+  t+='  Origination:       '+f2(origAmt)+' ('+(origPct*100).toFixed(2)+'%)\n';
+  t+='  Processing/UW:     $1,999\n';
+  t+='  Title Est.:        '+f2(titleAmt)+' (1%)\n';
+  t+='  Insurance Est.:    '+f2(insAmt)+'\n';
+  t+='  Annual Taxes:      '+(annTax>0?f2(annTax):'Not provided')+'\n';
+  if(payoff>0&&!isPurch) t+='  Loan Payoff:       '+f2(payoff)+'\n';
+  t+='  --------------------------------\n  Total Est. Costs:  '+f2(totalCC)+'\n\n';
+  t+='RESERVE REQUIREMENT\n  3-Month Reserve:   '+f2(reserves)+'\n\n';
+  t+='NET POSITION\n';
+  if(isPurch) t+='  Cash From Borrower: '+f2(downPmt+closing)+'\n  Liquid Needed: '+f2(liquid)+'\n';
+  else if(netPos>=0) t+='  Est. Cash Back:    '+f2(cashBack)+(isRT?' (2% cap per Crebrid guidelines)':'')+'\n';
+  else t+='  Est. Cash to Close: '+f2(cashCls)+'\n  Liquid Needed: '+f2(liquid)+'\n';
+  t+='\n'+SEP+'\nPREPARED BY\n';
+  t+='  Loan Officer:      '+loN+'\n';
+  var jloVal=(g('jloName')&&g('jloName').value)?g('jloName').value:'';
+  if(jloVal) t+='  Junior LO:         '+jloVal+'\n';
+  var bkrVal=(g('brokerNameInput')&&g('brokerNameInput').value)?g('brokerNameInput').value:'';
+  if(bkrVal) t+='  Broker:            '+bkrVal+'\n';
+  t+='  Priced By:         '+pb+'\n';
+  if(notes) t+='\nNOTES\n  '+notes+'\n';
+  t+='\n'+SEP+'\nCrebrid LLC -- 8343 Douglas Ave Suite 750 -- Dallas TX 75225\nFor informational purposes only.\n';
+  navigator.clipboard.writeText(t).then(function(){
+    var toast=document.getElementById('toast');
+    if(toast){toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2500);}
+  }).catch(function(){
+    var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    var toast=document.getElementById('toast');
+    if(toast){toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2500);}
   });
 }
 
@@ -1881,26 +1983,26 @@ function autoFillJLO() {
 function calcSeasoningFromDate() {
   var acqDate = document.getElementById('acquisitionDate');
   var seasoningSel = document.getElementById('seasoning');
-  if (!acqDate || !acqDate.value || !seasoningSel) return;
+  if(!acqDate||!acqDate.value||!seasoningSel) return;
   var acq = new Date(acqDate.value);
   var now = new Date();
-  var months = (now.getFullYear() - acq.getFullYear()) * 12 + (now.getMonth() - acq.getMonth());
-  if (months < 0) months = 0;
-  if (months < 3) { seasoningSel.value = '0-3M'; }
-  else if (months < 6) { seasoningSel.value = '3-6M'; }
-  else { seasoningSel.value = '6M+'; }
+  var months = (now.getFullYear()-acq.getFullYear())*12+(now.getMonth()-acq.getMonth());
+  if(months<0) months=0;
+  if(months<3) seasoningSel.value='0-3M';
+  else if(months<6) seasoningSel.value='3-6M';
+  else seasoningSel.value='6M+';
   calculate();
 }
 
 function showRefiFields() {
   var purpose = document.getElementById('purpose') ? document.getElementById('purpose').value : '';
   var isRefi = purpose !== 'Purchase';
-  var ids = ['field-acqdate', 'field-ownership', 'field-fullowner'];
-  for (var k = 0; k < ids.length; k++) {
-    var el = document.getElementById(ids[k]);
-    if (el) el.style.display = isRefi ? 'flex' : 'none';
-  }
+  ['field-acqdate','field-ownership','field-fullowner'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.style.display = isRefi ? 'flex' : 'none';
+  });
 }
+
 
 calculate();
 showRefiFields();
