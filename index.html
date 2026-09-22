@@ -410,7 +410,7 @@
     <h1>Crebrid LO Pricer</h1>
     <p>Professional Investor · LO Version</p>
   </div>
-  <div class="date-pill">9/9/26</div>
+  <div class="date-pill">9/17/26</div>
 </header>
 
 <div class="container">
@@ -608,8 +608,8 @@
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B6B6B;">Rate Trend (30Y 6% Base)</div>
       <div style="display:flex;gap:8px;">
-        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 2.750 pts from best</span>
-        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">v 0.750 pts vs last sheet</span>
+        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">= 0.000 pts from best</span>
+        <span style="font-size:10px;font-weight:700;color:#CC3333;background:#FFEEEE;padding:2px 7px;border-radius:20px;">^ 2.750 pts vs last sheet</span>
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">3/12/26</span><span style="font-size:10px;font-weight:700;color:#2D7A5F;">98.750</span></div>
@@ -632,7 +632,8 @@
     <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">8/7/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.500</span></div>
     <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">8/25/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">97.375</span></div>
     <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">8/31/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">96.750</span></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">9/9/26</span><span style="font-size:10px;font-weight:700;color:#CC3333;">96.000</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">9/9/26</span><span style="font-size:10px;font-weight:700;color:#1A1A1A;">96.000</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#6B6B6B;font-size:10px;">9/17/26</span><span style="font-size:10px;font-weight:700;color:#2D7A5F;">98.75</span></div>
     <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F0F0F0;font-size:9px;color:#9CA3AF;">Higher base price = better rates for borrowers at same premium floor</div>
   </div>
 
@@ -860,7 +861,7 @@
         </div>
         <div style="text-align:right;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6B6B6B;">Rate Sheet</div>
-          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">September 9, 2026</div>
+          <div style="font-size:13px;font-weight:700;color:#1A1A1A;">September 17, 2026</div>
         </div>
       </div>
     </div>
@@ -1393,9 +1394,9 @@ function printTermSheet() {
 
 // --- DATA --------------------------------------------------------------------
 
-const RATES_30Y = [[6.0,96],[6.125,96.75],[6.25,97.5],[6.375,98.25],[6.5,99],[6.625,99.75],[6.75,100.5],[6.875,101.25],[7.0,102],[7.125,102.75],[7.25,103.40625],[7.375,103.96875],[7.5,104.53125],[7.625,105],[7.75,105.375],[7.875,105.75],[8.0,106.0625],[8.125,106.3125],[8.25,106.5625],[8.375,106.8125],[8.5,107.0625],[8.625,107.3125],[8.75,107.5625],[8.875,107.8125],[9.0,108.0625],[9.125,108.3125],[9.25,108.5625],[9.375,108.8125],[9.5,109.0625],[9.625,109.3125],[9.75,109.5625],[9.875,109.8125],[10.0,110.0625],[10.125,110.3125],[10.25,110.5625]];
+const RATES_30Y = [[6.625,98.75],[6.75,99.5],[6.875,100.25],[7.0,101],[7.125,101.75],[7.25,102.5],[7.375,103.25],[7.5,103.6875],[7.625,104.125],[7.75,104.5625],[7.875,105],[8.0,105.4375],[8.125,105.6875],[8.25,105.9375],[8.375,106.1875],[8.5,106.4375],[8.625,106.6875],[8.75,106.9375],[8.875,107.1875],[9.0,107.4375],[9.125,107.6875],[9.25,107.9375],[9.375,108.1875],[9.5,108.4375],[9.625,108.6875],[9.75,108.9375],[9.875,109.1875],[10.0,109.4375],[10.125,109.6875],[10.25,109.9375],[10.375,110.1875],[10.5,110.4375],[10.625,110.6875],[10.75,110.9375],[10.875,111.1875]];
 
-const RATES_ARM = [[6.0,96.5],[6.125,97.25],[6.25,98],[6.375,98.75],[6.5,99.5],[6.625,100.25],[6.75,101],[6.875,101.75],[7.0,102.45],[7.125,103.15],[7.25,103.75625],[7.375,104.26875],[7.5,104.78125],[7.625,105.2],[7.75,105.575],[7.875,105.95],[8.0,106.2625],[8.125,106.5125],[8.25,106.7625],[8.375,107.0125],[8.5,107.2625],[8.625,107.5125],[8.75,107.7625],[8.875,108.0125],[9.0,108.2625],[9.125,108.5125],[9.25,108.7625],[9.375,109.0125],[9.5,109.2625],[9.625,109.5125],[9.75,109.7625],[9.875,110.0125],[10.0,110.2625],[10.125,110.5125],[10.25,110.7625]];
+const RATES_ARM = [[6.625,99.25],[6.75,100],[6.875,100.75],[7.0,101.5],[7.125,102.25],[7.25,103],[7.375,103.75],[7.5,104.1875],[7.625,104.575],[7.75,104.9625],[7.875,105.35],[8.0,105.7375],[8.125,105.9375],[8.25,106.1375],[8.375,106.3875],[8.5,106.6375],[8.625,106.8875],[8.75,107.1375],[8.875,107.3875],[9.0,107.6375],[9.125,107.8875],[9.25,108.1375],[9.375,108.3875],[9.5,108.6375],[9.625,108.8875],[9.75,109.1375],[9.875,109.3875],[10.0,109.6375],[10.125,109.8875],[10.25,110.1375],[10.375,110.3875],[10.5,110.6375],[10.625,110.8875],[10.75,111.1375],[10.875,111.3875]];
 
 const LTV_COLS = [0.50,0.55,0.60,0.65,0.70,0.75,0.80];
 
@@ -1889,7 +1890,7 @@ function copyToEmail(){
   var liquid=isPurch?reserves+(downPmt+closing):(netPos<0?reserves+cashCls:reserves);
   var SEP='================================================';
   var t='CREBRID -- DSCR LOAN QUOTE\n';
-  t+='Date: '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'  |  Rate Sheet: 9/9/26\n';
+  t+='Date: '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'  |  Rate Sheet: 9/17/26\n';
   t+=SEP+'\n\n';
   t+='RATE TREND (30Y 6% Base)\n';
   t+='  3/12/26: 98.750  3/27/26: 97.188  3/31/26: 97.563  4/6/26:  97.938\n';
