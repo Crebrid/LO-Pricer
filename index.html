@@ -592,6 +592,14 @@
       <label>Monthly HOA ($)</label>
       <input type="number" id="hoa" value="0" oninput="calcDSCR()">
     </div>
+    <div class="field">
+      <label>Broker Name</label>
+      <input type="text" id="brokerFeeLabel" placeholder="Broker name (optional)">
+    </div>
+    <div class="field">
+      <label>Broker Fee ($)</label>
+      <input type="number" id="brokerFee" value="0" min="0" placeholder="0">
+    </div>
     <div class="field" style="background:var(--surface2);border-radius:6px;">
       <label style="color:var(--muted);font-size:11px;">TIA (auto-calc)</label>
       <input type="number" id="tia" readonly
@@ -604,7 +612,7 @@
     <!-- ── RIGHT COLUMN ── -->
     <div>
   <!-- Rate Trend Indicator -->
-  <div style="background:white;border:1px solid #E5E5E2;border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+  <div class="rate-trend-widget" style="background:white;border:1px solid #E5E5E2;border-radius:12px;padding:14px 16px;margin-bottom:12px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B6B6B;">Rate Trend (30Y 6% Base)</div>
       <div style="display:flex;gap:8px;">
@@ -749,6 +757,7 @@
         <option value="">-- Select AE --</option>
         <option value="Andrea Haire|ahaire@crebrid.com">Andrea Haire</option>
         <option value="Brett Fair|bfair@crebrid.com">Brett Fair</option>
+        <option value="Brian Ingram|bingram@crebrid.com">Brian Ingram</option>
         <option value="Chad Russell|crussell@crebrid.com">Chad Russell</option>
         <option value="Chris Carr|ccarr@crebrid.com">Chris Carr</option>
         <option value="Chase Howard|choward@crebrid.com">Chase Howard</option>
@@ -1085,6 +1094,11 @@
             <td style="padding:7px 10px;text-align:right;font-weight:600;color:#1A1A1A;border:1px solid #E5E5E2;" id="ts-cc-payoff">—</td>
             <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;">From Input</td>
           </tr>
+          <tr id="ts-cc-broker-row" style="display:none;">
+            <td style="padding:7px 10px;color:#1A1A1A;border:1px solid #E5E5E2;" id="ts-cc-broker-label">Broker Fee</td>
+            <td style="padding:7px 10px;text-align:right;color:#1A1A1A;border:1px solid #E5E5E2;" id="ts-cc-broker">--</td>
+            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:11px;border:1px solid #E5E5E2;">Est.</td>
+          </tr>
           <tr style="background:#1A1A1A;">
             <td style="padding:9px 10px;color:white;font-weight:700;border:1px solid #333;">Total Estimated Closing Costs</td>
             <td style="padding:9px 10px;text-align:right;font-weight:700;color:white;border:1px solid #333;" id="ts-cc-total">—</td>
@@ -1294,8 +1308,15 @@ function generateTermSheet() {
     if(g2('ts-cc-payoff-row')) g2('ts-cc-payoff-row').style.display = 'none';
   }
 
+  // Broker fee
+  const brokerFeeAmt = parseFloat((g('brokerFee')&&g('brokerFee').value)||0) || 0;
+  const brokerFeeLabel = (g('brokerFeeLabel')&&g('brokerFeeLabel').value) ? g('brokerFeeLabel').value+' Fee' : 'Broker Fee';
+  if(g2('ts-cc-broker-row')) g2('ts-cc-broker-row').style.display = brokerFeeAmt > 0 ? 'table-row' : 'none';
+  if(g2('ts-cc-broker')) g2('ts-cc-broker').textContent = brokerFeeAmt > 0 ? fmt2(brokerFeeAmt) : '--';
+  if(g2('ts-cc-broker-label')) g2('ts-cc-broker-label').textContent = brokerFeeLabel;
+
   // Total closing costs (excl down payment and payoff)
-  const closingCostsOnly = origAmt + procAmt + titleAmt + insAmt + annTaxes;
+  const closingCostsOnly = origAmt + procAmt + titleAmt + insAmt + annTaxes + brokerFeeAmt;
 
   // Total row includes payoff for refi, down payment for purchase
   const totalCC = isPurchase
@@ -1586,6 +1607,14 @@ function calculateWithOverride(overrideRate) {
 // --- MAIN CALCULATE ----------------------------------------------------------
 
 function calculate(forceRate) {
+  // If override is active and this is a natural recalculate (no forceRate passed),
+  // re-apply the override so it persists through DSCR/expense changes
+  if (!forceRate && rateOverrideActive) {
+    const overrideVal = parseFloat(document.getElementById('rateOverride').value);
+    if (!isNaN(overrideVal)) {
+      forceRate = overrideVal;
+    }
+  }
   const fico     = parseInt(document.getElementById('fico').value) || 0;
   const ltv      = parseFloat(document.getElementById('ltv').value) || 0;
   const loanAmt  = parseFloat(document.getElementById('loanAmt').value) || 0;
@@ -1894,10 +1923,23 @@ function copyToEmail(){
   t+='Date: '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'  |  Rate Sheet: 9/23/26\n';
   t+=SEP+'\n\n';
   t+='RATE TREND (30Y 6% Base)\n';
-  t+='  3/12/26: 98.750  3/27/26: 97.188  3/31/26: 97.563  4/6/26:  97.938\n';
-  t+='  4/22/26: 98.625  4/29/26: 97.875  5/15/26: 97.875  5/18/26: 97.750\n';
-  t+='  5/27/26: 98.250  6/1/26:  97.500  6/8/26:  96.750  6/15/26: 97.875\n';
-  t+='  6/17/26: 97.125 (current)\n\n';
+  // Dynamically pull trend rows from the live widget
+  var trendRows = document.querySelectorAll('.rate-trend-widget span[style*="font-size:10px;font-weight:700"]');
+  var trendDates = document.querySelectorAll('.rate-trend-widget span[style*="color:#6B6B6B;font-size:10px"]');
+  if(trendDates.length > 0) {
+    var trendLine = '  ';
+    for(var ti=0; ti<trendDates.length; ti++) {
+      var tDate = trendDates[ti].textContent;
+      var tPrice = trendRows[ti] ? trendRows[ti].textContent : '';
+      var isCurrent = trendRows[ti] && trendRows[ti].style.color === 'rgb(204, 51, 51)';
+      trendLine += tDate+': '+tPrice+(isCurrent?' (current)':'')+'  ';
+      if((ti+1) % 4 === 0) { t+=trendLine+'\n'; trendLine='  '; }
+    }
+    if(trendLine.trim()) t+=trendLine+'\n';
+  } else {
+    t+='  See rate trend on pricer\n';
+  }
+  t+='\n';
   t+='BORROWER & PROPERTY\n';
   t+='  Borrower:          '+borrower+'\n';
   t+='  Property:          '+addr+'\n';
