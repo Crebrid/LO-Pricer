@@ -432,7 +432,15 @@
     </div>
     <div class="field">
       <label>LTV (%)</label>
-      <input type="number" id="ltv" value="70" min="1" max="80" step="1" onchange="calculate(); updateCalcLoan()">
+      <select id="ltv" onchange="calculate(); updateCalcLoan()">
+        <option value="50">50%</option>
+        <option value="55">55%</option>
+        <option value="60">60%</option>
+        <option value="65">65%</option>
+        <option value="70" selected>70%</option>
+        <option value="75">75%</option>
+        <option value="80">80%</option>
+      </select>
     </div>
     <div class="field">
       <label>Est. Value ($)</label>
@@ -555,10 +563,12 @@
       </select>
     </div>
     <div class="field">
-      <label>Foreign National?</label>
+      <label>Citizenship</label>
       <select id="fn" onchange="calculate()">
-        <option>No</option>
-        <option>Yes</option>
+        <option value="No">U.S. Citizen</option>
+        <option value="No">Permanent Resident</option>
+        <option value="No">Non-Permanent Resident</option>
+        <option value="Yes">Foreign National</option>
       </select>
     </div>
     <div class="field">
@@ -599,6 +609,14 @@
     <div class="field">
       <label>Broker Fee ($)</label>
       <input type="number" id="brokerFee" value="0" min="0" placeholder="0">
+    </div>
+    <div class="field">
+      <label>Reserve Requirement</label>
+      <select id="reserveMonths">
+        <option value="3">3 Months</option>
+        <option value="6">6 Months</option>
+        <option value="12">12 Months</option>
+      </select>
     </div>
     <div class="field" style="background:var(--surface2);border-radius:6px;">
       <label style="color:var(--muted);font-size:11px;">TIA (auto-calc)</label>
@@ -1078,7 +1096,7 @@
           <tr>
             <td style="padding:7px 10px;color:#1A1A1A;border:1px solid #E5E5E2;">Title / Settlement Fees</td>
             <td style="padding:7px 10px;text-align:right;font-weight:600;color:#1A1A1A;border:1px solid #E5E5E2;" id="ts-cc-title">—</td>
-            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;">Est. 1%</td>
+            <td style="padding:7px 10px;text-align:right;color:#6B6B6B;font-size:10px;border:1px solid #E5E5E2;">Est. 1.25%</td>
           </tr>
           <tr style="background:#F7F7F5;">
             <td style="padding:7px 10px;color:#1A1A1A;border:1px solid #E5E5E2;">Insurance Premium (1st year)</td>
@@ -1118,10 +1136,10 @@
           </div>
           <div>
             <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">Months Required</div>
-            <div style="font-size:13px;font-weight:700;color:#1A1A1A;">3 Months</div>
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A;" id="ts-cc-reserve-months">3 Months</div>
           </div>
           <div>
-            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;">3-Month Reserve</div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B6B6B;margin-bottom:2px;" id="ts-cc-reserve-label">3-Month Reserve</div>
             <div style="font-size:13px;font-weight:700;color:#C8643A;" id="ts-cc-reserves">—</div>
           </div>
         </div>
@@ -1228,8 +1246,8 @@ function generateTermSheet() {
   g('ts-fico').textContent = g('fico').value;
   if(g('ts-proptype')) g('ts-proptype').textContent = g('propType') && g('propType').value ? g('propType').value : '--';
   if(g('ts-orig')) g('ts-orig').textContent = g('originationFee').value;
-  if(g('ts-orig-proc')) g('ts-orig-proc').textContent = '$1,999';
-  if(g('ts-orig-lo-proc')) g('ts-orig-lo-proc').textContent = '$1,999';
+  if(g('ts-orig-proc')) g('ts-orig-proc').textContent = '$2,099';
+  if(g('ts-orig-lo-proc')) g('ts-orig-lo-proc').textContent = '$2,099';
   if(g('ts-orig-lo')) g('ts-orig-lo').textContent = g('originationFee').value;
 
   // Est Value -- only show if filled in
@@ -1273,11 +1291,12 @@ function generateTermSheet() {
   const isPurchase = purpose2 === 'Purchase';
 
   const origAmt    = loanAmt2 * origPct;
-  const procAmt    = 1999;
-  const titleAmt   = loanAmt2 * 0.01;
+  const procAmt    = 2099;
+  const titleAmt   = loanAmt2 * 0.0125;
   const insAmt     = annIns > 0 ? annIns : loanAmt2 * 0.01;
   const downPmt    = isPurchase && estValue2 > loanAmt2 ? estValue2 - loanAmt2 : 0;
-  const reservesAmt = pitia2 * 3;
+  const reserveMonths = parseInt((g('reserveMonths')&&g('reserveMonths').value)||'3') || 3;
+  const reservesAmt = pitia2 * reserveMonths;
 
   const fmt2 = n => '$' + Math.round(n).toLocaleString();
 
@@ -1299,7 +1318,9 @@ function generateTermSheet() {
   if(g2('ts-cc-title'))     g2('ts-cc-title').textContent     = fmt2(titleAmt);
   if(g2('ts-cc-insurance')) g2('ts-cc-insurance').textContent = fmt2(insAmt);
   if(g2('ts-cc-taxes'))     g2('ts-cc-taxes').textContent     = annTaxes > 0 ? fmt2(annTaxes) : 'Not provided';
-  if(g2('ts-cc-reserves'))  g2('ts-cc-reserves').textContent  = fmt2(reservesAmt);
+  if(g2('ts-cc-reserve-months')) g2('ts-cc-reserve-months').textContent = reserveMonths + ' Months';
+  if(g2('ts-cc-reserve-label'))  g2('ts-cc-reserve-label').textContent  = reserveMonths + '-Month Reserve';
+  if(g2('ts-cc-reserves'))       g2('ts-cc-reserves').textContent       = fmt2(reservesAmt);
 
   // Payoff row -- refi only
   if(payoff > 0 && !isPurchase) {
