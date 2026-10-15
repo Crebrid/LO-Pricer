@@ -1361,12 +1361,21 @@ function generateTermSheet() {
     if(g2('ts-cc-liquid'))            g2('ts-cc-liquid').textContent = fmt2(reservesAmt + cashFromBorrower);
   } else {
     // Refi: net position
+    const isRT = purpose2 === 'Rate/Term Refinance';
     const netPosition = loanAmt2 - payoff - closingCostsOnly;
     if(netPosition >= 0) {
       // Cash back to borrower
       if(g2('ts-cc-cashback-section'))  g2('ts-cc-cashback-section').style.display  = 'block';
       if(g2('ts-cc-cashclose-section')) g2('ts-cc-cashclose-section').style.display = 'none';
-      if(g2('ts-cc-cashback'))          g2('ts-cc-cashback').textContent = fmt2(netPosition);
+      if(g2('ts-cc-cashback')) {
+        const maxCashBack = isRT ? loanAmt2 * 0.02 : Infinity;
+        const cappedCashBack = Math.min(netPosition, maxCashBack);
+        g2('ts-cc-cashback').textContent = fmt2(cappedCashBack);
+        if(g2('ts-cc-cashback-note')) {
+          g2('ts-cc-cashback-note').style.display = isRT ? 'block' : 'none';
+          g2('ts-cc-cashback-note').textContent = '2% Cash-Back Limit Per Crebrid Guidelines';
+        }
+      }
       // Liquid assets = 3-month reserves only (cash back covers closing)
       if(g2('ts-cc-liquid-section'))    g2('ts-cc-liquid-section').style.display = 'none';
     } else {
