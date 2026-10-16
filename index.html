@@ -1695,9 +1695,45 @@ function calculate(forceRate) {
     chk('Max LTV -- Purchase/R&T', effLtv <= maxP, `Eff. LTV=${effLtv}% / Max=${maxP}%`);
   }
 
-  if(fico >= 660 && fico < 680 && ltv > 75) chk('FICO 660-679: Max LTV 75%', false, 'FICO='+fico+' / LTV='+ltv+'%');
-  if(fico >= 660 && fico < 680 && purpose === 'Cash-Out Refinance' && ltv > 70) chk('FICO 660-679: Cash-Out Max 70%', false, 'FICO='+fico+' / LTV='+ltv+'%');
-  if(fico >= 680 && fico < 700 && purpose === 'Cash-Out Refinance' && ltv > 75) chk('FICO 680-699: Cash-Out Max 75%', false, 'FICO='+fico+' / LTV='+ltv+'%');
+  // FICO/Purpose Max LTV Matrix (with IO, FTI, Sub-1.0x DSCR reductions)
+  if (!isFN) {
+    var isCOpurp = purpose === 'Cash-Out Refinance';
+    var isRTorPurch = !isCOpurp;
+    var baseLtvMap;
+    if (isRTorPurch) {
+      baseLtvMap = [
+        {minF:740, maxF:9999, base:80},
+        {minF:720, maxF:739,  base:80},
+        {minF:700, maxF:719,  base:75},
+        {minF:680, maxF:699,  base:80},
+        {minF:660, maxF:679,  base:75},
+        {minF:640, maxF:659,  base:70}
+      ];
+    } else {
+      baseLtvMap = [
+        {minF:740, maxF:9999, base:75},
+        {minF:720, maxF:739,  base:75},
+        {minF:700, maxF:719,  base:75},
+        {minF:680, maxF:699,  base:70},
+        {minF:660, maxF:679,  base:65},
+        {minF:640, maxF:659,  base:60}
+      ];
+    }
+    var matched = baseLtvMap.find(function(r){ return fico >= r.minF && fico <= r.maxF; });
+    if (matched) {
+      var guideMax = matched.base;
+      var reductions = [];
+      if (isIOProd)   { guideMax -= 5; reductions.push('IO -5%'); }
+      if (exp0)       { guideMax -= 5; reductions.push('FTI -5%'); }
+      if (dscr < 1.0) { guideMax -= 5; reductions.push('Sub-1.0x DSCR -5%'); }
+      if (ltv > guideMax) {
+        var redStr = reductions.length ? ' [' + reductions.join(', ') + ']' : '';
+        var purpLabel = isCOpurp ? 'Cash-Out' : 'Rate/Term';
+        chk('FICO ' + fico + ' ' + purpLabel + ' Max LTV ' + guideMax + '%' + redStr, false,
+            'Selected LTV=' + ltv + '% / Max=' + guideMax + '%');
+      }
+    }
+  }
 
     if (isFN) {
     
